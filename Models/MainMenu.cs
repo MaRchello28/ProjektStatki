@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace ProjektStatki.Models
 {
-    //Dodać do tego dziedziczące konkretne dekoratory
-    public class ShipDecorator
+    public class MainMenu
     {
-        Ship wrappe;
-        public ShipDecorator(Ship ship) 
+        public MainMenu() 
         { 
-            wrappe = ship;
+            
         }
 
-        public void Execute()
+        public void Login()
+        {
+
+        }
+
+        public void LogOut()
         {
 
         }

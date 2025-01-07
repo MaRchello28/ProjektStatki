@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjektStatki.Models
+namespace ProjektStatki.Models.Creator
 {
     public class NormalShipType : Ship
     {
@@ -13,7 +13,7 @@ namespace ProjektStatki.Models
 
         public NormalShipType(string name)
         {
-            this.points = new List<Point>();
+            points = new List<Point>();
             this.name = name;
         }
 
@@ -34,8 +34,8 @@ namespace ProjektStatki.Models
 
         public Point fire()
         {
-            int x=0, y=0;
-            Point point = new Point(x,y);
+            int x = 0, y = 0;
+            Point point = new Point(x, y);
             return point;
         }
     }

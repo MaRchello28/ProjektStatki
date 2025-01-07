@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjektStatki.Models
+namespace ProjektStatki.Models.Creator
 {
     public class SpecialTypeShipCreator
     {

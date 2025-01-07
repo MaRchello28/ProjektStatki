@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjektStatki.Models
+namespace ProjektStatki.Models.Creator
 {
     public class SpecialShipType : Ship
     {
@@ -13,7 +13,7 @@ namespace ProjektStatki.Models
 
         public SpecialShipType(string name)
         {
-            this.points = new List<Point>();
+            points = new List<Point>();
             this.name = name;
         }
 

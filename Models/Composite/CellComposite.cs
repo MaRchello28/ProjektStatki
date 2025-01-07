@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjektStatki.Models
+namespace ProjektStatki.Models.Composite
 {
     public class CellComposite : Cell
     {
@@ -39,12 +39,12 @@ namespace ProjektStatki.Models
 
         public Point getPoint()
         {
-             return new Point(0, 0);
+            return new Point(0, 0);
         }
 
         public void display()
         {
-            
+
         }
     }
 }
