@@ -3,23 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ProjektStatki.Models.Composite;
 
 namespace ProjektStatki.Models
 {
     public class Board
     {
-        public CellOnBoard cellOnBoard;
-        public Player playerBoard { get; set; }
-        public Board(CellOnBoard cellOnBoard, Player player) 
+        public Player player {  get; set; }
+        public List<Cell> cells = new List<Cell>();
+        public Board(Player player, int x, int y) 
         { 
-            this.cellOnBoard = cellOnBoard;
-            this.playerBoard = player;
+            this.player = player;
+            CreateBoard(x,y);
         }
 
-        public void ShowBoard()
+        public List<Cell> CreateBoard(int x, int y)
         {
-
+            for(int i=0; i<x; i++)
+            {
+                for (int j=0; j<y; j++)
+                {
+                    cells.Add(new Cell(false, false, new Point(i, y)));
+                }
+            }
+            return cells;
         }
     }
 }
