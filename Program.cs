@@ -1,3 +1,5 @@
+using ProjektStatki.Models.Data;
+
 namespace ProjektStatki
 {
     internal static class Program
@@ -8,8 +10,6 @@ namespace ProjektStatki
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new MainMenu());
         }

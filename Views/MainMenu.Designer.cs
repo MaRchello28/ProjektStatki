@@ -38,32 +38,36 @@
             // 
             // button1
             // 
-            button1.Location = new Point(23, 158);
+            button1.Location = new Point(20, 118);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(125, 32);
+            button1.Size = new Size(109, 24);
             button1.TabIndex = 0;
             button1.Text = "Zaloguj";
             button1.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(23, 53);
+            textBox1.Location = new Point(20, 40);
+            textBox1.Margin = new Padding(3, 2, 3, 2);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 27);
+            textBox1.Size = new Size(110, 23);
             textBox1.TabIndex = 1;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(23, 125);
+            textBox2.Location = new Point(20, 94);
+            textBox2.Margin = new Padding(3, 2, 3, 2);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(125, 27);
+            textBox2.Size = new Size(110, 23);
             textBox2.TabIndex = 2;
             // 
             // button2
             // 
-            button2.Location = new Point(364, 12);
+            button2.Location = new Point(318, 9);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Size = new Size(125, 32);
+            button2.Size = new Size(109, 24);
             button2.TabIndex = 3;
             button2.Text = "Utwórz konto";
             button2.UseVisualStyleBackColor = true;
@@ -71,34 +75,36 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(42, 30);
+            label1.Location = new Point(37, 22);
             label1.Name = "label1";
-            label1.Size = new Size(84, 20);
+            label1.Size = new Size(67, 15);
             label1.TabIndex = 4;
             label1.Text = "Podaj login";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(42, 102);
+            label2.Location = new Point(37, 76);
             label2.Name = "label2";
-            label2.Size = new Size(85, 20);
+            label2.Size = new Size(68, 15);
             label2.TabIndex = 5;
             label2.Text = "Podaj hasło";
             // 
-            // LoginMenu
+            // MainMenu
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(501, 228);
+            ClientSize = new Size(438, 171);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(button2);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
             Controls.Add(button1);
-            Name = "LoginMenu";
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "MainMenu";
             Text = "Login";
+            Load += MainMenu_Load;
             ResumeLayout(false);
             PerformLayout();
         }
