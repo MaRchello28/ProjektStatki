@@ -8,12 +8,18 @@ namespace ProjektStatki.Models
 {
     public class Board
     {
-        public Player player {  get; set; }
+        public Player? player {  get; set; }
         public List<Cell> cells = new List<Cell>();
-        public Board(Player player, int x, int y) 
-        { 
-            this.player = player;
+        public Board(int x, int y) 
+        {
+            this.player = null;
             CreateBoard(x,y);
+        }
+
+        public Board(Player player, int x, int y)
+        {
+            this.player = player;
+            CreateBoard(x, y);
         }
 
         public List<Cell> CreateBoard(int x, int y)

@@ -15,15 +15,15 @@ namespace ProjektStatki.Models.Gamemodes
         }
         public Board SetBoard(int x, int y)
         {
-
+            return new Board(x, y);
         }
-        public int SetCountShipsOnBoard()
+        public int SetCountShipsOnBoard(int value)
         {
-
+            return value;
         }
-        public int SetCountSpecialShips()
+        public int SetCountSpecialShips(int value)
         {
-
+            return value;
         }
         public void PlaceShip()
         {

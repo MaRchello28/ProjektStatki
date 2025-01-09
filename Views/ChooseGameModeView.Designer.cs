@@ -28,134 +28,376 @@
         /// </summary>
         private void InitializeComponent()
         {
-            groupBox1 = new GroupBox();
+            TreeNode treeNode1 = new TreeNode("Nie rankingowa");
+            TreeNode treeNode2 = new TreeNode("Rankingowa");
+            TreeNode treeNode3 = new TreeNode("Zwykła", new TreeNode[] { treeNode1, treeNode2 });
+            TreeNode treeNode4 = new TreeNode("Tryb Symulacji");
+            TreeNode treeNode5 = new TreeNode("SpecjalneStatki");
+            TreeNode treeNode6 = new TreeNode("Specjalne", new TreeNode[] { treeNode4, treeNode5 });
+            TreeNode treeNode7 = new TreeNode("Gracz vs AI");
+            TreeNode treeNode8 = new TreeNode("Stwórz Własną");
+            TreeNode treeNode9 = new TreeNode("Customowe", new TreeNode[] { treeNode7, treeNode8 });
+            button1 = new Button();
+            treeView1 = new TreeView();
             label1 = new Label();
             pictureBox1 = new PictureBox();
             label2 = new Label();
+            panel1 = new Panel();
+            panel2 = new Panel();
+            panel6 = new Panel();
+            label11 = new Label();
+            numericUpDown6 = new NumericUpDown();
+            panel5 = new Panel();
+            label7 = new Label();
+            numericUpDown3 = new NumericUpDown();
+            panel3 = new Panel();
+            panel4 = new Panel();
             label3 = new Label();
-            pictureBox2 = new PictureBox();
-            pictureBox3 = new PictureBox();
-            button1 = new Button();
-            groupBox1.SuspendLayout();
+            label9 = new Label();
+            label10 = new Label();
+            numericUpDown4 = new NumericUpDown();
+            numericUpDown5 = new NumericUpDown();
+            label8 = new Label();
+            label6 = new Label();
+            label5 = new Label();
+            numericUpDown2 = new NumericUpDown();
+            numericUpDown1 = new NumericUpDown();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            panel1.SuspendLayout();
+            panel2.SuspendLayout();
+            panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown6).BeginInit();
+            panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown3).BeginInit();
+            panel3.SuspendLayout();
+            panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(label3);
-            groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(pictureBox1);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(281, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(252, 366);
-            groupBox1.TabIndex = 0;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "groupBox1";
-            // 
-            // label1
-            // 
-            label1.BorderStyle = BorderStyle.FixedSingle;
-            label1.Font = new Font("Segoe UI", 14F);
-            label1.Location = new Point(0, 19);
-            label1.Name = "label1";
-            label1.Size = new Size(252, 23);
-            label1.TabIndex = 1;
-            label1.Text = "Nazwa Trybu Gry";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Image = Properties.Resources.AI;
-            pictureBox1.Location = new Point(0, 42);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(252, 127);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
-            // 
-            // label2
-            // 
-            label2.BorderStyle = BorderStyle.FixedSingle;
-            label2.Font = new Font("Segoe UI", 14F);
-            label2.ImageAlign = ContentAlignment.TopCenter;
-            label2.Location = new Point(0, 163);
-            label2.Name = "label2";
-            label2.Size = new Size(252, 23);
-            label2.TabIndex = 2;
-            label2.Text = "Zasady";
-            label2.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // label3
-            // 
-            label3.BorderStyle = BorderStyle.FixedSingle;
-            label3.Font = new Font("Segoe UI", 14F);
-            label3.Location = new Point(0, 186);
-            label3.Name = "label3";
-            label3.Size = new Size(252, 178);
-            label3.TabIndex = 3;
-            label3.Text = "OpisTrybu";
-            label3.TextAlign = ContentAlignment.TopCenter;
-            // 
-            // pictureBox2
-            // 
-            pictureBox2.Image = Properties.Resources.arrow_forward_ios_24dp_5F6368_FILL0_wght400_GRAD0_opsz24;
-            pictureBox2.Location = new Point(119, 164);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(97, 94);
-            pictureBox2.TabIndex = 1;
-            pictureBox2.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.Image = Properties.Resources.arrow_back_ios_new_24dp_5F6368_FILL0_wght400_GRAD0_opsz24;
-            pictureBox3.Location = new Point(590, 164);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(97, 94);
-            pictureBox3.TabIndex = 2;
-            pictureBox3.TabStop = false;
             // 
             // button1
             // 
             button1.Font = new Font("Segoe UI", 13F);
-            button1.Location = new Point(339, 384);
+            button1.Location = new Point(272, 403);
             button1.Name = "button1";
             button1.Size = new Size(147, 35);
             button1.TabIndex = 3;
             button1.Text = "Zatwierdź";
             button1.UseVisualStyleBackColor = true;
             // 
+            // treeView1
+            // 
+            treeView1.Font = new Font("Segoe UI", 14F);
+            treeView1.Location = new Point(12, 12);
+            treeView1.Name = "treeView1";
+            treeNode1.Name = "nieRankingowa";
+            treeNode1.Text = "Nie rankingowa";
+            treeNode2.Name = "rankingowa";
+            treeNode2.Text = "Rankingowa";
+            treeNode3.Name = "normal";
+            treeNode3.Text = "Zwykła";
+            treeNode4.Name = "trybSymulacji";
+            treeNode4.Text = "Tryb Symulacji";
+            treeNode5.Name = "specjalneStatki";
+            treeNode5.Text = "SpecjalneStatki";
+            treeNode6.Name = "specjalne";
+            treeNode6.Text = "Specjalne";
+            treeNode7.Name = "graczVsAI";
+            treeNode7.Text = "Gracz vs AI";
+            treeNode8.Name = "stwórzWłasną";
+            treeNode8.Text = "Stwórz Własną";
+            treeNode9.Name = "custom";
+            treeNode9.Text = "Customowe";
+            treeView1.Nodes.AddRange(new TreeNode[] { treeNode3, treeNode6, treeNode9 });
+            treeView1.Size = new Size(194, 426);
+            treeView1.TabIndex = 4;
+            treeView1.AfterSelect += treeView1_AfterSelect;
+            // 
+            // label1
+            // 
+            label1.BorderStyle = BorderStyle.FixedSingle;
+            label1.Font = new Font("Segoe UI", 15F);
+            label1.Location = new Point(3, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(247, 34);
+            label1.TabIndex = 0;
+            label1.Text = "Nazwa Trybu Gry";
+            label1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox1.Location = new Point(3, 46);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(247, 129);
+            pictureBox1.TabIndex = 1;
+            pictureBox1.TabStop = false;
+            // 
+            // label2
+            // 
+            label2.BorderStyle = BorderStyle.FixedSingle;
+            label2.Font = new Font("Segoe UI", 15F);
+            label2.Location = new Point(3, 178);
+            label2.Name = "label2";
+            label2.Size = new Size(247, 194);
+            label2.TabIndex = 2;
+            label2.Text = "Zasady";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // panel1
+            // 
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(pictureBox1);
+            panel1.Location = new Point(212, 12);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(256, 373);
+            panel1.TabIndex = 6;
+            // 
+            // panel2
+            // 
+            panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(panel6);
+            panel2.Controls.Add(panel5);
+            panel2.Controls.Add(panel3);
+            panel2.Controls.Add(label4);
+            panel2.Location = new Point(502, 12);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(256, 373);
+            panel2.TabIndex = 7;
+            // 
+            // panel6
+            // 
+            panel6.BorderStyle = BorderStyle.FixedSingle;
+            panel6.Controls.Add(label11);
+            panel6.Controls.Add(numericUpDown6);
+            panel6.Location = new Point(1, 182);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(254, 59);
+            panel6.TabIndex = 11;
+            // 
+            // label11
+            // 
+            label11.Font = new Font("Segoe UI", 10F);
+            label11.Location = new Point(3, 9);
+            label11.Name = "label11";
+            label11.Size = new Size(154, 43);
+            label11.TabIndex = 6;
+            label11.Text = "Wybierz llcizbę statków specjalnych:";
+            // 
+            // numericUpDown6
+            // 
+            numericUpDown6.Location = new Point(170, 20);
+            numericUpDown6.Name = "numericUpDown6";
+            numericUpDown6.Size = new Size(82, 23);
+            numericUpDown6.TabIndex = 7;
+            // 
+            // panel5
+            // 
+            panel5.BorderStyle = BorderStyle.FixedSingle;
+            panel5.Controls.Add(label7);
+            panel5.Controls.Add(numericUpDown3);
+            panel5.Location = new Point(2, 143);
+            panel5.Name = "panel5";
+            panel5.Size = new Size(254, 43);
+            panel5.TabIndex = 10;
+            // 
+            // label7
+            // 
+            label7.Font = new Font("Segoe UI", 10F);
+            label7.Location = new Point(3, 9);
+            label7.Name = "label7";
+            label7.Size = new Size(154, 21);
+            label7.TabIndex = 6;
+            label7.Text = "Wybierz llcizbę statków:";
+            // 
+            // numericUpDown3
+            // 
+            numericUpDown3.Location = new Point(170, 9);
+            numericUpDown3.Name = "numericUpDown3";
+            numericUpDown3.Size = new Size(82, 23);
+            numericUpDown3.TabIndex = 7;
+            // 
+            // panel3
+            // 
+            panel3.BorderStyle = BorderStyle.FixedSingle;
+            panel3.Controls.Add(panel4);
+            panel3.Controls.Add(label8);
+            panel3.Controls.Add(label6);
+            panel3.Controls.Add(label5);
+            panel3.Controls.Add(numericUpDown2);
+            panel3.Controls.Add(numericUpDown1);
+            panel3.Location = new Point(2, 51);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(254, 92);
+            panel3.TabIndex = 9;
+            // 
+            // panel4
+            // 
+            panel4.BorderStyle = BorderStyle.FixedSingle;
+            panel4.Controls.Add(label3);
+            panel4.Controls.Add(label9);
+            panel4.Controls.Add(label10);
+            panel4.Controls.Add(numericUpDown4);
+            panel4.Controls.Add(numericUpDown5);
+            panel4.Location = new Point(-1, -1);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(254, 92);
+            panel4.TabIndex = 10;
+            // 
+            // label3
+            // 
+            label3.Font = new Font("Segoe UI", 10F);
+            label3.Location = new Point(1, 5);
+            label3.Name = "label3";
+            label3.Size = new Size(162, 21);
+            label3.TabIndex = 8;
+            label3.Text = "Wybierz rozmiar planszy:";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(181, 73);
+            label9.Name = "label9";
+            label9.Size = new Size(58, 15);
+            label9.TabIndex = 5;
+            label9.Text = "wysokość";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(181, 29);
+            label10.Name = "label10";
+            label10.Size = new Size(58, 15);
+            label10.TabIndex = 4;
+            label10.Text = "szerokość";
+            // 
+            // numericUpDown4
+            // 
+            numericUpDown4.Location = new Point(169, 47);
+            numericUpDown4.Name = "numericUpDown4";
+            numericUpDown4.Size = new Size(82, 23);
+            numericUpDown4.TabIndex = 3;
+            // 
+            // numericUpDown5
+            // 
+            numericUpDown5.Location = new Point(169, 3);
+            numericUpDown5.Name = "numericUpDown5";
+            numericUpDown5.Size = new Size(82, 23);
+            numericUpDown5.TabIndex = 2;
+            // 
+            // label8
+            // 
+            label8.Font = new Font("Segoe UI", 10F);
+            label8.Location = new Point(1, 5);
+            label8.Name = "label8";
+            label8.Size = new Size(162, 21);
+            label8.TabIndex = 8;
+            label8.Text = "Wybierz rozmiar planszy:";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(181, 73);
+            label6.Name = "label6";
+            label6.Size = new Size(58, 15);
+            label6.TabIndex = 5;
+            label6.Text = "wysokość";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(181, 29);
+            label5.Name = "label5";
+            label5.Size = new Size(58, 15);
+            label5.TabIndex = 4;
+            label5.Text = "szerokość";
+            // 
+            // numericUpDown2
+            // 
+            numericUpDown2.Location = new Point(169, 47);
+            numericUpDown2.Name = "numericUpDown2";
+            numericUpDown2.Size = new Size(82, 23);
+            numericUpDown2.TabIndex = 3;
+            // 
+            // numericUpDown1
+            // 
+            numericUpDown1.Location = new Point(169, 3);
+            numericUpDown1.Name = "numericUpDown1";
+            numericUpDown1.Size = new Size(82, 23);
+            numericUpDown1.TabIndex = 2;
+            // 
+            // label4
+            // 
+            label4.BorderStyle = BorderStyle.FixedSingle;
+            label4.Font = new Font("Segoe UI", 15F);
+            label4.Location = new Point(3, 9);
+            label4.Name = "label4";
+            label4.Size = new Size(247, 34);
+            label4.TabIndex = 0;
+            label4.Text = "Custom";
+            label4.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // ChooseGameModeView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(777, 450);
+            Controls.Add(panel2);
+            Controls.Add(panel1);
+            Controls.Add(treeView1);
             Controls.Add(button1);
-            Controls.Add(pictureBox3);
-            Controls.Add(pictureBox2);
-            Controls.Add(groupBox1);
             Name = "ChooseGameModeView";
             Text = "ChooseGameModeView";
             Load += ChooseGameModeView_Load;
-            groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            panel1.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numericUpDown6).EndInit();
+            panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numericUpDown3).EndInit();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private GroupBox groupBox1;
-        private Label label3;
-        private Label label2;
-        private PictureBox pictureBox1;
-        private Label label1;
-        private PictureBox pictureBox2;
-        private PictureBox pictureBox3;
         private Button button1;
+        private TreeView treeView1;
+        private Label label1;
+        private PictureBox pictureBox1;
+        private Label label2;
+        private Panel panel1;
+        private Panel panel2;
+        private Label label4;
+        private Label label6;
+        private Label label5;
+        private NumericUpDown numericUpDown2;
+        private NumericUpDown numericUpDown1;
+        private Label label7;
+        private Label label8;
+        private NumericUpDown numericUpDown3;
+        private Panel panel3;
+        private Panel panel4;
+        private Label label3;
+        private Label label9;
+        private Label label10;
+        private NumericUpDown numericUpDown4;
+        private NumericUpDown numericUpDown5;
+        private Panel panel5;
+        private Panel panel6;
+        private Label label11;
+        private NumericUpDown numericUpDown6;
     }
 }

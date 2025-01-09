@@ -8,9 +8,10 @@ namespace ProjektStatki.Models
 {
     public interface Ship
     {
+        public int Id { get; set; }
         List<Point> getPoints();
         string getName();
         Ship putShipOnBoard();
-        Point fire();
+        Point fire(int x, int y);
     }
 }

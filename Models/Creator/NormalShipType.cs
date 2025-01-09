@@ -10,6 +10,7 @@ namespace ProjektStatki.Models.Creator
     {
         private List<Point> points;
         private string name;
+        public int Id {  get; set; }
 
         public NormalShipType(string name)
         {
@@ -32,9 +33,8 @@ namespace ProjektStatki.Models.Creator
             return this;
         }
 
-        public Point fire()
+        public Point fire(int x, int y)
         {
-            int x = 0, y = 0;
             Point point = new Point(x, y);
             return point;
         }
