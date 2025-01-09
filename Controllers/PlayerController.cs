@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProjektStatki.Models.Data;
+using ProjektStatki.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +10,18 @@ namespace ProjektStatki.Controllers
 {
     public class PlayerController
     {
-        public void RunController() //Odpowiada za zalogowanie i jak się zalogujesz to wyświetli menu
+        string LoggedUserId;
+        MyDbContext db;
+        PlayerView playerView;
+        public PlayerController(MyDbContext db, string LoggedUserId) 
+        { 
+            this.db = db;
+            this.LoggedUserId = LoggedUserId;
+            playerView = new PlayerView(db);
+        }
+        public void RunController()
         {
-
+            playerView.Run(LoggedUserId);
         }
 
         public void ShowRanking()

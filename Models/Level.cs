@@ -11,6 +11,7 @@ namespace ProjektStatki.Models
         public int level {  get; set; }
         public int exp { get; set; }
         public int expToNextLevel { get; set; }
+        public Level() { }
         public Level(int l, int e, int et) 
         { 
             level = l;

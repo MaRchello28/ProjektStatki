@@ -1,4 +1,6 @@
+using ProjektStatki.Controllers;
 using ProjektStatki.Models.Data;
+using System.Windows.Forms;
 
 namespace ProjektStatki
 {
@@ -10,8 +12,11 @@ namespace ProjektStatki
         [STAThread]
         static void Main()
         {
-            ApplicationConfiguration.Initialize();
-            Application.Run(new MainMenu());
+            MyDbContext db = new MyDbContext();
+            
+            MainController controller = new MainController(db);
+
+            controller.Run();
         }
     }
 }

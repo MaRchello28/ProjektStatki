@@ -13,5 +13,8 @@ namespace ProjektStatki.Models.Data
         {
             this.Configuration.LazyLoadingEnabled = true;
         }
+
+        public DbSet<HumanPlayer> users {  get; set; }
+        public DbSet<Achievement> achievements { get; set; }
     }
 }

@@ -8,7 +8,8 @@ namespace ProjektStatki.Models
 {
     public class Achievement
     {
-        public string name {  get; set; }
+        public string id {  get; set; }
+        public string name { get; set; }
         public string description { get; set; }
         public bool wasUnlocked { get; set; }
         public Achievement(string n, string d, bool w)

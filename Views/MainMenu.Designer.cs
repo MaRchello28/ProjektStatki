@@ -38,13 +38,14 @@
             // 
             // button1
             // 
-            button1.Location = new Point(20, 118);
+            button1.Location = new Point(21, 136);
             button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
             button1.Size = new Size(109, 24);
             button1.TabIndex = 0;
             button1.Text = "Zaloguj";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // textBox1
             // 
@@ -56,11 +57,12 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(20, 94);
+            textBox2.Location = new Point(20, 107);
             textBox2.Margin = new Padding(3, 2, 3, 2);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(110, 23);
             textBox2.TabIndex = 2;
+            textBox2.UseSystemPasswordChar = true;
             // 
             // button2
             // 
@@ -71,11 +73,12 @@
             button2.TabIndex = 3;
             button2.Text = "Utwórz konto";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(37, 22);
+            label1.Location = new Point(37, 14);
             label1.Name = "label1";
             label1.Size = new Size(67, 15);
             label1.TabIndex = 4;
@@ -84,7 +87,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(37, 76);
+            label2.Location = new Point(37, 77);
             label2.Name = "label2";
             label2.Size = new Size(68, 15);
             label2.TabIndex = 5;
