@@ -87,6 +87,7 @@
             button1.TabIndex = 3;
             button1.Text = "Zatwierdź";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // treeView1
             // 
@@ -289,6 +290,7 @@
             numericUpDown5.Name = "numericUpDown5";
             numericUpDown5.Size = new Size(82, 23);
             numericUpDown5.TabIndex = 2;
+            numericUpDown5.ValueChanged += numericUpDown5_ValueChanged;
             // 
             // label8
             // 

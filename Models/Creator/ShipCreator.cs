@@ -8,6 +8,6 @@ namespace ProjektStatki.Models.Creator
 {
     public interface ShipCreator
     {
-        Ship createShip();
+        Ship createShip(int x, string name);
     }
 }
