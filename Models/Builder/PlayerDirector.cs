@@ -16,7 +16,13 @@ namespace ProjektStatki.Models.Builder
 
         public void ChangeBuilder(PlayerBuilder builder)
         {
-
+            this.builder = builder;
+        }
+        public Player BuildPlayer()
+        {
+            builder.reset();
+            builder.createSteps();
+            return ((ComputerPlayerBuilder)builder).GetResult();
         }
     }
 }
