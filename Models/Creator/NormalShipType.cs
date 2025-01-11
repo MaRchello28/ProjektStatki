@@ -8,7 +8,7 @@ namespace ProjektStatki.Models.Creator
 {
     public class NormalShipType : Ship
     {
-        public List<Point> points;
+        public List<Point> points {  get; set; }
         public string name;
         public int Id {  get; set; }
 

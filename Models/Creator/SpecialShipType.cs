@@ -8,8 +8,8 @@ namespace ProjektStatki.Models.Creator
 {
     public class SpecialShipType : Ship
     {
-        private List<Point> points;
-        private string name;
+        public List<Point> points {  get; set; }
+        public string name;
         public int Id { get; set; }
 
         public SpecialShipType(string name)
