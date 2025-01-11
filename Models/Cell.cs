@@ -17,5 +17,12 @@ namespace ProjektStatki.Models
             this.wasShot = wasShot;
             this.point = point;
         }
+
+        public Cell(Cell otherCell)
+        {
+            this.wasShot = otherCell.wasShot;
+            this.isShip = otherCell.isShip;
+            this.point = new Point(otherCell.point);
+        }
     }
 }

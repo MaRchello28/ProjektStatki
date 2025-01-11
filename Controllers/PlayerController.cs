@@ -68,7 +68,7 @@ namespace ProjektStatki.Controllers
 
         public void CreateGame(GameMode gameMode)
         {
-            GameController gameController = new GameController(db, gameMode, LoggedUserId, new HumanPlayer());
+            GameController gameController = new GameController(db, gameMode, LoggedUserId, gameModeView.Enemy());
             gameController.RunController();
         }
 

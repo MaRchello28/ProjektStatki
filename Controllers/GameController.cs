@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ProjektStatki.Controllers
 {
@@ -29,7 +30,7 @@ namespace ProjektStatki.Controllers
             }
             else
             {
-                Game game = new Game(gamemode.board, gamemode.board, gamemode, player1, player2);
+                Game game = new Game(gamemode.board1, gamemode.board2, gamemode, player1, player2);
                 GameView gameView = new GameView(game);
                 gameView.ShowDialog();
                 //Zacznij grę

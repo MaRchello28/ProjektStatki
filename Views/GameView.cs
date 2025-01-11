@@ -20,6 +20,7 @@ namespace ProjektStatki.Views
         private List<Point> shipPoints = new List<Point>();
         private Ship selectedShip = null;
         Board currentPlayerBoard = null;
+        DataGridView currentDataGridView = null;
         public GameView(Game game)
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace ProjektStatki.Views
             this.KeyPreview = true;
             this.KeyDown += new KeyEventHandler(Form1_KeyDown);
             listBox1.KeyDown += new KeyEventHandler(listBox1_KeyDown);
+            listBox2.KeyDown += new KeyEventHandler(listBox2_KeyDown);
         }
 
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
@@ -37,8 +39,17 @@ namespace ProjektStatki.Views
             }
         }
 
+        private void listBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right)
+            {
+                e.Handled = true;
+            }
+        }
+
         private void GameView_Load(object sender, EventArgs e)
         {
+            groupBox2.Visible = false;
             dataGridView1.ReadOnly = true;
             dataGridView2.ReadOnly = true;
             DrawBoard(game.boardPlayer1, dataGridView1);
@@ -50,14 +61,17 @@ namespace ProjektStatki.Views
             LoadShips();
             PutShipsOnBoard(game.player1.name);
             currentPlayerBoard = game.boardPlayer1;
+            currentDataGridView = dataGridView1;
+            dataGridView1.CurrentCell = null;
+            dataGridView2.CurrentCell = null;
         }
 
         private bool IsAbleToPlaceShip()
         {
-            Board board = game.boardPlayer1;
+            Board board = currentPlayerBoard;
             foreach (var checkingPoint in shipPoints)
             {
-                if(board.cells.Any(c => c.isShip == true && c.point.height == checkingPoint.height && c.point.wight == checkingPoint.wight))
+                if (board.cells.Any(c => c.isShip == true && c.point.height == checkingPoint.height && c.point.wight == checkingPoint.wight))
                 {
                     return false;
                 }
@@ -147,6 +161,8 @@ namespace ProjektStatki.Views
 
         private void MoveShip(Keys key, List<Point> shipPoints, DataGridView grid, Board board)
         {
+            dataGridView1.CurrentCell = null;
+            dataGridView2.CurrentCell = null;
             List<Point> previousShipPoints = new List<Point>(shipPoints);
             int x = 0; int y = 0;
             switch (key)
@@ -197,7 +213,7 @@ namespace ProjektStatki.Views
                     }
                 case Keys.Enter:
                     {
-                        if(!IsAbleToPlaceShip())
+                        if (!IsAbleToPlaceShip())
                         {
                             MessageBox.Show("Te miejsce jest już zajęte");
                         }
@@ -209,7 +225,7 @@ namespace ProjektStatki.Views
                                 {
                                     if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
                                     {
-                                        Cell cell = game.boardPlayer1.cells.FirstOrDefault(c => c.point.wight == point.wight && 
+                                        Cell cell = game.boardPlayer1.cells.FirstOrDefault(c => c.point.wight == point.wight &&
                                         c.point.height == point.height);
 
                                         if (cell != null)
@@ -224,23 +240,49 @@ namespace ProjektStatki.Views
                                     }
                                 }
 
-                                MessageBox.Show("Statek został ustawiony!", "Informacja", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                                 listBox1.Items.Remove(listBox1.SelectedItem);
                                 listBox1.SelectedIndex = -1;
 
-                                //NextShip();
+                                if (listBox1.Items.Count == 0)
+                                {
+                                    SwitchToPlayer2();
+                                }
                             }
                             else
                             {
+                                foreach (Point point in shipPoints)
+                                {
+                                    if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
+                                    {
+                                        Cell cell = game.boardPlayer2.cells.FirstOrDefault(c => c.point.wight == point.wight &&
+                                        c.point.height == point.height);
 
+                                        if (cell != null)
+                                        {
+                                            cell.isShip = true;
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Coś poszło nie tak");
+                                    }
+                                }
+
+                                listBox2.Items.Remove(listBox2.SelectedItem);
+                                listBox2.SelectedIndex = -1;
+
+                                if (listBox2.Items.Count == 0)
+                                {
+                                    StartGame();
+                                }
                             }
                         }
                         break;
                     }
             }
 
-            if(CanMoveShip(x, y, shipPoints, grid))
+            if (CanMoveShip(x, y, shipPoints, grid))
             {
                 for (int i = 0; i < shipPoints.Count; i++)
                 {
@@ -252,11 +294,36 @@ namespace ProjektStatki.Views
             }
         }
 
+        public void StartGame()
+        {
+            MessageBox.Show("Teraz rozpocznie się gra. Rusza się gracz: "+ game.player1.name);
+            currentPlayer = 1;
+            currentPlayerBoard = game.boardPlayer1;
+            currentDataGridView = dataGridView1;
+        }
+
+        public void PlayerTurn()
+        {
+
+        }
+
+        private void SwitchToPlayer2()
+        {
+            groupBox1.Visible = false;
+
+            groupBox2.Visible = true;
+
+            PutShipsOnBoard(game.player2.name);
+
+            currentPlayer = 2;
+            currentPlayerBoard = game.boardPlayer2;
+            currentDataGridView = dataGridView2;
+        }
+
         private void ClearGrid(List<Point> previousShipPoints, DataGridView grid, Board board)
         {
             foreach (Point point in previousShipPoints)
             {
-                // Sprawdzamy, czy punkt mieści się w zakresie planszy
                 if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
                 {
                     Cell cell = board.cells.FirstOrDefault(c => c.point.wight == point.wight &&
@@ -318,9 +385,32 @@ namespace ProjektStatki.Views
                 }
             }
         }
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dataGridView2.CurrentCell = null;
+            HighlightShotCells(dataGridView2, game.boardPlayer2);
+            if (listBox2.SelectedIndex != -1)
+            {
+                if (currentPlayer == 2)
+                {
+                    selectedShip = game.gameMode.ships.Find(s => s.getName() == listBox2.SelectedItem.ToString());
+                    if (selectedShip != null)
+                    {
+                        shipPoints = new List<Point>(selectedShip.points);
+
+                        DisplayShipInGrid(shipPoints, dataGridView2);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Coś poszło nie tak");
+                    }
+                }
+            }
+        }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            dataGridView1.CurrentCell = null;
             HighlightShotCells(dataGridView1, game.boardPlayer1);
             if (listBox1.SelectedIndex != -1)
             {
@@ -338,10 +428,6 @@ namespace ProjektStatki.Views
                         MessageBox.Show("Coś poszło nie tak");
                     }
                 }
-                else
-                {
-                    // Możliwość działania w przypadku drugiego gracza
-                }
             }
         }
 
@@ -349,7 +435,11 @@ namespace ProjektStatki.Views
         {
             if (listBox1.SelectedIndex != -1 && selectedShip != null)
             {
-                MoveShip(e.KeyCode, shipPoints, dataGridView1, currentPlayerBoard);
+                MoveShip(e.KeyCode, shipPoints, currentDataGridView, currentPlayerBoard);
+            }
+            else if(listBox2.SelectedIndex != -1 && selectedShip != null)
+            {
+                MoveShip(e.KeyCode, shipPoints, currentDataGridView, currentPlayerBoard);
             }
         }
 
@@ -415,9 +505,7 @@ namespace ProjektStatki.Views
                 int x = cell.point.wight;
                 int y = cell.point.height;
 
-                // Set cell value or style
-                dataGridView[x, y].Value = cell.wasShot ? "O" : "";
-                //dataGridView[x, y].Style.BackColor = cell.IsHit ? Color.Red : Color.White;
+                dataGridView[x, y].Value = "";
             }
         }
 

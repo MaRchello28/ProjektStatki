@@ -15,5 +15,11 @@ namespace ProjektStatki.Models
             this.wight = x;
             this.height = y;
         }
+
+        public Point(Point otherPoint)
+        {
+            this.wight = otherPoint.wight;
+            this.height = otherPoint.height;
+        }
     }
 }

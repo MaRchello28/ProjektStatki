@@ -16,6 +16,15 @@ namespace ProjektStatki.Models
             CreateBoard(x,y);
         }
 
+        public Board(Board otherBoard)
+        {
+            this.player = null;
+            foreach (var cell in otherBoard.cells)
+            {
+                cells.Add(new Cell(cell));  // Zakładając, że Cell ma odpowiedni konstruktor kopiujący
+            }
+        }
+
         public Board(Player player, int x, int y)
         {
             this.player = player;

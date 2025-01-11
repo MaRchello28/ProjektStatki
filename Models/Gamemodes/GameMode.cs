@@ -9,7 +9,8 @@ namespace ProjektStatki.Models.Gamemodes
     public interface GameMode
     {
         public bool isRanked { get; set; }
-        public Board board { get; set; }
+        public Board board1 { get; set; }
+        public Board board2 { get; set; }
         public int countShipsOnBoard { get; set; }
         public int countSpecialShips { get; set; }
         public List<Ship> ships { get; set; }
