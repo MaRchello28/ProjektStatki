@@ -23,7 +23,7 @@ namespace ProjektStatki.Views
         private void GameView_Load(object sender, EventArgs e)
         {
             DrawBoard(game.boardPlayer1, dataGridView1);
-            DrawBoard(game.boardPlayer2, dataGridView1);
+            DrawBoard(game.boardPlayer2, dataGridView2);
         }
 
         private void DrawBoard(Board board, DataGridView dataGridView)
@@ -37,13 +37,17 @@ namespace ProjektStatki.Views
             dataGridView.ColumnCount = maxX;
             dataGridView.RowCount = maxY;
 
+            // Obliczanie szerokości i wysokości komórek w oparciu o rozmiar DataGridView
+            int cellWidth = dataGridView.ClientSize.Width / (maxX + 1);
+            int cellHeight = dataGridView.ClientSize.Height / (maxY + 1);
+
             for (int i = 0; i < maxX; i++)
             {
-                dataGridView.Columns[i].Width = 30;
+                dataGridView.Columns[i].Width = cellWidth;
             }
             for (int i = 0; i < maxY; i++)
             {
-                dataGridView.Rows[i].Height = 30;
+                dataGridView.Rows[i].Height = cellHeight;
             }
 
             foreach (var cell in board.cells)

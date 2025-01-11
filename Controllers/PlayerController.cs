@@ -1,4 +1,6 @@
-﻿using ProjektStatki.Models.Data;
+﻿using ProjektStatki.Models;
+using ProjektStatki.Models.Data;
+using ProjektStatki.Models.Gamemodes;
 using ProjektStatki.Views;
 using System;
 using System.Collections.Generic;
@@ -13,15 +15,45 @@ namespace ProjektStatki.Controllers
         string LoggedUserId;
         MyDbContext db;
         PlayerView playerView;
+        ChooseGameModeView gameModeView;
         public PlayerController(MyDbContext db, string LoggedUserId) 
         { 
             this.db = db;
             this.LoggedUserId = LoggedUserId;
             playerView = new PlayerView(db);
+            gameModeView = new ChooseGameModeView(db);
         }
         public void RunController()
         {
-            playerView.Run(LoggedUserId);
+            int choose;
+            choose = playerView.Run(LoggedUserId);
+            switch (choose)
+            {
+                case 1:
+                    {
+                        gameModeView.ShowDialog();
+                        GameMode selectedGameMode = gameModeView.ChoseGamemode();
+                        if (selectedGameMode != null)
+                        {
+                            CreateGame(selectedGameMode);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nie wybrano trybu gry.");
+                        }
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+        }
+
+        public Player GetLoggedPlayer()
+        {
+            var user = db.users.FirstOrDefault(u => u.id == LoggedUserId);
+            return user;
         }
 
         public void ShowRanking()
@@ -34,9 +66,10 @@ namespace ProjektStatki.Controllers
 
         }
 
-        public void CreateGame()
+        public void CreateGame(GameMode gameMode)
         {
-
+            GameController gameController = new GameController(db, gameMode, LoggedUserId, new HumanPlayer());
+            gameController.RunController();
         }
 
         public void UnlockElement()

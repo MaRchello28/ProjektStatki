@@ -1,4 +1,6 @@
-﻿using ProjektStatki.Models;
+﻿using ProjektStatki.Controllers;
+using ProjektStatki.Models;
+using ProjektStatki.Models.Data;
 using ProjektStatki.Models.Gamemodes;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,23 @@ namespace ProjektStatki.Views
     public partial class ChooseGameModeView : Form
     {
         public GameMode gameMode = null;
-        public ChooseGameModeView()
+        public Player enemy = null;
+        MyDbContext db;
+        public ChooseGameModeView(MyDbContext db)
         {
             InitializeComponent();
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.db = db;
+        }
+
+        public GameMode ChoseGamemode()
+        {
+            return gameMode;
+        }
+
+        public Player Enemy()
+        {
+            return enemy;
         }
 
         private void ChooseGameModeView_Load(object sender, EventArgs e)
@@ -52,22 +67,94 @@ namespace ProjektStatki.Views
             }
         }
 
+        public void SelectEnemyPlayer()
+        {
+            if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                if (!(checkBox1.Checked))
+                {
+                    MessageBox.Show("Musisz wybrać przeciwnika");
+                }
+                else
+                {
+                    enemy = new HumanPlayer("GOŚĆ", "1234");
+                }
+            }
+            else
+            {
+                string login = textBox1.Text;
+                if (db.users.Any(u => u.name == login))
+                {
+                    enemy = db.users.FirstOrDefault(u => u.name == login);
+                }
+                else
+                {
+                    MessageBox.Show("Nie istnieje taki użytkownik");
+                }
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (panel1.Visible == true)
             {
-
+                if(label1.Text == "Nie rankingowa")
+                {
+                    gameMode = new ClassicGameMode(false);
+                    if(string.IsNullOrEmpty(textBox1.Text))
+                    {
+                        if(!(checkBox1.Checked))
+                        {
+                            MessageBox.Show("Musisz wybrać przeciwnika");
+                        }
+                        else
+                        {
+                            enemy = new HumanPlayer("GOŚĆ", "1234");
+                        }
+                    }
+                    else
+                    {
+                        string login = textBox1.Text;
+                        if(db.users.Any(u => u.name == login))
+                        {
+                            enemy = db.users.FirstOrDefault(u => u.name == login);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nie istnieje taki użytkownik");
+                        }
+                    }
+                }
+                else if(label1.Text == "Rankingowa")
+                {
+                    gameMode = new ClassicGameMode(true);
+                }
+                else if(label1.Text == "Tryb Symulacji")
+                {
+                    MessageBox.Show("trybSymulacji");
+                }
+                else if(label1.Text == "SpecjalneStatki")
+                {
+                    MessageBox.Show("specjalneStatki");
+                }
+                else
+                {
+                    MessageBox.Show("Nie wybrano trybu w panel1");
+                }
             }
             else if (panel2.Visible == true)
             {
-                int x = (int)numericUpDown5.Value;
-                int y = (int)numericUpDown4.Value;
-                Board board = new Board(x, y);
-                int shipCount = (int)numericUpDown3.Value;
-                int specialShipCount = (int)numericUpDown6.Value;
-                if (IsPossibleToCreateGame(board, shipCount, specialShipCount))
+                if (label4.Text == "Gracz vs AI")
                 {
-                    //Game game = new Game(board, board, gameMode, ); Do dokończenia bo teraz nie ma jak tego zrobić
+                    MessageBox.Show("graczVsAI");
+                }
+                else if (label4.Text == "Stwórz Własną")
+                {
+                    MessageBox.Show("stwórzWłasną");
+                }
+                else
+                {
+                    MessageBox.Show("Nie wybrano trybu w panel2");
                 }
             }
             else

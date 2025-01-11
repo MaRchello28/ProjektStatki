@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjektStatki.Models.Creator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjektStatki.Models.Gamemodes
 {
-    public class ClassicGameMode
+    public class ClassicGameMode:GameMode
     {
         public bool isRanked { get; set; }
         public Board board { get; set; }
@@ -19,6 +20,7 @@ namespace ProjektStatki.Models.Gamemodes
             board = SetBoard(10, 10);
             countShipsOnBoard = SetCountShipsOnBoard(5);
             countSpecialShips = SetCountSpecialShips(0);
+            ships = SelectShips();
         }
         public Board SetBoard(int x, int y)
         {
@@ -32,9 +34,18 @@ namespace ProjektStatki.Models.Gamemodes
         {
             return value;
         }
-        public void SelectShips()
+        public List<Ship> SelectShips()
         {
+            List<Ship> selectedShips = new List<Ship>();
+            NormalShipCreator normalShipCreator = new NormalShipCreator();
 
+            selectedShips.Add(normalShipCreator.createShip(2, ""));
+            selectedShips.Add(normalShipCreator.createShip(3, ""));
+            selectedShips.Add(normalShipCreator.createShip(3, ""));
+            selectedShips.Add(normalShipCreator.createShip(4, ""));
+            selectedShips.Add(normalShipCreator.createShip(5, ""));
+
+            return selectedShips;
         }
         public void PlaceShip()
         {

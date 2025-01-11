@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjektStatki.Models.Gamemodes
 {
-    public class GameWithAI : GameMode
+    public class GameWithAI
     {
         public bool isRanked { get; set; }
         public GameWithAI()

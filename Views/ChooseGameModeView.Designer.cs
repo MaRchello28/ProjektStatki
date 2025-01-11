@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            TreeNode treeNode1 = new TreeNode("Nie rankingowa");
-            TreeNode treeNode2 = new TreeNode("Rankingowa");
-            TreeNode treeNode3 = new TreeNode("Zwykła", new TreeNode[] { treeNode1, treeNode2 });
-            TreeNode treeNode4 = new TreeNode("Tryb Symulacji");
-            TreeNode treeNode5 = new TreeNode("SpecjalneStatki");
-            TreeNode treeNode6 = new TreeNode("Specjalne", new TreeNode[] { treeNode4, treeNode5 });
-            TreeNode treeNode7 = new TreeNode("Gracz vs AI");
-            TreeNode treeNode8 = new TreeNode("Stwórz Własną");
-            TreeNode treeNode9 = new TreeNode("Customowe", new TreeNode[] { treeNode7, treeNode8 });
+            TreeNode treeNode19 = new TreeNode("Nie rankingowa");
+            TreeNode treeNode20 = new TreeNode("Rankingowa");
+            TreeNode treeNode21 = new TreeNode("Zwykła", new TreeNode[] { treeNode19, treeNode20 });
+            TreeNode treeNode22 = new TreeNode("Tryb Symulacji");
+            TreeNode treeNode23 = new TreeNode("SpecjalneStatki");
+            TreeNode treeNode24 = new TreeNode("Specjalne", new TreeNode[] { treeNode22, treeNode23 });
+            TreeNode treeNode25 = new TreeNode("Gracz vs AI");
+            TreeNode treeNode26 = new TreeNode("Stwórz Własną");
+            TreeNode treeNode27 = new TreeNode("Customowe", new TreeNode[] { treeNode25, treeNode26 });
             button1 = new Button();
             treeView1 = new TreeView();
             label1 = new Label();
@@ -63,6 +63,12 @@
             numericUpDown2 = new NumericUpDown();
             numericUpDown1 = new NumericUpDown();
             label4 = new Label();
+            checkBox1 = new CheckBox();
+            textBox1 = new TextBox();
+            label12 = new Label();
+            label13 = new Label();
+            textBox2 = new TextBox();
+            checkBox2 = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -81,7 +87,7 @@
             // button1
             // 
             button1.Font = new Font("Segoe UI", 13F);
-            button1.Location = new Point(272, 403);
+            button1.Location = new Point(268, 421);
             button1.Name = "button1";
             button1.Size = new Size(147, 35);
             button1.TabIndex = 3;
@@ -94,25 +100,25 @@
             treeView1.Font = new Font("Segoe UI", 14F);
             treeView1.Location = new Point(12, 12);
             treeView1.Name = "treeView1";
-            treeNode1.Name = "nieRankingowa";
-            treeNode1.Text = "Nie rankingowa";
-            treeNode2.Name = "rankingowa";
-            treeNode2.Text = "Rankingowa";
-            treeNode3.Name = "normal";
-            treeNode3.Text = "Zwykła";
-            treeNode4.Name = "trybSymulacji";
-            treeNode4.Text = "Tryb Symulacji";
-            treeNode5.Name = "specjalneStatki";
-            treeNode5.Text = "SpecjalneStatki";
-            treeNode6.Name = "specjalne";
-            treeNode6.Text = "Specjalne";
-            treeNode7.Name = "graczVsAI";
-            treeNode7.Text = "Gracz vs AI";
-            treeNode8.Name = "stwórzWłasną";
-            treeNode8.Text = "Stwórz Własną";
-            treeNode9.Name = "custom";
-            treeNode9.Text = "Customowe";
-            treeView1.Nodes.AddRange(new TreeNode[] { treeNode3, treeNode6, treeNode9 });
+            treeNode19.Name = "nieRankingowa";
+            treeNode19.Text = "Nie rankingowa";
+            treeNode20.Name = "rankingowa";
+            treeNode20.Text = "Rankingowa";
+            treeNode21.Name = "normal";
+            treeNode21.Text = "Zwykła";
+            treeNode22.Name = "trybSymulacji";
+            treeNode22.Text = "Tryb Symulacji";
+            treeNode23.Name = "specjalneStatki";
+            treeNode23.Text = "SpecjalneStatki";
+            treeNode24.Name = "specjalne";
+            treeNode24.Text = "Specjalne";
+            treeNode25.Name = "graczVsAI";
+            treeNode25.Text = "Gracz vs AI";
+            treeNode26.Name = "stwórzWłasną";
+            treeNode26.Text = "Stwórz Własną";
+            treeNode27.Name = "custom";
+            treeNode27.Text = "Customowe";
+            treeView1.Nodes.AddRange(new TreeNode[] { treeNode21, treeNode24, treeNode27 });
             treeView1.Size = new Size(194, 426);
             treeView1.TabIndex = 4;
             treeView1.AfterSelect += treeView1_AfterSelect;
@@ -143,7 +149,7 @@
             label2.Font = new Font("Segoe UI", 15F);
             label2.Location = new Point(3, 178);
             label2.Name = "label2";
-            label2.Size = new Size(247, 194);
+            label2.Size = new Size(247, 161);
             label2.TabIndex = 2;
             label2.Text = "Zasady";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -151,24 +157,30 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(label12);
+            panel1.Controls.Add(textBox1);
+            panel1.Controls.Add(checkBox1);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(pictureBox1);
             panel1.Location = new Point(212, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(256, 373);
+            panel1.Size = new Size(256, 403);
             panel1.TabIndex = 6;
             // 
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(checkBox2);
+            panel2.Controls.Add(textBox2);
+            panel2.Controls.Add(label13);
             panel2.Controls.Add(panel6);
             panel2.Controls.Add(panel5);
             panel2.Controls.Add(panel3);
             panel2.Controls.Add(label4);
             panel2.Location = new Point(502, 12);
             panel2.Name = "panel2";
-            panel2.Size = new Size(256, 373);
+            panel2.Size = new Size(256, 403);
             panel2.TabIndex = 7;
             // 
             // panel6
@@ -344,11 +356,63 @@
             label4.Text = "Custom";
             label4.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(133, 375);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(118, 19);
+            checkBox1.TabIndex = 3;
+            checkBox1.Text = "Użyj konta gościa";
+            checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(3, 375);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(107, 23);
+            textBox1.TabIndex = 4;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(3, 357);
+            label12.Name = "label12";
+            label12.Size = new Size(152, 15);
+            label12.TabIndex = 5;
+            label12.Text = "Podaj login przeciwnika lub";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(3, 357);
+            label13.Name = "label13";
+            label13.Size = new Size(152, 15);
+            label13.TabIndex = 6;
+            label13.Text = "Podaj login przeciwnika lub";
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(6, 373);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(107, 23);
+            textBox2.TabIndex = 6;
+            // 
+            // checkBox2
+            // 
+            checkBox2.AutoSize = true;
+            checkBox2.Location = new Point(132, 375);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new Size(118, 19);
+            checkBox2.TabIndex = 6;
+            checkBox2.Text = "Użyj konta gościa";
+            checkBox2.UseVisualStyleBackColor = true;
+            // 
             // ChooseGameModeView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(777, 450);
+            ClientSize = new Size(777, 468);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(treeView1);
@@ -358,7 +422,9 @@
             Load += ChooseGameModeView_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)numericUpDown6).EndInit();
             panel5.ResumeLayout(false);
@@ -401,5 +467,11 @@
         private Panel panel6;
         private Label label11;
         private NumericUpDown numericUpDown6;
+        private Label label12;
+        private TextBox textBox1;
+        private CheckBox checkBox1;
+        private CheckBox checkBox2;
+        private TextBox textBox2;
+        private Label label13;
     }
 }

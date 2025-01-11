@@ -28,7 +28,7 @@ namespace ProjektStatki.Models
             {
                 for (int j=0; j<y; j++)
                 {
-                    cells.Add(new Cell(false, false, new Point(i, y)));
+                    cells.Add(new Cell(false, false, new Point(i, j)));
                 }
             }
             return cells;

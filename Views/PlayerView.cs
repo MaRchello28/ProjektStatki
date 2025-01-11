@@ -15,7 +15,6 @@ namespace ProjektStatki.Views
     {
         MyDbContext db;
         public int choose = 10;
-        ChooseGameModeView gameModeView = new ChooseGameModeView();
         public PlayerView(MyDbContext db)
         {
             InitializeComponent();
@@ -32,7 +31,7 @@ namespace ProjektStatki.Views
 
         }
 
-        public void Run(string LoggedUserId)
+        public int Run(string LoggedUserId)
         {
             var user = db.users.FirstOrDefault(s => s.id == LoggedUserId);
             if (user == null)
@@ -48,17 +47,13 @@ namespace ProjektStatki.Views
                 label1.Text = user.level.level.ToString();
                 this.ShowDialog();
             }
+            return choose;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             choose = 1;
-            if (gameModeView.IsDisposed)
-            {
-                gameModeView = new ChooseGameModeView();
-            }
-
-            gameModeView.Show();
+            this.Close();
         }
     }
 }

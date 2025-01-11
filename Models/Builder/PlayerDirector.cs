@@ -10,7 +10,7 @@ namespace ProjektStatki.Models.Builder
     {
         PlayerBuilder builder;
         public PlayerDirector(PlayerBuilder builder) 
-        { 
+        {
             this.builder = builder;
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjektStatki.Models.Builder
 {
-    public class ComputerPlayerBuilder
+    public class ComputerPlayerBuilder:PlayerBuilder
     {
         public ComputerPlayerBuilder() { }
         public void reset()
