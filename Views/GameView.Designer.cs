@@ -91,6 +91,7 @@
             label1.TabIndex = 3;
             label1.Text = "Ruchy Graczy";
             label1.TextAlign = ContentAlignment.MiddleCenter;
+            label1.Click += label1_Click;
             // 
             // listBox1
             // 

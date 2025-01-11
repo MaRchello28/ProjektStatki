@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Point = ProjektStatki.Models.Point;
+using System.Threading;
 
 namespace ProjektStatki.Views
 {
@@ -21,15 +22,186 @@ namespace ProjektStatki.Views
         private Ship selectedShip = null;
         Board currentPlayerBoard = null;
         DataGridView currentDataGridView = null;
+        Board board1;
+        Board board2;
         public GameView(Game game)
         {
             InitializeComponent();
             this.game = game;
+            dataGridView1.ClearSelection();
             this.KeyPreview = true;
             this.KeyDown += new KeyEventHandler(Form1_KeyDown);
             listBox1.KeyDown += new KeyEventHandler(listBox1_KeyDown);
             listBox2.KeyDown += new KeyEventHandler(listBox2_KeyDown);
+            board1 = game.boardPlayer1;
+            board2 = game.boardPlayer2;
+            dataGridView1.Enabled = false;
+            dataGridView2.Enabled = false;
+            dataGridView1.CellClick += DataGridView1_CellClick;
+            dataGridView2.CellClick += DataGridView2_CellClick;
         }
+
+        public void PlayerWon()
+        {
+            if(currentPlayer == 1)
+            {
+                List<Cell> cel = board2.cells.Where(c => c.isShip == true).ToList();
+                if (!cel.Any(c => c.wasShot == false))
+                {
+                    WinView();
+                    this.Close();
+                    return;
+                }
+            }
+            else
+            {
+                List<Cell> cel = board1.cells.Where(c => c.isShip == true).ToList();
+                if (!cel.Any(c => c.wasShot == false))
+                {
+                    WinView();
+                    this.Close();
+                    return;
+                }
+            }
+        }
+
+        public void WinView()
+        {
+            MessageBox.Show("Wygrałeś!!!");
+        }
+
+        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                dataGridView1.ClearSelection();
+                dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
+
+                Point selectedCell = new Point(e.RowIndex, e.ColumnIndex);
+                Cell cell = board1.cells.FirstOrDefault(c => c.point.wight == selectedCell.wight &&
+                                        c.point.height == selectedCell.height);
+
+                if (cell != null)
+                {
+                    if (cell.isShip == false && cell.wasShot == false)
+                    {
+                        dataGridView1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Green;
+                        cell.wasShot = true;
+                        MessageBox.Show("Pudło!. Następny gracz");
+                        NextMove(false);
+                    }
+                    else if (cell.isShip == true && cell.wasShot == false)
+                    {
+                        dataGridView1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Red;
+                        cell.wasShot = true;
+                        PlayerWon();
+                        MessageBox.Show("Trafiony!. Ruszasz się ponownie");
+                        NextMove(true);
+                    }
+                    else if (cell.isShip == false && cell.wasShot == true)
+                    {
+                        MessageBox.Show("Nie możesz oddać strzału w te samo miejsce co wtedy!");
+                    }
+                    else if (cell.isShip == true && cell.wasShot == true)
+                    {
+                        MessageBox.Show("Nie możesz oddać strzału w te samo miejsce co wtedy!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Coś nie tak ze strzałem");
+                }
+                dataGridView1.ClearSelection();
+                PlayerTurn();
+                groupBox1.Show();
+                groupBox2.Show();
+                dataGridView3.Show();
+            }
+        }
+
+        private void DataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                dataGridView2.ClearSelection();
+                dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
+
+                Point selectedCell = new Point(e.RowIndex, e.ColumnIndex);
+                Cell cell = board2.cells.FirstOrDefault(c => c.point.wight == selectedCell.wight &&
+                                        c.point.height == selectedCell.height);
+
+                if (cell != null)
+                {
+                    if (cell.isShip == false && cell.wasShot == false)
+                    {
+                        dataGridView2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Green;
+                        cell.wasShot = true;
+                        MessageBox.Show("Pudło!. Następny gracz");
+                        NextMove(false);
+                    }
+                    else if (cell.isShip == true && cell.wasShot == false)
+                    {
+                        dataGridView2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Red;
+                        cell.wasShot = true;
+                        PlayerWon();
+                        MessageBox.Show("Trafiony!. Ruszasz się ponownie");
+                        NextMove(true);
+                    }
+                    else if (cell.isShip == false && cell.wasShot == true)
+                    {
+                        MessageBox.Show("Nie możesz oddać strzału w te samo miejsce co wtedy!");
+                    }
+                    else if (cell.isShip == true && cell.wasShot == true)
+                    {
+                        MessageBox.Show("Nie możesz oddać strzału w te samo miejsce co wtedy!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Coś nie tak ze strzałem");
+                }
+                dataGridView2.ClearSelection();
+                PlayerTurn();
+                groupBox1.Show();
+                groupBox2.Show();
+                dataGridView3.Show();
+                label1.Show();
+            }
+        }
+
+        public void NextMove(bool shipHit)
+        {
+            if (shipHit)
+            {
+
+            }
+            else
+            {
+                if (currentPlayer == 1)
+                {
+                    currentPlayer = 2;
+                    currentPlayerBoard = board2;
+                    currentDataGridView = dataGridView2;
+                    label1.Hide();
+                    groupBox1.Hide();
+                    groupBox2.Hide();
+                    dataGridView3.Hide();
+                    MessageBox.Show("Teraz rusza się gracz: " + game.player2.name);
+                }
+                else
+                {
+                    currentPlayer = 1;
+                    currentPlayerBoard = board1;
+                    currentDataGridView = dataGridView1;
+                    label1.Hide();
+                    groupBox1.Hide();
+                    groupBox2.Hide();
+                    dataGridView3.Hide();
+                    MessageBox.Show("Teraz rusza się gracz: " + game.player1.name);
+                }
+            }
+        }
+
 
         private void listBox1_KeyDown(object sender, KeyEventArgs e)
         {
@@ -274,7 +446,10 @@ namespace ProjektStatki.Views
 
                                 if (listBox2.Items.Count == 0)
                                 {
+                                    groupBox2.Visible = false;
                                     StartGame();
+                                    PlayerTurn();
+                                    return;
                                 }
                             }
                         }
@@ -296,15 +471,115 @@ namespace ProjektStatki.Views
 
         public void StartGame()
         {
-            MessageBox.Show("Teraz rozpocznie się gra. Rusza się gracz: "+ game.player1.name);
+            groupBox1.Hide();
+            groupBox2.Hide();
+            MessageBox.Show("Teraz rozpocznie się gra. Rozpoczyna gracz: " + game.player1.name);
             currentPlayer = 1;
             currentPlayerBoard = game.boardPlayer1;
             currentDataGridView = dataGridView1;
+            groupBox1.Show();
+            groupBox2.Show();
+            //Dodane bo ostatni statek się pokazywał idk dlaczego ale i tak pokazuje się statek
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                {
+                    dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.White;
+                }
+            }
+            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+            {
+                for (int j = 0; j < dataGridView2.Columns.Count; j++)
+                {
+                    dataGridView2.Rows[i].Cells[j].Style.BackColor = Color.White;
+                }
+            }
+            groupBox1.Visible = true;
+        }
+
+        public void PlayerView(DataGridView grid1, DataGridView grid2, Board board1, Board board2)
+        {
+            grid1.Visible = false; grid2.Visible = false;
+            for (int i = 0; i < grid1.Rows.Count; i++)
+            {
+                for (int j = 0; j < grid1.Columns.Count; j++)
+                {
+                    var cell = board1.cells.FirstOrDefault(c => c.point.height == i && c.point.wight == j);
+                    if (cell != null)
+                    {
+                        if (cell.isShip == false && cell.wasShot == false)
+                        {
+                            grid1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.White;
+                        }
+                        else if (cell.isShip == true && cell.wasShot == false)
+                        {
+                            grid1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Black;
+                        }
+                        else if (cell.isShip == false && cell.wasShot == true)
+                        {
+                            grid1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Green;
+                        }
+                        else if (cell.isShip == true && cell.wasShot == true)
+                        {
+                            grid1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Red;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nie znaleziono komórki");
+                    }
+                }
+            }
+
+            for (int i = 0; i < grid2.Rows.Count; i++)
+            {
+                for (int j = 0; j < grid2.Columns.Count; j++)
+                {
+                    var cell = board2.cells.FirstOrDefault(c => c.point.height == i && c.point.wight == j);
+                    if (cell != null)
+                    {
+                        if (cell.isShip == false && cell.wasShot == false)
+                        {
+                            grid2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.White;
+                        }
+                        else if (cell.isShip == true && cell.wasShot == false)
+                        {
+                            grid2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.White;
+                        }
+                        else if (cell.isShip == false && cell.wasShot == true)
+                        {
+                            grid2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Green;
+                        }
+                        else if (cell.isShip == true && cell.wasShot == true)
+                        {
+                            grid2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Red;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nie znaleziono komórki");
+                    }
+                }
+            }
+            grid1.Visible = true; grid2.Visible = true;
         }
 
         public void PlayerTurn()
         {
-
+            listBox1.Visible = false;
+            listBox2.Visible = false;
+            if (currentPlayer == 1)
+            {
+                dataGridView2.Enabled = true;
+                dataGridView1.Enabled = false;
+                PlayerView(dataGridView1, dataGridView2, board1, board2);
+            }
+            else
+            {
+                dataGridView1.Enabled = true;
+                dataGridView2.Enabled = false;
+                PlayerView(dataGridView2, dataGridView1, board2, board1);
+            }
         }
 
         private void SwitchToPlayer2()
@@ -437,7 +712,7 @@ namespace ProjektStatki.Views
             {
                 MoveShip(e.KeyCode, shipPoints, currentDataGridView, currentPlayerBoard);
             }
-            else if(listBox2.SelectedIndex != -1 && selectedShip != null)
+            else if (listBox2.SelectedIndex != -1 && selectedShip != null)
             {
                 MoveShip(e.KeyCode, shipPoints, currentDataGridView, currentPlayerBoard);
             }
@@ -487,7 +762,6 @@ namespace ProjektStatki.Views
             dataGridView.ColumnCount = maxX;
             dataGridView.RowCount = maxY;
 
-            // Obliczanie szerokości i wysokości komórek w oparciu o rozmiar DataGridView
             int cellWidth = dataGridView.ClientSize.Width / (maxX + 1);
             int cellHeight = dataGridView.ClientSize.Height / (maxY + 1);
 
@@ -514,5 +788,9 @@ namespace ProjektStatki.Views
 
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

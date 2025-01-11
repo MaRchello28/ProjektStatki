@@ -33,10 +33,6 @@ namespace ProjektStatki.Controllers
                 Game game = new Game(gamemode.board1, gamemode.board2, gamemode, player1, player2);
                 GameView gameView = new GameView(game);
                 gameView.ShowDialog();
-                //Zacznij grę
-                //Wykonywanie ruchów
-                //Po ruchu, gdzie był strzał sprawdzasz czy wygrałeś
-                //Jeżeli koniec gry wykonaj
             }
         }
 

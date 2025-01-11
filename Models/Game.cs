@@ -17,7 +17,7 @@ namespace ProjektStatki.Models
         public Player player2;
 
 
-        public Game() { }//To potem do wyjebania ale to jest teraz. NIE UŻYWAĆ PUSTEGO!!!!!
+        public Game() { }
         public Game(Board b1, Board b2, GameMode g, Player p1, Player p2)
         {
             boardPlayer1 = b1;

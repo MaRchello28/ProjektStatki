@@ -26,27 +26,30 @@ namespace ProjektStatki.Controllers
         public void RunController()
         {
             int choose;
-            choose = playerView.Run(LoggedUserId);
-            switch (choose)
+            while(true)
             {
-                case 1:
-                    {
-                        gameModeView.ShowDialog();
-                        GameMode selectedGameMode = gameModeView.ChoseGamemode();
-                        if (selectedGameMode != null)
+                choose = playerView.Run(LoggedUserId);
+                switch (choose)
+                {
+                    case 1:
                         {
-                            CreateGame(selectedGameMode);
+                            gameModeView.ShowDialog();
+                            GameMode selectedGameMode = gameModeView.ChoseGamemode();
+                            if (selectedGameMode != null)
+                            {
+                                CreateGame(selectedGameMode);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Nie wybrano trybu gry.");
+                            }
+                            break;
                         }
-                        else
+                    default:
                         {
-                            MessageBox.Show("Nie wybrano trybu gry.");
+                            break;
                         }
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
+                }
             }
         }
 
