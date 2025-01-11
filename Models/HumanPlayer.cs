@@ -46,5 +46,63 @@ namespace ProjektStatki.Models
 
             return datePart + randomDigits;
         }
+
+        public void LevelUp(bool gameWon)
+        {
+            if(gameWon)
+            {
+                level.exp += 5;
+                if (level.exp > level.expToNextLevel)
+                {
+                    level.level++;
+                    level.exp = level.exp - level.expToNextLevel;
+                    level.expToNextLevel += 6;
+                }
+            }
+            else
+            {
+                level.exp += 2;
+                if (level.exp > level.expToNextLevel)
+                {
+                    level.level++;
+                    level.exp = level.exp - level.expToNextLevel;
+                    level.expToNextLevel += 6;
+                }
+            }
+        }
+
+        public void UpdateRanking(bool gameWon, int enemyRaitingPoints)
+        {
+            if(gameWon)
+            {
+                if(raitingPoints + 200 < enemyRaitingPoints )
+                {
+                    raitingPoints += 20;
+                }
+                else if(raitingPoints - 200 > enemyRaitingPoints )
+                {
+                    raitingPoints += 1;
+                }
+                else
+                {
+                    raitingPoints += 10;
+                }
+            }
+            else
+            {
+                if (raitingPoints + 200 < enemyRaitingPoints)
+                {
+                    raitingPoints -= 1;
+                }
+                else if (raitingPoints - 200 > enemyRaitingPoints)
+                {
+                    raitingPoints -= 20;
+                }
+                else
+                {
+                    raitingPoints -= 10;
+                }
+            }
+        }
     }
 }

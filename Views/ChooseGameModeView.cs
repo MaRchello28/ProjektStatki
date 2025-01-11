@@ -127,6 +127,29 @@ namespace ProjektStatki.Views
                 }
                 else if(label1.Text == "Rankingowa")
                 {
+                    if (string.IsNullOrEmpty(textBox1.Text))
+                    {
+                        if (!(checkBox1.Checked))
+                        {
+                            MessageBox.Show("Musisz wybrać przeciwnika");
+                        }
+                        else
+                        {
+                            MessageBox.Show("W tym trybie przeciwnik nie może być Gościem");
+                        }
+                    }
+                    else
+                    {
+                        string login = textBox1.Text;
+                        if (db.users.Any(u => u.name == login))
+                        {
+                            enemy = db.users.FirstOrDefault(u => u.name == login);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nie istnieje taki użytkownik");
+                        }
+                    }
                     gameMode = new ClassicGameMode(true);
                 }
                 else if(label1.Text == "Tryb Symulacji")

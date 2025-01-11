@@ -70,9 +70,13 @@ namespace ProjektStatki.Controllers
         }
 
         public void CreateGame(GameMode gameMode)
-        {
-            GameController gameController = new GameController(db, gameMode, LoggedUserId, gameModeView.Enemy());
-            gameController.RunController();
+        {   
+            if(gameModeView.Enemy() != null)
+            {
+                GameController gameController = new GameController(db, gameMode, LoggedUserId, gameModeView.Enemy());
+                gameController.RunController();
+            }
+            
         }
 
         public void UnlockElement()

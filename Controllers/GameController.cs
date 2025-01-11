@@ -31,7 +31,7 @@ namespace ProjektStatki.Controllers
             else
             {
                 Game game = new Game(gamemode.board1, gamemode.board2, gamemode, player1, player2);
-                GameView gameView = new GameView(game);
+                GameView gameView = new GameView(game, db);
                 gameView.ShowDialog();
             }
         }

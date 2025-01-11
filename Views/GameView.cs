@@ -11,11 +11,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Point = ProjektStatki.Models.Point;
 using System.Threading;
+using ProjektStatki.Models.Data;
 
 namespace ProjektStatki.Views
 {
     public partial class GameView : Form
     {
+        MyDbContext db;
         Game game;
         int currentPlayer = 1;
         private List<Point> shipPoints = new List<Point>();
@@ -24,10 +26,11 @@ namespace ProjektStatki.Views
         DataGridView currentDataGridView = null;
         Board board1;
         Board board2;
-        public GameView(Game game)
+        public GameView(Game game, MyDbContext db)
         {
             InitializeComponent();
             this.game = game;
+            this.db = db;
             dataGridView1.ClearSelection();
             this.KeyPreview = true;
             this.KeyDown += new KeyEventHandler(Form1_KeyDown);
@@ -68,6 +71,52 @@ namespace ProjektStatki.Views
         public void WinView()
         {
             MessageBox.Show("Wygrałeś!!!");
+            if(currentPlayer == 1)
+            {
+                var playerWon = db.users.FirstOrDefault(u => u.name == game.player1.name);
+                var playerLose = db.users.FirstOrDefault(u => u.name == game.player2.name);
+
+                if (playerWon != null)
+                {
+                    if (game.gameMode.isRanked == true)
+                    {
+                        playerWon.UpdateRanking(true, playerLose.raitingPoints);
+                    }
+                    playerWon.LevelUp(true);
+                }
+                if (playerLose != null)
+                {
+                    if (game.gameMode.isRanked == true)
+                    {
+                        playerLose.UpdateRanking(false, playerWon.raitingPoints);
+                    }
+                    playerLose.LevelUp(false);
+                }
+                db.SaveChanges();
+            }
+            else
+            {
+                var playerWon = db.users.FirstOrDefault(u => u.name == game.player2.name);
+                var playerLose = db.users.FirstOrDefault(u => u.name == game.player1.name);
+
+                if (playerWon != null)
+                {
+                    if (game.gameMode.isRanked == true)
+                    {
+                        playerWon.UpdateRanking(true, playerLose.raitingPoints);
+                    }
+                    playerWon.LevelUp(true);
+                }
+                if (playerLose != null)
+                {
+                    if (game.gameMode.isRanked == true)
+                    {
+                        playerLose.UpdateRanking(false, playerWon.raitingPoints);
+                    }
+                    playerLose.LevelUp(false);
+                }
+                db.SaveChanges();
+            }
         }
 
         private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)

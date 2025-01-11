@@ -21,7 +21,7 @@ namespace ProjektStatki.Models
             this.player = null;
             foreach (var cell in otherBoard.cells)
             {
-                cells.Add(new Cell(cell));  // Zakładając, że Cell ma odpowiedni konstruktor kopiujący
+                cells.Add(new Cell(cell));
             }
         }
 
