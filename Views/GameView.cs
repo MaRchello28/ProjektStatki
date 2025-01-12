@@ -650,8 +650,8 @@ namespace ProjektStatki.Views
             {
                 if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
                 {
-                    Cell cell = board.cells.FirstOrDefault(c => c.point.wight == point.wight &&
-                                        c.point.height == point.height);
+                    Cell cell = board.cells.FirstOrDefault(c => c.point.wight == point.height &&
+                                        c.point.height == point.wight);
 
                     if (cell != null && !cell.isShip)
                     {
@@ -679,7 +679,7 @@ namespace ProjektStatki.Views
                 int newX = point.wight + deltaX;
                 int newY = point.height + deltaY;
 
-                if (newX < 0 || newX >= grid.ColumnCount || newY < 0 || newY >= grid.RowCount)
+                if (newX < 0 || newX >= grid.RowCount || newY < 0 || newY >= grid.ColumnCount)
                 {
                     return false;
                 }
@@ -805,30 +805,30 @@ namespace ProjektStatki.Views
             dataGridView.Rows.Clear();
             dataGridView.Columns.Clear();
 
-            int maxX = board.cells.Max(cell => cell.point.wight) + 1;
-            int maxY = board.cells.Max(cell => cell.point.height) + 1;
+            int maxX = board.cells.Max(cell => cell.point.height) + 1;
+            int maxY = board.cells.Max(cell => cell.point.wight) + 1;
 
-            dataGridView.ColumnCount = maxX;
-            dataGridView.RowCount = maxY;
+            dataGridView.ColumnCount = maxY;
+            dataGridView.RowCount = maxX;
 
             int cellWidth = dataGridView.ClientSize.Width / (maxX + 1);
             int cellHeight = dataGridView.ClientSize.Height / (maxY + 1);
 
-            for (int i = 0; i < maxX; i++)
-            {
-                dataGridView.Columns[i].Width = cellWidth;
-            }
             for (int i = 0; i < maxY; i++)
             {
-                dataGridView.Rows[i].Height = cellHeight;
+                dataGridView.Columns[i].Width = cellHeight;
+            }
+            for (int i = 0; i < maxX; i++)
+            {
+                dataGridView.Rows[i].Height = cellWidth;
             }
 
             foreach (var cell in board.cells)
             {
-                int x = cell.point.wight;
-                int y = cell.point.height;
+                int x = cell.point.height;
+                int y = cell.point.wight;
 
-                dataGridView[x, y].Value = "";
+                dataGridView[y, x].Value = "";
             }
         }
 

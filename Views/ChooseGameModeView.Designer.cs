@@ -43,7 +43,14 @@
             pictureBox1 = new PictureBox();
             label2 = new Label();
             panel1 = new Panel();
+            textBox3 = new TextBox();
+            label14 = new Label();
+            label12 = new Label();
+            textBox1 = new TextBox();
+            checkBox1 = new CheckBox();
             panel2 = new Panel();
+            checkBox2 = new CheckBox();
+            textBox2 = new TextBox();
             panel6 = new Panel();
             label11 = new Label();
             numericUpDown6 = new NumericUpDown();
@@ -63,12 +70,9 @@
             numericUpDown2 = new NumericUpDown();
             numericUpDown1 = new NumericUpDown();
             label4 = new Label();
-            checkBox1 = new CheckBox();
-            textBox1 = new TextBox();
-            label12 = new Label();
             label13 = new Label();
-            textBox2 = new TextBox();
-            checkBox2 = new CheckBox();
+            label15 = new Label();
+            textBox4 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -87,7 +91,7 @@
             // button1
             // 
             button1.Font = new Font("Segoe UI", 13F);
-            button1.Location = new Point(268, 421);
+            button1.Location = new Point(269, 459);
             button1.Name = "button1";
             button1.Size = new Size(147, 35);
             button1.TabIndex = 3;
@@ -119,7 +123,7 @@
             treeNode27.Name = "custom";
             treeNode27.Text = "Customowe";
             treeView1.Nodes.AddRange(new TreeNode[] { treeNode21, treeNode24, treeNode27 });
-            treeView1.Size = new Size(194, 426);
+            treeView1.Size = new Size(194, 441);
             treeView1.TabIndex = 4;
             treeView1.AfterSelect += treeView1_AfterSelect;
             // 
@@ -157,6 +161,8 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(textBox3);
+            panel1.Controls.Add(label14);
             panel1.Controls.Add(label12);
             panel1.Controls.Add(textBox1);
             panel1.Controls.Add(checkBox1);
@@ -165,23 +171,84 @@
             panel1.Controls.Add(pictureBox1);
             panel1.Location = new Point(212, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(256, 403);
+            panel1.Size = new Size(256, 441);
             panel1.TabIndex = 6;
+            // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(3, 402);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(124, 23);
+            textBox3.TabIndex = 7;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(3, 384);
+            label14.Name = "label14";
+            label14.Size = new Size(133, 15);
+            label14.TabIndex = 6;
+            label14.Text = "Podaj hasło przeciwnika";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(3, 339);
+            label12.Name = "label12";
+            label12.Size = new Size(135, 15);
+            label12.TabIndex = 5;
+            label12.Text = "Podaj login przeciwnika ";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(3, 357);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(124, 23);
+            textBox1.TabIndex = 4;
+            // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(133, 417);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(118, 19);
+            checkBox1.TabIndex = 3;
+            checkBox1.Text = "Użyj konta gościa";
+            checkBox1.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(textBox4);
+            panel2.Controls.Add(label15);
+            panel2.Controls.Add(label13);
             panel2.Controls.Add(checkBox2);
             panel2.Controls.Add(textBox2);
-            panel2.Controls.Add(label13);
             panel2.Controls.Add(panel6);
             panel2.Controls.Add(panel5);
             panel2.Controls.Add(panel3);
             panel2.Controls.Add(label4);
             panel2.Location = new Point(502, 12);
             panel2.Name = "panel2";
-            panel2.Size = new Size(256, 403);
+            panel2.Size = new Size(256, 441);
             panel2.TabIndex = 7;
+            // 
+            // checkBox2
+            // 
+            checkBox2.AutoSize = true;
+            checkBox2.Location = new Point(133, 417);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new Size(118, 19);
+            checkBox2.TabIndex = 6;
+            checkBox2.Text = "Użyj konta gościa";
+            checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(5, 357);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(123, 23);
+            textBox2.TabIndex = 6;
             // 
             // panel6
             // 
@@ -356,63 +423,36 @@
             label4.Text = "Custom";
             label4.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(133, 375);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(118, 19);
-            checkBox1.TabIndex = 3;
-            checkBox1.Text = "Użyj konta gościa";
-            checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(3, 375);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(107, 23);
-            textBox1.TabIndex = 4;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Location = new Point(3, 357);
-            label12.Name = "label12";
-            label12.Size = new Size(152, 15);
-            label12.TabIndex = 5;
-            label12.Text = "Podaj login przeciwnika lub";
-            // 
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(3, 357);
+            label13.Location = new Point(5, 339);
             label13.Name = "label13";
-            label13.Size = new Size(152, 15);
-            label13.TabIndex = 6;
-            label13.Text = "Podaj login przeciwnika lub";
+            label13.Size = new Size(135, 15);
+            label13.TabIndex = 8;
+            label13.Text = "Podaj login przeciwnika ";
             // 
-            // textBox2
+            // label15
             // 
-            textBox2.Location = new Point(6, 373);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(107, 23);
-            textBox2.TabIndex = 6;
+            label15.AutoSize = true;
+            label15.Location = new Point(7, 384);
+            label15.Name = "label15";
+            label15.Size = new Size(133, 15);
+            label15.TabIndex = 8;
+            label15.Text = "Podaj hasło przeciwnika";
             // 
-            // checkBox2
+            // textBox4
             // 
-            checkBox2.AutoSize = true;
-            checkBox2.Location = new Point(132, 375);
-            checkBox2.Name = "checkBox2";
-            checkBox2.Size = new Size(118, 19);
-            checkBox2.TabIndex = 6;
-            checkBox2.Text = "Użyj konta gościa";
-            checkBox2.UseVisualStyleBackColor = true;
+            textBox4.Location = new Point(6, 402);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(121, 23);
+            textBox4.TabIndex = 8;
             // 
             // ChooseGameModeView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(777, 468);
+            ClientSize = new Size(777, 506);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(treeView1);
@@ -472,6 +512,10 @@
         private CheckBox checkBox1;
         private CheckBox checkBox2;
         private TextBox textBox2;
+        private TextBox textBox3;
+        private Label label14;
+        private TextBox textBox4;
+        private Label label15;
         private Label label13;
     }
 }

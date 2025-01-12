@@ -67,33 +67,6 @@ namespace ProjektStatki.Views
             }
         }
 
-        public void SelectEnemyPlayer()
-        {
-            if (string.IsNullOrEmpty(textBox1.Text))
-            {
-                if (!(checkBox1.Checked))
-                {
-                    MessageBox.Show("Musisz wybrać przeciwnika");
-                }
-                else
-                {
-                    enemy = new HumanPlayer("GOŚĆ", "1234");
-                }
-            }
-            else
-            {
-                string login = textBox1.Text;
-                if (db.users.Any(u => u.name == login))
-                {
-                    enemy = db.users.FirstOrDefault(u => u.name == login);
-                }
-                else
-                {
-                    MessageBox.Show("Nie istnieje taki użytkownik");
-                }
-            }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             if (panel1.Visible == true)
@@ -115,13 +88,14 @@ namespace ProjektStatki.Views
                     else
                     {
                         string login = textBox1.Text;
-                        if(db.users.Any(u => u.name == login))
+                        string password = textBox3.Text;
+                        if(db.users.Any(u => u.name == login && u.password == password))
                         {
                             enemy = db.users.FirstOrDefault(u => u.name == login);
                         }
                         else
                         {
-                            MessageBox.Show("Nie istnieje taki użytkownik");
+                            MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
                         }
                     }
                 }
@@ -141,13 +115,14 @@ namespace ProjektStatki.Views
                     else
                     {
                         string login = textBox1.Text;
-                        if (db.users.Any(u => u.name == login))
+                        string password = textBox3.Text;
+                        if (db.users.Any(u => u.name == login && u.password == password))
                         {
                             enemy = db.users.FirstOrDefault(u => u.name == login);
                         }
                         else
                         {
-                            MessageBox.Show("Nie istnieje taki użytkownik");
+                            MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
                         }
                     }
                     gameMode = new ClassicGameMode(true);
@@ -173,7 +148,42 @@ namespace ProjektStatki.Views
                 }
                 else if (label4.Text == "Stwórz Własną")
                 {
-                    MessageBox.Show("stwórzWłasną");
+                    if (string.IsNullOrEmpty(textBox1.Text))
+                    {
+                        if (!(checkBox2.Checked))
+                        {
+                            MessageBox.Show("Musisz wybrać przeciwnika");
+                        }
+                        else
+                        {
+                            enemy = new HumanPlayer("GOŚĆ", "1234");
+                        }
+                    }
+                    else
+                    {
+                        string login = textBox2.Text;
+                        string password = textBox4.Text;
+                        if (db.users.Any(u => u.name == login && u.password == password))
+                        {
+                            enemy = db.users.FirstOrDefault(u => u.name == login);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
+                        }
+                    }
+                    Board board = new Board((int)numericUpDown5.Value, (int)numericUpDown4.Value);
+                    Board board1 = new Board(board);
+                    Board board2 = new Board(board);
+                    int shipsCount = (int)numericUpDown3.Value;
+                    int specShipsCount = (int)numericUpDown6.Value;
+                    SelectShipsView select = new SelectShipsView(shipsCount, specShipsCount);
+                    select.ShowDialog();
+                    List<Ship> ships = select.GetSelectedShips();
+                    if(IsPossibleToCreateGame(board, shipsCount, specShipsCount))
+                    {
+                        gameMode = new CustomgameMode(board1, board2, shipsCount, specShipsCount, ships);
+                    }
                 }
                 else
                 {
@@ -190,7 +200,7 @@ namespace ProjektStatki.Views
         public bool IsPossibleToCreateGame(Board board, int shipCount, int specialShipCount)
         {
             int maxBoardSize = 15;
-            if (board == null || shipCount <= 0 || specialShipCount <= 0)
+            if (board == null || shipCount <= 0)
             {
                 MessageBox.Show("Podano niepoprawne wartości!");
                 return false;
