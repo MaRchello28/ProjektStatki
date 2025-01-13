@@ -10,5 +10,6 @@ namespace ProjektStatki.Models.Builder
     {
         public void reset();
         public void createSteps();
+        public Player GetResult();
     }
 }

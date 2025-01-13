@@ -112,7 +112,7 @@ namespace ProjektStatki.Models.Builder
             }
         }
 
-        public ComputerPlayer GetResult()
+        public Player GetResult()
         {
             return _computerPlayer;
         }

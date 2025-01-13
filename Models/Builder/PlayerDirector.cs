@@ -22,7 +22,7 @@ namespace ProjektStatki.Models.Builder
         {
             builder.reset();
             builder.createSteps();
-            return ((ComputerPlayerBuilder)builder).GetResult();
+            return builder.GetResult();
         }
     }
 }
