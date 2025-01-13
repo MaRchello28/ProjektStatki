@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Point = ProjektStatki.Models.Point;
 
 namespace ProjektStatki.Views
 {
@@ -56,15 +57,48 @@ namespace ProjektStatki.Views
 
         private void Label6TextRestart()
         {
-            label5.Text = "Statki specjalne: " + specialShipsCount;
+            label6.Text = "Statki specjalne: " + specialShipsCount;
         }
 
         public void LoadShipsToListBoxes()
         {
+            List<Point> specPoints1 = new List<Point>()
+            {
+                new Point(0,0), new Point(0,1), new Point(1,0)
+            };
+            List<Point> specPoints2 = new List<Point>()
+            {
+                new Point(0,0), new Point(1,0), new Point(1,1), new Point(1,2), new Point(0,2)
+            };
+            List<Point> specPoints3 = new List<Point>()
+            {
+                new Point(0,0), new Point(1,0), new Point(2,0), new Point(2,1), new Point(2,2), new Point(0,1), new Point(1,2), new Point(0,2)
+            };
+            List<Point> specPoints4 = new List<Point>()
+            {
+                new Point(0,0), new Point(0,1), new Point(1,1), new Point(1,2), new Point(2,2), new Point(2,3), new Point(3,3)
+            };
+            List<Point> specPoints5 = new List<Point>()
+            {
+                new Point(1,0), new Point(0,1), new Point(1,1), new Point(2,1), new Point (1,2)
+            };
             List<string> names = new List<string>
             {
                 "Kajak", "Łudka", "Liniowiec", "Krążownik", "Lotniskowiec", "Pancernik"
             };
+
+            List<string> specNames = new List<string>
+            {
+                "Szalupa", "U", "O", "Grom", "Plus"
+            };
+
+            List<List<Point>> specPoints = new List<List<Point>>()
+            {
+                specPoints1, specPoints2, specPoints3, specPoints4, specPoints5
+            };
+
+
+
             NormalShipCreator normal = new NormalShipCreator();
             for (int i = 0; i < 6; i++)
             {
@@ -78,6 +112,18 @@ namespace ProjektStatki.Views
             }
 
             //Tu będą statki specjalne
+            SpecialTypeShipCreator special = new SpecialTypeShipCreator();
+
+            for(int i=0; i< 5; i++)
+            {
+                Ship ship = special.createShip(specPoints[i], specNames[i]);
+                specialShips.Add(ship);
+            }
+
+            foreach (var ship in specialShips)
+            {
+                listBox2.Items.Add(ship.getName());
+            }
         }
 
         public void DisplayShip(Ship ship)
@@ -137,6 +183,16 @@ namespace ProjektStatki.Views
             if (listBox2.SelectedIndex != -1)
             {
                 listBox1.ClearSelected();
+                string selectedShipName = listBox2.SelectedItem.ToString();
+                Ship ship = specialShips.FirstOrDefault(s => s.getName() == selectedShipName);
+                if (ship != null)
+                {
+                    DisplayShip(ship);
+                }
+                else
+                {
+                    MessageBox.Show("Problem ze znalezieniem statku");
+                }
             }
         }
 
@@ -170,7 +226,28 @@ namespace ProjektStatki.Views
                 }
                 else
                 {
-                    MessageBox.Show("Tu beda statki specjalne");
+                    if (specialShipsCount > 0)
+                    {
+                        string selectedShipName = listBox2.SelectedItem.ToString();
+                        Ship ship = specialShips.FirstOrDefault(s => s.getName() == selectedShipName);
+                        if (ship != null)
+                        {
+                            selectedShips.Add(ship);
+                            listBox3.Items.Add(ship.getName());
+                            shipsCount--;
+                            specialShipsCount--;
+                            Label5TextRestart();
+                            Label6TextRestart();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Problem ze znalezieniem statku");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Masz wybrane wszystkie statki specjalne");
+                    }
                 }
             }
             else

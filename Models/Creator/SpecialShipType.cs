@@ -12,6 +12,11 @@ namespace ProjektStatki.Models.Creator
         public string name;
         public int Id { get; set; }
 
+        SpecialShipType()
+        {
+
+        }
+
         public SpecialShipType(string name)
         {
             points = new List<Point>();

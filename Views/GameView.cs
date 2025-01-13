@@ -44,7 +44,7 @@ namespace ProjektStatki.Views
             dataGridView2.CellClick += DataGridView2_CellClick;
         }
 
-        public void PlayerWon()
+        public bool PlayerWon()
         {
             if(currentPlayer == 1)
             {
@@ -53,7 +53,7 @@ namespace ProjektStatki.Views
                 {
                     WinView();
                     this.Close();
-                    return;
+                    return true;
                 }
             }
             else
@@ -63,9 +63,10 @@ namespace ProjektStatki.Views
                 {
                     WinView();
                     this.Close();
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
 
         public void WinView()
@@ -127,24 +128,24 @@ namespace ProjektStatki.Views
                 dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
 
                 Point selectedCell = new Point(e.RowIndex, e.ColumnIndex);
-                Cell cell = board1.cells.FirstOrDefault(c => c.point.wight == selectedCell.wight &&
-                                        c.point.height == selectedCell.height);
+                Cell cell = board1.cells.FirstOrDefault(c => c.point.height == selectedCell.wight &&
+                                        c.point.wight == selectedCell.height);
 
                 if (cell != null)
                 {
                     if (cell.isShip == false && cell.wasShot == false)
                     {
-                        dataGridView1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Green;
+                        dataGridView1.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Green;
                         cell.wasShot = true;
                         MessageBox.Show("Pudło!. Następny gracz");
                         NextMove(false);
                     }
                     else if (cell.isShip == true && cell.wasShot == false)
                     {
-                        dataGridView1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Red;
+                        dataGridView1.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Red;
                         cell.wasShot = true;
-                        PlayerWon();
-                        MessageBox.Show("Trafiony!. Ruszasz się ponownie");
+                        if(!PlayerWon())
+                            MessageBox.Show("Trafiony!. Ruszasz się ponownie");
                         NextMove(true);
                     }
                     else if (cell.isShip == false && cell.wasShot == true)
@@ -176,24 +177,24 @@ namespace ProjektStatki.Views
                 dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
 
                 Point selectedCell = new Point(e.RowIndex, e.ColumnIndex);
-                Cell cell = board2.cells.FirstOrDefault(c => c.point.wight == selectedCell.wight &&
-                                        c.point.height == selectedCell.height);
+                Cell cell = board2.cells.FirstOrDefault(c => c.point.height == selectedCell.wight &&
+                                        c.point.wight == selectedCell.height);
 
                 if (cell != null)
                 {
                     if (cell.isShip == false && cell.wasShot == false)
                     {
-                        dataGridView2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Green;
+                        dataGridView2.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Green;
                         cell.wasShot = true;
                         MessageBox.Show("Pudło!. Następny gracz");
                         NextMove(false);
                     }
                     else if (cell.isShip == true && cell.wasShot == false)
                     {
-                        dataGridView2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Red;
+                        dataGridView2.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Red;
                         cell.wasShot = true;
-                        PlayerWon();
-                        MessageBox.Show("Trafiony!. Ruszasz się ponownie");
+                        if (!PlayerWon())
+                            MessageBox.Show("Trafiony!. Ruszasz się ponownie");
                         NextMove(true);
                     }
                     else if (cell.isShip == false && cell.wasShot == true)
@@ -292,7 +293,7 @@ namespace ProjektStatki.Views
             Board board = currentPlayerBoard;
             foreach (var checkingPoint in shipPoints)
             {
-                if (board.cells.Any(c => c.isShip == true && c.point.height == checkingPoint.height && c.point.wight == checkingPoint.wight))
+                if (board.cells.Any(c => c.isShip == true && c.point.height == checkingPoint.wight && c.point.wight == checkingPoint.height))
                 {
                     return false;
                 }
@@ -317,7 +318,7 @@ namespace ProjektStatki.Views
 
             foreach (Point point in rotatedPoints)
             {
-                if (point.wight < 0 || point.wight >= grid.ColumnCount || point.height < 0 || point.height >= grid.RowCount)
+                if (point.wight < 0 || point.wight >= grid.RowCount || point.height < 0 || point.height >= grid.ColumnCount)
                 {
                     return false;
                 }
@@ -357,7 +358,7 @@ namespace ProjektStatki.Views
 
             foreach (Point point in rotatedPoints)
             {
-                if (point.wight < 0 || point.wight >= grid.ColumnCount || point.height < 0 || point.height >= grid.RowCount)
+                if (point.wight < 0 || point.wight >= grid.RowCount || point.height < 0 || point.height >= grid.ColumnCount)
                 {
                     return false;
                 }
@@ -440,14 +441,15 @@ namespace ProjektStatki.Views
                         }
                         else
                         {
+                            HighlightShotCells(grid, board);
                             if (currentPlayer == 1)
                             {
                                 foreach (Point point in shipPoints)
                                 {
                                     if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
                                     {
-                                        Cell cell = game.boardPlayer1.cells.FirstOrDefault(c => c.point.wight == point.wight &&
-                                        c.point.height == point.height);
+                                        Cell cell = game.boardPlayer1.cells.FirstOrDefault(c => c.point.wight == point.height &&
+                                        c.point.height == point.wight);
 
                                         if (cell != null)
                                         {
@@ -475,8 +477,8 @@ namespace ProjektStatki.Views
                                 {
                                     if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
                                     {
-                                        Cell cell = game.boardPlayer2.cells.FirstOrDefault(c => c.point.wight == point.wight &&
-                                        c.point.height == point.height);
+                                        Cell cell = game.boardPlayer2.cells.FirstOrDefault(c => c.point.wight == point.height &&
+                                        c.point.height == point.wight);
 
                                         if (cell != null)
                                         {
@@ -528,49 +530,35 @@ namespace ProjektStatki.Views
             currentDataGridView = dataGridView1;
             groupBox1.Show();
             groupBox2.Show();
-            //Dodane bo ostatni statek się pokazywał idk dlaczego ale i tak pokazuje się statek
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                for (int j = 0; j < dataGridView1.Columns.Count; j++)
-                {
-                    dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.White;
-                }
-            }
-            for (int i = 0; i < dataGridView2.Rows.Count; i++)
-            {
-                for (int j = 0; j < dataGridView2.Columns.Count; j++)
-                {
-                    dataGridView2.Rows[i].Cells[j].Style.BackColor = Color.White;
-                }
-            }
-            groupBox1.Visible = true;
         }
 
         public void PlayerView(DataGridView grid1, DataGridView grid2, Board board1, Board board2)
         {
+            HighlightShotCells(grid1, board1);
+            HighlightShotCells(grid2, board2);
             grid1.Visible = false; grid2.Visible = false;
             for (int i = 0; i < grid1.Rows.Count; i++)
             {
                 for (int j = 0; j < grid1.Columns.Count; j++)
                 {
-                    var cell = board1.cells.FirstOrDefault(c => c.point.height == i && c.point.wight == j);
+                    var cell = board1.cells.FirstOrDefault(c => c.point.wight == j && c.point.height == i);
                     if (cell != null)
                     {
                         if (cell.isShip == false && cell.wasShot == false)
                         {
-                            grid1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.White;
+                            grid1.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.White;
                         }
                         else if (cell.isShip == true && cell.wasShot == false)
                         {
-                            grid1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Black;
+                            grid1.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Black;
                         }
                         else if (cell.isShip == false && cell.wasShot == true)
                         {
-                            grid1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Green;
+                            grid1.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Green;
                         }
                         else if (cell.isShip == true && cell.wasShot == true)
                         {
-                            grid1.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Red;
+                            grid1.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Red;
                         }
                     }
                     else
@@ -584,30 +572,30 @@ namespace ProjektStatki.Views
             {
                 for (int j = 0; j < grid2.Columns.Count; j++)
                 {
-                    var cell = board2.cells.FirstOrDefault(c => c.point.height == i && c.point.wight == j);
+                    var cell = board2.cells.FirstOrDefault(c => c.point.wight == j && c.point.height == i);
                     if (cell != null)
                     {
                         if (cell.isShip == false && cell.wasShot == false)
                         {
-                            grid2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.White;
+                            grid2.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.White;
                         }
                         else if (cell.isShip == true && cell.wasShot == false)
                         {
-                            grid2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.White;
+                            grid2.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.White;
                         }
                         else if (cell.isShip == false && cell.wasShot == true)
                         {
-                            grid2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Green;
+                            grid2.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Green;
                         }
                         else if (cell.isShip == true && cell.wasShot == true)
                         {
-                            grid2.Rows[cell.point.wight].Cells[cell.point.height].Style.BackColor = Color.Red;
+                            grid2.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Red;
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show("Nie znaleziono komórki");
-                    }
+                    //else
+                    //{
+                    //    MessageBox.Show("Nie znaleziono komórki");
+                    //}
                 }
             }
             grid1.Visible = true; grid2.Visible = true;
@@ -693,7 +681,7 @@ namespace ProjektStatki.Views
             {
                 for (int col = 0; col < grid.ColumnCount; col++)
                 {
-                    Cell cell = board.cells.FirstOrDefault(c => c.point.wight == row && c.point.height == col);
+                    Cell cell = board.cells.FirstOrDefault(c => c.point.wight == col && c.point.height == row);
 
                     if (cell != null)
                     {

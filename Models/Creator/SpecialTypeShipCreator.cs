@@ -9,36 +9,36 @@ namespace ProjektStatki.Models.Creator
     public class SpecialTypeShipCreator
     {
         public SpecialTypeShipCreator() { }
-        public Ship createShip(int type, string name) // type to jaki to statek ma byc
+        public Ship createShip(List<Point> pointsToCreate, string name)
         {
-            SpecialShipType ship = new SpecialShipType(name);
-            List<Point> points = new List<Point>();
-            switch (type)
+            SpecialShipType spec;
+            foreach (var point in pointsToCreate)
             {
-                case 0:
-                    {
-                        points.Add(new Point(0, 1));
-                        points.Add(new Point(0, 2));
-                        points.Add(new Point(1, 1));
-                        points.Add(new Point(0, 3));
-                        points.Add(new Point(1, 2));
-                        ship.points = points;
-                        return ship;
-                    }
-                case 1:
-                    {
-                        points.Add(new Point(0, 1));
-                        points.Add(new Point(0, 2));
-                        points.Add(new Point(1, 2));
-                        points.Add(new Point(2, 2));
-                        ship.points = points;
-                        return ship;
-                    }
-                default:
-                    {
-                        return ship;
-                    }
+                bool hasNeighbor = pointsToCreate.Any(other =>
+                    (point != other) &&
+                    (Math.Abs(point.wight - other.wight) + Math.Abs(point.height - other.height) == 1)
+                );
+
+                if (!hasNeighbor)
+                {
+                    throw new Exception("Nie można utworzyć takiego statku");
+                }
+
+                if (pointsToCreate.GroupBy(p => new { p.wight, p.height }).Any(g => g.Count() > 1))
+                {
+                    throw new Exception("Znaleziono zduplikowane punkty.");
+                }
+
+                if (pointsToCreate.Any(p => p.wight < 0 || p.height < 0))
+                {
+                    throw new Exception("Znaleziono punkt o współrzędnych mniejszych niż 0.");
+                }
+
             }
+            spec = new SpecialShipType(name);
+            spec.points = pointsToCreate;
+            return spec;
+
         }
     }
 }
