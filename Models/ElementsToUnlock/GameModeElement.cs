@@ -21,7 +21,7 @@ namespace ProjektStatki.Models.ElementsToUnlock
         }
         public Element SetElement(int lvl, string name)
         {
-            return new GameModeElement("Gra",lvl , name);
+            return new GameModeElement("GameMode",lvl , name);
         }
     }
 }
