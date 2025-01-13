@@ -9,6 +9,8 @@ namespace ProjektStatki.Models.ElementsToUnlock
     public interface Element
     {
         public string type { get; set; }
-        public Element SetElement();
+        public string name { get; set; }
+        public int Requiredlvl { get; set; }
+        public Element SetElement(int lvl, string name);
     }
 }

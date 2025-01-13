@@ -9,13 +9,19 @@ namespace ProjektStatki.Models.ElementsToUnlock
     public class GameModeElement:Element
     {
         public string type { get; set; }
-        public GameModeElement(string type) 
-        { 
-            this.type = type; 
-        }
-        public Element SetElement()
+        public string name { get; set; }
+
+        public int Requiredlvl { get; set; }
+
+        public GameModeElement(string type, int requiredlvl, string name)
         {
-            return new GameModeElement("ForFunMode");
+            this.type = type;
+            this.Requiredlvl = requiredlvl;
+            this.name = name;
+        }
+        public Element SetElement(int lvl, string name)
+        {
+            return new GameModeElement("Gra",lvl , name);
         }
     }
 }

@@ -8,15 +8,22 @@ namespace ProjektStatki.Models.ElementsToUnlock
 {
     public class ShipElement:Element
     {
+
         public string type { get; set; }
-        public ShipElement(string type) 
+        public string name { get; set; }
+
+        public int Requiredlvl { get; set; }
+
+        public ShipElement(string type, int Requiredlvl, string name) 
         { 
             this.type = type;
+            this.Requiredlvl = Requiredlvl;
+            this.name = name;
         }
 
-        public Element SetElement()
+        public Element SetElement(int lvl, string name)
         {
-            return new ShipElement("żaglówka");
+            return new ShipElement("Ship", lvl, name);
         }
     }
 }

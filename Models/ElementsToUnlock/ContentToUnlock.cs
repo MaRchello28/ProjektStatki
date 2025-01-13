@@ -14,9 +14,14 @@ namespace ProjektStatki.Models.ElementsToUnlock
             this.elements = elements;
         }
 
-        public void HowToUnlock()
+        public Element HowToUnlock(List<Element> element, int lvl)
         {
-
+            for(int i = 0; i < elements.Count; i++)
+            {
+                if(elements[i].Requiredlvl == lvl)
+                    return elements[i];
+            }
+            return null;
         }
     }
 }

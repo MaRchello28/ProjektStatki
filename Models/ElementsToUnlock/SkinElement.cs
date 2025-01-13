@@ -9,10 +9,19 @@ namespace ProjektStatki.Models.ElementsToUnlock
     public class SkinElement:Element
     {
         public string type { get; set; }
-        public SkinElement(string type) { this.type = type; }
-        public Element SetElement()
+        public string name { get; set; }
+
+        public int Requiredlvl { get; set; }
+
+        public SkinElement(string type, int Requiredlvl, string name) 
+        { 
+            this.type = type;
+            this.Requiredlvl = Requiredlvl;
+            this.name = name;
+        }
+        public Element SetElement(int lvl, string name)
         {
-            return new SkinElement("Pink");
+            return new SkinElement("Skin",lvl,name);
         }
     }
 }
