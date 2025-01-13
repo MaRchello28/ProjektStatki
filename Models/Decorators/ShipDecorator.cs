@@ -9,15 +9,15 @@ namespace ProjektStatki.Models.Decorator
     //Dodać do tego dziedziczące konkretne dekoratory
     public class ShipDecorator
     {
-        Ship wrappe;
+        Ship wrappedShip;
         public ShipDecorator(Ship ship)
         {
-            wrappe = ship;
+            wrappedShip = ship;
         }
 
-        public void Execute()
+        public virtual void Execute()
         {
-
+            wrappedShip.Execute();
         }
     }
 }

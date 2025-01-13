@@ -21,5 +21,10 @@ namespace ProjektStatki.Models.Creator
             ship.points = points;
             return ship;
         }
+
+        public void Execute()
+        {
+
+        }
     }
 }
