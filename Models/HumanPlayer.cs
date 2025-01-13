@@ -8,7 +8,7 @@ namespace ProjektStatki.Models
 {
     public class HumanPlayer : Player
     {
-        public string id { get; set; }
+        public string Id { get; set; }
         public string name {  get; set; }
         public string password { get; set; }
         public int raitingPoints { get; set; }
@@ -18,7 +18,7 @@ namespace ProjektStatki.Models
         public HumanPlayer() { }
         public HumanPlayer(string name, string password) 
         {
-            this.id = GenerateId();
+            this.Id = GenerateId();
             this.name = name;
             this.password = password;
             raitingPoints = 1000;
@@ -28,7 +28,7 @@ namespace ProjektStatki.Models
 
         public HumanPlayer(string name, string password, int rait, int level, int exp, int expToNext)
         {
-            this.id = GenerateId();
+            this.Id = GenerateId();
             this.name = name;
             this.password = password;
             raitingPoints = rait;

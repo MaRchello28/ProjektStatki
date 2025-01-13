@@ -55,7 +55,7 @@ namespace ProjektStatki.Controllers
 
         public Player GetLoggedPlayer()
         {
-            var user = db.users.FirstOrDefault(u => u.id == LoggedUserId);
+            var user = db.users.FirstOrDefault(u => u.Id == LoggedUserId);
             return user;
         }
 

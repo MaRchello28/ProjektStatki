@@ -9,6 +9,6 @@ namespace ProjektStatki.Models.History
     public interface History
     {
         public Game AddToGameHistory();
-        public void ShowHistory();
+        public void ShowHistory(List<Game> userGames);
     }
 }

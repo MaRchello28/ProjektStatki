@@ -9,9 +9,9 @@ namespace ProjektStatki.Models.History
     public class GameHistoryProxy : History
     {
         private GameHistory realHistory; 
-        private int userId; 
+        private string userId; 
 
-        public GameHistoryProxy(GameHistory realHistory, int userId)
+        public GameHistoryProxy(GameHistory realHistory, string userId)
         {
             this.realHistory = realHistory;
             this.userId = userId;
@@ -22,7 +22,7 @@ namespace ProjektStatki.Models.History
         {
             if (realHistory.gameHistory != null)
             {
-                var userGames = realHistory.gameHistory.Where(game => game.player1.playerId == userId || game.player2.playerId == userId).ToList(); //tu krzyczy bo nie ma zadnego id do przyjecia (chyba)
+                var userGames = realHistory.gameHistory.Where(game => game.player1.Id == userId || game.player2.Id == userId).ToList(); //tu krzyczy bo nie ma zadnego id do przyjecia (chyba)
                 ShowHistory(userGames);
             }
         }

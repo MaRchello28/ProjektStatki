@@ -21,7 +21,7 @@ namespace ProjektStatki
         public string Run()
         {
             this.ShowDialog();
-            return humanPlayer.id;
+            return humanPlayer.Id;
         }
 
         private void MainMenu_Load(object sender, EventArgs e)

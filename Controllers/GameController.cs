@@ -23,7 +23,7 @@ namespace ProjektStatki.Controllers
         }
         public void RunController()
         {
-            Player player1 = db.users.FirstOrDefault(u => u.id == this.LoggedUserId);
+            Player player1 = db.users.FirstOrDefault(u => u.Id == this.LoggedUserId);
             if(player1 == null)
             {
                 MessageBox.Show("Nie znaleziono gracza!");

@@ -34,7 +34,7 @@ namespace ProjektStatki.Views
 
         public int Run(string LoggedUserId)
         {
-            var user = db.users.FirstOrDefault(s => s.id == LoggedUserId);
+            var user = db.users.FirstOrDefault(s => s.Id == LoggedUserId);
             if (user == null)
             {
                 MessageBox.Show("Coś poszło nie tak ze znalezieniem użytkownika");
