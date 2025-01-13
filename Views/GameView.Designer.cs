@@ -38,6 +38,7 @@
             listBox2 = new ListBox();
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView3).BeginInit();
@@ -130,16 +131,27 @@
             groupBox2.Controls.Add(dataGridView2);
             groupBox2.Location = new Point(1224, 6);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(656, 739);
+            groupBox2.Size = new Size(656, 709);
             groupBox2.TabIndex = 11;
             groupBox2.TabStop = false;
             groupBox2.Text = "groupBox2";
+            // 
+            // button1
+            // 
+            button1.Location = new Point(858, 830);
+            button1.Name = "button1";
+            button1.Size = new Size(140, 58);
+            button1.TabIndex = 12;
+            button1.Text = "Poddaj się";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // GameView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1852, 900);
+            Controls.Add(button1);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(label1);
@@ -168,5 +180,6 @@
         private ListBox listBox2;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
+        private Button button1;
     }
 }

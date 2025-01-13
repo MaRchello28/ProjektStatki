@@ -8,6 +8,7 @@ namespace ProjektStatki.Models
 {
     public class Board
     {
+        public int Id { get; set; }
         public Player? player {  get; set; }
         public List<Cell> cells = new List<Cell>();
         public Board(int x, int y) 

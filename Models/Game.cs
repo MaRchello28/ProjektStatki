@@ -9,12 +9,13 @@ namespace ProjektStatki.Models
 {
     public class Game
     {
-        public Board boardPlayer1;
-        public Board boardPlayer2;
-        public GameMode gameMode;
-        public string result;
-        public Player player1;
-        public Player player2;
+        public int gameId { get; set; }
+        public Board boardPlayer1 { get; set; }
+        public Board boardPlayer2 { get; set; }
+        public GameMode gameMode {  get; set; }
+        public string result { get; set; }
+        public Player player1 { get; set; }
+        public Player player2 { get; set; }
 
 
         public Game() { }

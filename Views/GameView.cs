@@ -42,17 +42,56 @@ namespace ProjektStatki.Views
             dataGridView2.Enabled = false;
             dataGridView1.CellClick += DataGridView1_CellClick;
             dataGridView2.CellClick += DataGridView2_CellClick;
+            dataGridView3.ReadOnly = true;
+            button1.Visible = false;
+        }
+
+        public void AddShotToList(int x, int y, bool wasShot)
+        {
+            if (currentPlayer == 1)
+            {
+                if (wasShot)
+                {
+                    dataGridView3.Rows.Add((x + 1).ToString() + (Convert.ToChar('a' + (y))).ToString(), "");
+                    dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[0].Style.ForeColor = Color.Red;
+                }
+                else
+                {
+                    dataGridView3.Rows.Add((x + 1).ToString() + (Convert.ToChar('a' + (y))).ToString(), "");
+                    dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[0].Style.ForeColor = Color.Green;
+                }
+            }
+            else
+            {
+                if (wasShot)
+                {
+                    dataGridView3.Rows.Add("", (x + 1).ToString() + (Convert.ToChar('a' + (y))).ToString());
+                    dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[0].Style.ForeColor = Color.Red;
+                }
+                else
+                {
+                    dataGridView3.Rows.Add("", (x + 1).ToString() + (Convert.ToChar('a' + (y))).ToString());
+                    dataGridView3.Rows[dataGridView3.Rows.Count - 1].Cells[0].Style.ForeColor = Color.Green;
+                }
+            }
+
+            int rowHeight = dataGridView3.Rows[dataGridView3.Rows.Count - 1].Height;
+            if (dataGridView3.Height < 540)
+            {
+                dataGridView3.Height += rowHeight;
+            }
+
         }
 
         public bool PlayerWon()
         {
-            if(currentPlayer == 1)
+            if (currentPlayer == 1)
             {
                 List<Cell> cel = board2.cells.Where(c => c.isShip == true).ToList();
                 if (!cel.Any(c => c.wasShot == false))
                 {
                     WinView();
-                    this.Close();
+                    MessageBox.Show("Wygrałeś!!!");
                     return true;
                 }
             }
@@ -62,7 +101,7 @@ namespace ProjektStatki.Views
                 if (!cel.Any(c => c.wasShot == false))
                 {
                     WinView();
-                    this.Close();
+                    MessageBox.Show("Wygrałeś!!!");
                     return true;
                 }
             }
@@ -71,8 +110,7 @@ namespace ProjektStatki.Views
 
         public void WinView()
         {
-            MessageBox.Show("Wygrałeś!!!");
-            if(currentPlayer == 1)
+            if (currentPlayer == 1)
             {
                 var playerWon = db.users.FirstOrDefault(u => u.name == game.player1.name);
                 var playerLose = db.users.FirstOrDefault(u => u.name == game.player2.name);
@@ -94,6 +132,7 @@ namespace ProjektStatki.Views
                     playerLose.LevelUp(false);
                 }
                 db.SaveChanges();
+                this.Close();
             }
             else
             {
@@ -117,6 +156,7 @@ namespace ProjektStatki.Views
                     playerLose.LevelUp(false);
                 }
                 db.SaveChanges();
+                this.Close();
             }
         }
 
@@ -138,14 +178,16 @@ namespace ProjektStatki.Views
                         dataGridView1.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Green;
                         cell.wasShot = true;
                         MessageBox.Show("Pudło!. Następny gracz");
+                        AddShotToList(cell.point.wight, cell.point.height, cell.isShip);
                         NextMove(false);
                     }
                     else if (cell.isShip == true && cell.wasShot == false)
                     {
                         dataGridView1.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Red;
                         cell.wasShot = true;
-                        if(!PlayerWon())
+                        if (!PlayerWon())
                             MessageBox.Show("Trafiony!. Ruszasz się ponownie");
+                        AddShotToList(cell.point.wight, cell.point.height, cell.isShip);
                         NextMove(true);
                     }
                     else if (cell.isShip == false && cell.wasShot == true)
@@ -187,6 +229,7 @@ namespace ProjektStatki.Views
                         dataGridView2.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Green;
                         cell.wasShot = true;
                         MessageBox.Show("Pudło!. Następny gracz");
+                        AddShotToList(cell.point.wight, cell.point.height, cell.isShip);
                         NextMove(false);
                     }
                     else if (cell.isShip == true && cell.wasShot == false)
@@ -195,6 +238,7 @@ namespace ProjektStatki.Views
                         cell.wasShot = true;
                         if (!PlayerWon())
                             MessageBox.Show("Trafiony!. Ruszasz się ponownie");
+                        AddShotToList(cell.point.wight, cell.point.height, cell.isShip);
                         NextMove(true);
                     }
                     else if (cell.isShip == false && cell.wasShot == true)
@@ -530,6 +574,7 @@ namespace ProjektStatki.Views
             currentDataGridView = dataGridView1;
             groupBox1.Show();
             groupBox2.Show();
+            button1.Visible = true;
         }
 
         public void PlayerView(DataGridView grid1, DataGridView grid2, Board board1, Board board2)
@@ -828,6 +873,12 @@ namespace ProjektStatki.Views
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Poddałeś się");
+            WinView();
         }
     }
 }
