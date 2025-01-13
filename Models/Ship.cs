@@ -14,6 +14,6 @@ namespace ProjektStatki.Models
         string getName();
         Ship putShipOnBoard();
         Point fire(int x, int y);
-        public void Execute();
+        void Execute(int x, int y);
     }
 }

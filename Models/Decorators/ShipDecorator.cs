@@ -17,7 +17,7 @@ namespace ProjektStatki.Models.Decorator
 
         public virtual void Execute()
         {
-            wrappedShip.Execute();
+
         }
     }
 }

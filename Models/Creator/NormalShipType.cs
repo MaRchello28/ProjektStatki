@@ -38,5 +38,10 @@ namespace ProjektStatki.Models.Creator
             Point point = new Point(x, y);
             return point;
         }
+
+        public void Execute(int x, int y)
+        {
+
+        }
     }
 }
