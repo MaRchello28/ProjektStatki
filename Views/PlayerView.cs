@@ -19,6 +19,7 @@ namespace ProjektStatki.Views
         {
             InitializeComponent();
             this.db = db;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -28,7 +29,7 @@ namespace ProjektStatki.Views
 
         private void PlayerView_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         public int Run(string LoggedUserId)

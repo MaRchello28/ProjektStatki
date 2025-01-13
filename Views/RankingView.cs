@@ -15,6 +15,12 @@ namespace ProjektStatki.Views
         public RankingView()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
+        }
+
+        private void RankingView_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }

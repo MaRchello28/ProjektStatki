@@ -33,6 +33,7 @@ namespace ProjektStatki.Views
             int cellHeight = dataGridView1.ClientSize.Height / 8;
             this.shipsCount = shipsCount;
             this.specialShipsCount = specialShipsCount;
+            this.StartPosition = FormStartPosition.CenterScreen;
             for (int i = 0; i < dataGridView1.ColumnCount; i++)
             {
                 dataGridView1.Columns[i].Width = cellWidth;
@@ -143,7 +144,7 @@ namespace ProjektStatki.Views
 
         private void SelectShipsView_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void DataGridViewReset()

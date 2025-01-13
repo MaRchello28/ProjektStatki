@@ -44,6 +44,7 @@ namespace ProjektStatki.Views
             dataGridView2.CellClick += DataGridView2_CellClick;
             dataGridView3.ReadOnly = true;
             button1.Visible = false;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         public void AddShotToList(int x, int y, bool wasShot)
@@ -315,6 +316,7 @@ namespace ProjektStatki.Views
 
         private void GameView_Load(object sender, EventArgs e)
         {
+            
             groupBox2.Visible = false;
             dataGridView1.ReadOnly = true;
             dataGridView2.ReadOnly = true;

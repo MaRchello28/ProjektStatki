@@ -23,11 +23,12 @@ namespace ProjektStatki.Views
             this.mainMenu = mainMenu;
             this.db = db;
             playerDirector = new PlayerDirector(playerBuilder);
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void CreateAccountView_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void button1_Click(object sender, EventArgs e)

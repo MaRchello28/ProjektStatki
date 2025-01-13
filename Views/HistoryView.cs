@@ -15,6 +15,12 @@ namespace ProjektStatki.Views
         public HistoryView()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
+        }
+
+        private void HistoryView_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -24,6 +24,7 @@ namespace ProjektStatki.Views
             InitializeComponent();
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.db = db;
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         public GameMode ChoseGamemode()
@@ -40,6 +41,7 @@ namespace ProjektStatki.Views
         {
             panel1.Visible = false;
             panel2.Visible = false;
+            
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)

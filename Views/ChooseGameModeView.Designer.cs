@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            TreeNode treeNode19 = new TreeNode("Nie rankingowa");
-            TreeNode treeNode20 = new TreeNode("Rankingowa");
-            TreeNode treeNode21 = new TreeNode("Zwykła", new TreeNode[] { treeNode19, treeNode20 });
-            TreeNode treeNode22 = new TreeNode("Tryb Symulacji");
-            TreeNode treeNode23 = new TreeNode("SpecjalneStatki");
-            TreeNode treeNode24 = new TreeNode("Specjalne", new TreeNode[] { treeNode22, treeNode23 });
-            TreeNode treeNode25 = new TreeNode("Gracz vs AI");
-            TreeNode treeNode26 = new TreeNode("Stwórz Własną");
-            TreeNode treeNode27 = new TreeNode("Customowe", new TreeNode[] { treeNode25, treeNode26 });
+            TreeNode treeNode1 = new TreeNode("Nie rankingowa");
+            TreeNode treeNode2 = new TreeNode("Rankingowa");
+            TreeNode treeNode3 = new TreeNode("Zwykła", new TreeNode[] { treeNode1, treeNode2 });
+            TreeNode treeNode4 = new TreeNode("Tryb Symulacji");
+            TreeNode treeNode5 = new TreeNode("SpecjalneStatki");
+            TreeNode treeNode6 = new TreeNode("Specjalne", new TreeNode[] { treeNode4, treeNode5 });
+            TreeNode treeNode7 = new TreeNode("Gracz vs AI");
+            TreeNode treeNode8 = new TreeNode("Stwórz Własną");
+            TreeNode treeNode9 = new TreeNode("Customowe", new TreeNode[] { treeNode7, treeNode8 });
             button1 = new Button();
             treeView1 = new TreeView();
             label1 = new Label();
@@ -49,6 +49,9 @@
             textBox1 = new TextBox();
             checkBox1 = new CheckBox();
             panel2 = new Panel();
+            textBox4 = new TextBox();
+            label15 = new Label();
+            label13 = new Label();
             checkBox2 = new CheckBox();
             textBox2 = new TextBox();
             panel6 = new Panel();
@@ -70,9 +73,6 @@
             numericUpDown2 = new NumericUpDown();
             numericUpDown1 = new NumericUpDown();
             label4 = new Label();
-            label13 = new Label();
-            label15 = new Label();
-            textBox4 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -104,25 +104,25 @@
             treeView1.Font = new Font("Segoe UI", 14F);
             treeView1.Location = new Point(12, 12);
             treeView1.Name = "treeView1";
-            treeNode19.Name = "nieRankingowa";
-            treeNode19.Text = "Nie rankingowa";
-            treeNode20.Name = "rankingowa";
-            treeNode20.Text = "Rankingowa";
-            treeNode21.Name = "normal";
-            treeNode21.Text = "Zwykła";
-            treeNode22.Name = "trybSymulacji";
-            treeNode22.Text = "Tryb Symulacji";
-            treeNode23.Name = "specjalneStatki";
-            treeNode23.Text = "SpecjalneStatki";
-            treeNode24.Name = "specjalne";
-            treeNode24.Text = "Specjalne";
-            treeNode25.Name = "graczVsAI";
-            treeNode25.Text = "Gracz vs AI";
-            treeNode26.Name = "stwórzWłasną";
-            treeNode26.Text = "Stwórz Własną";
-            treeNode27.Name = "custom";
-            treeNode27.Text = "Customowe";
-            treeView1.Nodes.AddRange(new TreeNode[] { treeNode21, treeNode24, treeNode27 });
+            treeNode1.Name = "nieRankingowa";
+            treeNode1.Text = "Nie rankingowa";
+            treeNode2.Name = "rankingowa";
+            treeNode2.Text = "Rankingowa";
+            treeNode3.Name = "normal";
+            treeNode3.Text = "Zwykła";
+            treeNode4.Name = "trybSymulacji";
+            treeNode4.Text = "Tryb Symulacji";
+            treeNode5.Name = "specjalneStatki";
+            treeNode5.Text = "SpecjalneStatki";
+            treeNode6.Name = "specjalne";
+            treeNode6.Text = "Specjalne";
+            treeNode7.Name = "graczVsAI";
+            treeNode7.Text = "Gracz vs AI";
+            treeNode8.Name = "stwórzWłasną";
+            treeNode8.Text = "Stwórz Własną";
+            treeNode9.Name = "custom";
+            treeNode9.Text = "Customowe";
+            treeView1.Nodes.AddRange(new TreeNode[] { treeNode3, treeNode6, treeNode9 });
             treeView1.Size = new Size(194, 441);
             treeView1.TabIndex = 4;
             treeView1.AfterSelect += treeView1_AfterSelect;
@@ -232,6 +232,31 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(256, 441);
             panel2.TabIndex = 7;
+            // 
+            // textBox4
+            // 
+            textBox4.Location = new Point(6, 402);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(121, 23);
+            textBox4.TabIndex = 8;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(7, 384);
+            label15.Name = "label15";
+            label15.Size = new Size(133, 15);
+            label15.TabIndex = 8;
+            label15.Text = "Podaj hasło przeciwnika";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(5, 339);
+            label13.Name = "label13";
+            label13.Size = new Size(135, 15);
+            label13.TabIndex = 8;
+            label13.Text = "Podaj login przeciwnika ";
             // 
             // checkBox2
             // 
@@ -423,36 +448,11 @@
             label4.Text = "Custom";
             label4.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new Point(5, 339);
-            label13.Name = "label13";
-            label13.Size = new Size(135, 15);
-            label13.TabIndex = 8;
-            label13.Text = "Podaj login przeciwnika ";
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Location = new Point(7, 384);
-            label15.Name = "label15";
-            label15.Size = new Size(133, 15);
-            label15.TabIndex = 8;
-            label15.Text = "Podaj hasło przeciwnika";
-            // 
-            // textBox4
-            // 
-            textBox4.Location = new Point(6, 402);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(121, 23);
-            textBox4.TabIndex = 8;
-            // 
             // ChooseGameModeView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(777, 506);
+            ClientSize = new Size(485, 506);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(treeView1);
