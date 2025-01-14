@@ -18,10 +18,10 @@ namespace ProjektStatki.Models.Builder
         {
             this.builder = builder;
         }
-        public Player BuildPlayer()
+        public Player BuildPlayer(string name)
         {
             builder.reset();
-            builder.createSteps();
+            builder.createSteps(name);
             return builder.GetResult();
         }
     }

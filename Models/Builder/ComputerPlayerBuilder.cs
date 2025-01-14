@@ -22,10 +22,10 @@ namespace ProjektStatki.Models.Builder
             _computerPlayer = new ComputerPlayer("DefaultBot", 1);
         }
 
-        public void createSteps()
+        public void createSteps(string name)
         {
             
-            _computerPlayer.name = "EasyBot";
+            _computerPlayer.name = name;
             _computerPlayer.DifficultyLevel = 1;
             _computerPlayer.PendingShots.Clear();
         }

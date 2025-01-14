@@ -33,10 +33,10 @@ namespace ProjektStatki.Views
 
         private void button1_Click(object sender, EventArgs e)
         {
-            playerBuilder.GetNameFromtextBox(textBox1.Text);
+            string name = textBox1.Text;
             playerBuilder.GetPasswordFromTextBox(textBox2.Text);
             playerBuilder.GetPassword2FromTextBox(textBox3.Text);
-            playerDirector.BuildPlayer();
+            playerDirector.BuildPlayer(name);
         }
 
         private void button2_Click(object sender, EventArgs e)

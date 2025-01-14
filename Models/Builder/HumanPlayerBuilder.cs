@@ -18,7 +18,7 @@ namespace ProjektStatki.Models.Builder
         {
             
         }
-        public void createSteps()
+        public void createSteps(string name)
         {
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(password2))
             {
