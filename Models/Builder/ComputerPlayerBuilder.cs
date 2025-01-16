@@ -29,8 +29,22 @@ namespace ProjektStatki.Models.Builder
             _computerPlayer.DifficultyLevel = 1;
             _computerPlayer.PendingShots.Clear();
         }
-
         public void EasyMode(Board board)
+        {
+            Point target;
+            target = GetRandomPoint(board);
+            bool hit = ShootAt(board, target);
+            if (hit)
+            {
+                Console.WriteLine($"Hit at ({target.wight}, {target.height})!");
+            }
+            else
+            {
+                Console.WriteLine($"Miss at ({target.wight}, {target.height}).");
+            }
+        }
+
+        public void MediiumMode(Board board)
         {
             
             Point target;
@@ -61,7 +75,65 @@ namespace ProjektStatki.Models.Builder
                 Console.WriteLine($"Miss at ({target.wight}, {target.height}).");
             }
         }
+        public void HardMode(Board board)
+        {
+            Point target;
 
+            if (_computerPlayer.PendingShots.Count > 0)
+            {
+                target = _computerPlayer.PendingShots[0];
+                _computerPlayer.PendingShots.RemoveAt(0);
+            }
+            else
+            {
+                // Generujemy listę punktów do strzału
+                List<Point> targetPool = GenerateTargetPool(board);
+
+                // Losujemy punkt z tej listy
+                target = targetPool[_random.Next(targetPool.Count)];
+            }
+
+            Console.WriteLine($"{_computerPlayer.name} shoots at ({target.wight}, {target.height})");
+
+            // Wykonujemy strzał
+            bool hit = ShootAt(board, target);
+
+            if (hit)
+            {
+                Console.WriteLine($"Hit at ({target.wight}, {target.height})!");
+                AddSurroundingPoints(board, target); // Dodaj sąsiadujące punkty, aby celować w statek
+            }
+            else
+            {
+                Console.WriteLine($"Miss at ({target.wight}, {target.height}).");
+            }
+        }
+
+
+        private List<Point> GenerateTargetPool(Board board)
+        {
+            var targetPool = new List<Point>();
+            var availableCells = board.cells
+                .Where(c => !c.wasShot && !c.isShip)
+                .ToList();
+
+            int pointsToAdd = Math.Min(4, availableCells.Count);
+            for (int i = 0; i < pointsToAdd; i++)
+            {
+                Cell randomCell = availableCells[_random.Next(availableCells.Count)];
+                targetPool.Add(randomCell.point);
+                availableCells.Remove(randomCell); // Usuwamy, aby nie powtarzać punktów
+            }
+
+            // Dodajemy punkt, w którym znajduje się statek, jeśli taki istnieje
+            Cell shipCell = board.cells.FirstOrDefault(c => !c.wasShot && c.isShip);
+            if (shipCell != null)
+            {
+                targetPool.Add(shipCell.point);
+            }
+
+            return targetPool;
+        }
         private Point GetRandomPoint(Board board)
         {
             List<Cell> availableCells = board.cells
