@@ -29,7 +29,7 @@ namespace ProjektStatki.Views
 
         private void PlayerView_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         public int Run(string LoggedUserId)
@@ -54,6 +54,12 @@ namespace ProjektStatki.Views
         private void button1_Click(object sender, EventArgs e)
         {
             choose = 1;
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            choose = 2;
             this.Close();
         }
     }
