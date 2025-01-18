@@ -57,6 +57,45 @@ namespace ProjektStatki.Views
                         panel1.Visible = true;
                         panel2.Visible = false;
                         label1.Text = selectedNode.Text;
+                        if (label1.Text == "Nie rankingowa")
+                        {
+                            label2.Text = "" +
+                                "Rankingowa = Nie \n\r" +
+                                "Rozmiar Planszy = 10x10 \n\r" +
+                                "Ile statków = 5 \n\r" +
+                                "W tym specjalnych = 0 \n\r";
+                        }
+                        else if (label1.Text == "Rankingowa")
+                        {
+                            label2.Text = "" +
+                                "Rankingowa = Tak \n\r" +
+                                "Rozmiar Planszy = 10x10 \n\r" +
+                                "Ile statków = 5 \n\r" +
+                                "W tym specjalnych = 0 \n\r";
+                        }
+                        else if (label1.Text == "Tryb Symulacji")
+                        {
+                            label2.Text = "" +
+                                "Rankingowa = Nie \n\r" +
+                                "Rozmiar Planszy = 10x10 \n\r" +
+                                "Ile statków = 5 \n\r" +
+                                "W tym specjalnych = 2 \n\r" +
+                                "Zasady: Możliwość oglądania testowej gry botów w trybie standardowym \n\r";
+                        }
+                        else if (label1.Text == "SpecjalneStatki")
+                        {
+                            label2.Text = "" +
+                                "Rankingowa = Nie \n\r" +
+                                "Rozmiar Planszy = 10x10 \n\r" +
+                                "Ile statków = 5 \n\r" +
+                                "W tym specjalnych = 2 \n\r" +
+                                "Zasady: Każdy statek zostaje zatopiony po 1 trafieniu \n\r";
+                        }
+                        else
+                        {
+                            label2.Text = "Wyskoczył błąd";
+                        }
+
                     }
                     else
                     {
@@ -135,7 +174,31 @@ namespace ProjektStatki.Views
                 }
                 else if(label1.Text == "SpecjalneStatki")
                 {
-                    MessageBox.Show("specjalneStatki");
+                    if (string.IsNullOrEmpty(textBox1.Text))
+                    {
+                        if (!(checkBox1.Checked))
+                        {
+                            MessageBox.Show("Musisz wybrać przeciwnika");
+                        }
+                        else
+                        {
+                            enemy = new HumanPlayer("GOŚĆ", "1234");
+                        }
+                    }
+                    else
+                    {
+                        string login = textBox1.Text;
+                        string password = textBox3.Text;
+                        if (db.users.Any(u => u.name == login && u.password == password))
+                        {
+                            enemy = db.users.FirstOrDefault(u => u.name == login);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
+                        }
+                    }
+                    gameMode = new OneShotSinksShip();
                 }
                 else
                 {

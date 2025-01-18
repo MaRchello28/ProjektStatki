@@ -208,7 +208,7 @@ namespace ProjektStatki.Views
             {
                 if (listBox1.SelectedIndex != -1)
                 {
-                    if(shipsCount > 0)
+                    if(shipsCount > 0 && shipsCount > specialShipsCount)
                     {
                         string selectedShipName = listBox1.SelectedItem.ToString();
                         Ship ship = normalShips.FirstOrDefault(s => s.getName() == selectedShipName);
@@ -223,6 +223,10 @@ namespace ProjektStatki.Views
                         {
                             MessageBox.Show("Problem ze znalezieniem statku");
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nie możesz już stawiać statków");
                     }
                 }
                 else
@@ -265,7 +269,8 @@ namespace ProjektStatki.Views
                 if (shipToDelete != null)
                 {
                     listBox3.Items.Remove(listBox3.SelectedItem);
-                    if(shipToDelete is NormalShipType)
+                    selectedShips.Remove(shipToDelete);
+                    if (shipToDelete is NormalShipType)
                     {
                         shipsCount++;
                         Label5TextRestart();

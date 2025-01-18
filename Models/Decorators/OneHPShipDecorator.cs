@@ -15,11 +15,11 @@ namespace ProjektStatki.Models.Decorators
             this.Ship = ship;
         }
 
-        public void Execute(int x, int y, Board board)
+        public override void Execute(int x, int y, Board board)
         {
             foreach(Point point in Ship.points)
             {
-                var changeCell = board.cells.FirstOrDefault(c => c.point.wight == point.wight && c.point.height == point.height);
+                var changeCell = board.cells.FirstOrDefault(c => c.point.wight == point.height && c.point.height == point.wight);
                 if(changeCell != null)
                 {
                     changeCell.wasShot = true;

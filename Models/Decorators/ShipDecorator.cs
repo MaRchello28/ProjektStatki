@@ -6,18 +6,38 @@ using System.Threading.Tasks;
 
 namespace ProjektStatki.Models.Decorator
 {
-    //Dodać do tego dziedziczące konkretne dekoratory
-    public class ShipDecorator
+    public abstract class ShipDecorator : Ship
     {
-        Ship wrappedShip;
-        public ShipDecorator(Ship ship)
+        public Ship Ship;
+
+        protected ShipDecorator(Ship ship)
         {
-            wrappedShip = ship;
+            this.Ship = ship;
         }
 
-        public virtual void Execute()
-        {
+        public int Id { get { return Ship.Id; } set { Ship.Id = value; } }
+        public List<Point> points { get { return Ship.points; } set { Ship.points = value; } }
 
+        public List<Point> getPoints()
+        {
+            return Ship.getPoints();
         }
+
+        public string getName()
+        {
+            return Ship.getName();
+        }
+
+        public Ship putShipOnBoard()
+        {
+            return Ship.putShipOnBoard();
+        }
+
+        public Point fire(int x, int y)
+        {
+            return Ship.fire(x, y);
+        }
+
+        public abstract void Execute(int x, int y, Board board);
     }
 }

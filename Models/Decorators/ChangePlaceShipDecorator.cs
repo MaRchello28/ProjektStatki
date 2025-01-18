@@ -16,7 +16,7 @@ namespace ProjektStatki.Models.Decorators
             this.Ship = ship;
         }
 
-        public void Execute(int x, int y, Board board)
+        public override void Execute(int x, int y, Board board)
         {
             int count = 0;
             //Ship.Execute(x, y);

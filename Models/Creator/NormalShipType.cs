@@ -39,7 +39,7 @@ namespace ProjektStatki.Models.Creator
             return point;
         }
 
-        public void Execute(int x, int y)
+        public void Execute(int x, int y, Board board)
         {
 
         }
