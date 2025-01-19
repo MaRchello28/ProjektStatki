@@ -17,17 +17,19 @@ namespace ProjektStatki.Views
         private WaveOutEvent waveOut;
         private AudioFileReader audioFile;
 
-        public SettingsView(HumanPlayer player)
+        public SettingsView(HumanPlayer player,WaveOutEvent existingWaveOut, AudioFileReader existingAudioFile)
         {
             InitializeComponent();
+            waveOut = existingWaveOut; 
+            audioFile = existingAudioFile; 
             InitializePlayerProfile(player);
-            InitializeAudio();
+            InitializeVolumeControl();
         }
 
         private void volumeTrackBar_Scroll(object sender, EventArgs e)
         {
             volumeLabel.Text = $"Głośność: {volumeTrackBar.Value}%";
-            audioFile.Volume = volumeTrackBar.Value / 100f;
+            waveOut.Volume = volumeTrackBar.Value / 100f;
         }
         private void InitializePlayerProfile(HumanPlayer player)
         {
@@ -36,16 +38,11 @@ namespace ProjektStatki.Views
             levelLabel.Text = $"Poziom: {player.level.level}";
             expLabel.Text = $"Doświadczenie: {player.level.exp}/{player.level.expToNextLevel}";
         }
-        private void InitializeAudio()
+        private void InitializeVolumeControl()
         {
-            // Tymczasowy plik z zasobu
-            string tempFilePath = Path.GetTempFileName() + ".mp3";
-            File.WriteAllBytes(tempFilePath, Properties.Resources.MuzyczkaMArio);
-
-            waveOut = new WaveOutEvent();
-            audioFile = new AudioFileReader(tempFilePath);
-            waveOut.Init(audioFile);
-            waveOut.Play();
+            // Ustawienie suwaka głośności na aktualną wartość
+            volumeTrackBar.Value = (int)(waveOut.Volume * 100);
+            volumeLabel.Text = $"Głośność: {volumeTrackBar.Value}%";
         }
     }
 }
