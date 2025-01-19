@@ -17,6 +17,7 @@ namespace ProjektStatki.Models.Gamemodes
         public int countShipsOnBoard { get; set; }
         public int countSpecialShips { get; set; }
         public List<Ship> ships { get; set; }
+        public string name { get; set; }
         public OneShotSinksShip() 
         { 
             isRanked = false;
@@ -25,6 +26,7 @@ namespace ProjektStatki.Models.Gamemodes
             countShipsOnBoard = 5;
             countSpecialShips = 2;
             this.ships = SelectShips();
+            name = "OneShotSinksShip";
         }
 
         public List<Ship> SelectShips()

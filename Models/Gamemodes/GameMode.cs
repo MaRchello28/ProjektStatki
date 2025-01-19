@@ -14,6 +14,7 @@ namespace ProjektStatki.Models.Gamemodes
         public int countShipsOnBoard { get; set; }
         public int countSpecialShips { get; set; }
         public List<Ship> ships { get; set; }
+        public string name { get; set; }
         public Board SetBoard(int x, int y);
         public int SetCountShipsOnBoard(int value);
         public int SetCountSpecialShips(int value);

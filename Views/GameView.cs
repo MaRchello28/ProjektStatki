@@ -255,6 +255,12 @@ namespace ProjektStatki.Views
                     }
                     playerLose.LevelUp(false);
                 }
+                if (game.player1 is HumanPlayer && game.player2 is HumanPlayer && playerLose != null && playerWon != null)
+                {
+                    GameHistoryModel ghm = new GameHistoryModel(game.player1.Id, game.player2.Id, game.player1.name + "Wygrał",
+                        game.gameMode.name, DateTime.Now);
+                    db.gameHistory.Add(ghm);
+                }
                 db.SaveChanges();
                 this.Close();
             }
@@ -278,6 +284,12 @@ namespace ProjektStatki.Views
                         playerLose.UpdateRanking(false, playerWon.raitingPoints);
                     }
                     playerLose.LevelUp(false);
+                }
+                if (game.player1 is HumanPlayer && game.player2 is HumanPlayer && playerLose != null && playerWon != null)
+                {
+                    GameHistoryModel ghm = new GameHistoryModel(game.player1.Id, game.player2.Id, game.player2.name + " Wygrał",
+                        game.gameMode.name, DateTime.Now);
+                    db.gameHistory.Add(ghm);
                 }
                 db.SaveChanges();
                 this.Close();

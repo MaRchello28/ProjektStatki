@@ -14,6 +14,7 @@ namespace ProjektStatki.Models.Gamemodes
         public int countShipsOnBoard { get; set; }
         public int countSpecialShips { get; set; }
         public List<Ship> ships { get; set; }
+        public string name { get; set; }
 
         public CustomgameMode(Board board1, Board board2, int countShipsOnBoard, int countSpecialShips, List<Ship> ships)
         {
@@ -23,6 +24,7 @@ namespace ProjektStatki.Models.Gamemodes
             this.countShipsOnBoard = countShipsOnBoard;
             this.countSpecialShips = countSpecialShips;
             this.ships = ships;
+            name = "CustomgameMode";
         }
 
         public Board SetBoard(int x, int y)

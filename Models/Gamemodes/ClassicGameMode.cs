@@ -16,6 +16,7 @@ namespace ProjektStatki.Models.Gamemodes
         public int countShipsOnBoard { get; set; }
         public int countSpecialShips { get; set; }
         public List<Ship> ships { get; set; }
+        public string name { get; set; }
         public ClassicGameMode(bool isRanked)
         {
             this.isRanked = isRanked;
@@ -24,6 +25,7 @@ namespace ProjektStatki.Models.Gamemodes
             countShipsOnBoard = SetCountShipsOnBoard(5);
             countSpecialShips = SetCountSpecialShips(0);
             ships = SelectShips();
+            name = "ClassicGameMode";
         }
         public Board SetBoard(int x, int y)
         {
