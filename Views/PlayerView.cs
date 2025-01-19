@@ -18,11 +18,13 @@ namespace ProjektStatki.Views
         public int choose = 10;
         private IWavePlayer _waveOutDevice;
         private AudioFileReader _audioFileReader;
+        private bool buttonPress = false;
         public PlayerView(MyDbContext db)
         {
             InitializeComponent();
             this.db = db;
             this.StartPosition = FormStartPosition.CenterScreen;
+            this.FormClosing += PlayerView_FormClosing;
             var tempFile = System.IO.Path.GetTempFileName();
             System.IO.File.WriteAllBytes(tempFile, Properties.Resources._02_Title_Theme);
             _waveOutDevice = new WaveOutEvent();
@@ -38,7 +40,7 @@ namespace ProjektStatki.Views
 
         private void PlayerView_Load(object sender, EventArgs e)
         {
-
+            buttonPress = false;
         }
 
         public int Run(string LoggedUserId)
@@ -63,6 +65,7 @@ namespace ProjektStatki.Views
         private void button1_Click(object sender, EventArgs e)
         {
             choose = 1;
+            buttonPress = true;
             this.Close();
 
         }
@@ -70,11 +73,16 @@ namespace ProjektStatki.Views
         private void button2_Click(object sender, EventArgs e)
         {
             choose = 2;
+            buttonPress = true;
             this.Close();
         }
-        /*_waveOutDevice?.Stop();
-        _waveOutDevice?.Dispose();
-        _audioFileReader?.Dispose();
-        base.OnFormClosing(e); -- nie wiem gdzie to wylaczenie ma byc */ 
+
+        private void PlayerView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(buttonPress == false)
+            {
+                choose = 10;
+            }
+        }
     }
 }

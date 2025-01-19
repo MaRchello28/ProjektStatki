@@ -40,11 +40,17 @@
             groupBox2 = new GroupBox();
             button1 = new Button();
             button2 = new Button();
+            panel1 = new Panel();
+            listBox4 = new ListBox();
+            label3 = new Label();
+            listBox3 = new ListBox();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView3).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // dataGridView1
@@ -149,7 +155,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(608, 232);
+            button2.Location = new Point(608, 295);
             button2.Name = "button2";
             button2.Size = new Size(140, 59);
             button2.TabIndex = 13;
@@ -157,11 +163,65 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // panel1
+            // 
+            panel1.Controls.Add(listBox4);
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(listBox3);
+            panel1.Controls.Add(label2);
+            panel1.Location = new Point(595, 131);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(165, 158);
+            panel1.TabIndex = 14;
+            // 
+            // listBox4
+            // 
+            listBox4.FormattingEnabled = true;
+            listBox4.ItemHeight = 15;
+            listBox4.Items.AddRange(new object[] { "Czarne", "Pomarańczowe" });
+            listBox4.Location = new Point(17, 109);
+            listBox4.Name = "listBox4";
+            listBox4.Size = new Size(125, 34);
+            listBox4.TabIndex = 3;
+            listBox4.SelectedIndexChanged += listBox4_SelectedIndexChanged;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 11F);
+            label3.Location = new Point(3, 86);
+            label3.Name = "label3";
+            label3.Size = new Size(159, 20);
+            label3.TabIndex = 2;
+            label3.Text = "Wybierz kolor statków:";
+            // 
+            // listBox3
+            // 
+            listBox3.FormattingEnabled = true;
+            listBox3.ItemHeight = 15;
+            listBox3.Items.AddRange(new object[] { "Białe", "Czerwone", "Zielone" });
+            listBox3.Location = new Point(17, 34);
+            listBox3.Name = "listBox3";
+            listBox3.Size = new Size(125, 49);
+            listBox3.TabIndex = 1;
+            listBox3.SelectedIndexChanged += listBox3_SelectedIndexChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 11F);
+            label2.Location = new Point(17, 11);
+            label2.Name = "label2";
+            label2.Size = new Size(125, 20);
+            label2.TabIndex = 0;
+            label2.Text = "Wybierz kolor tła:";
+            // 
             // GameView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1368, 624);
+            Controls.Add(panel1);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(groupBox2);
@@ -177,6 +237,8 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView3).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -194,5 +256,10 @@
         private GroupBox groupBox2;
         private Button button1;
         private Button button2;
+        private Panel panel1;
+        private ListBox listBox3;
+        private Label label2;
+        private ListBox listBox4;
+        private Label label3;
     }
 }

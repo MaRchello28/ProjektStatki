@@ -31,6 +31,8 @@ namespace ProjektStatki.Views
         Board board2;
         private List<Ship> player1Ships = new List<Ship>();
         private List<Ship> player2Ships = new List<Ship>();
+        private int backgroundSkin = 1;
+        private Color shipColor = Color.Black;
         Ship copiedShip = null;
         public GameView(Game game, MyDbContext db)
         {
@@ -42,10 +44,12 @@ namespace ProjektStatki.Views
             this.KeyDown += new KeyEventHandler(Form1_KeyDown);
             listBox1.KeyDown += new KeyEventHandler(listBox1_KeyDown);
             listBox2.KeyDown += new KeyEventHandler(listBox2_KeyDown);
+            listBox3.KeyDown += listBox1_KeyDown;
+            listBox4.KeyDown += listBox1_KeyDown;
             board1 = game.boardPlayer1;
             board2 = game.boardPlayer2;
-            //dataGridView1.Enabled = false;
-            //dataGridView2.Enabled = false;
+            dataGridView1.Enabled = false;
+            dataGridView2.Enabled = false;
             dataGridView1.CellClick += DataGridView1_CellClick;
             dataGridView2.CellClick += DataGridView2_CellClick;
             dataGridView3.ReadOnly = true;
@@ -442,7 +446,7 @@ namespace ProjektStatki.Views
                         groupBox1.Hide();
                         groupBox2.Hide();
                         dataGridView3.Hide();
-                        
+
                     }
                     //MessageBox.Show("Teraz rusza się gracz: " + game.player2.name);
                 }
@@ -457,7 +461,7 @@ namespace ProjektStatki.Views
                         groupBox1.Hide();
                         groupBox2.Hide();
                         dataGridView3.Hide();
-                        
+
                     }
                     //MessageBox.Show("Teraz rusza się gracz: " + game.player1.name);
                 }
@@ -833,18 +837,21 @@ namespace ProjektStatki.Views
 
         public void StartGame()
         {
+            panel1.Hide();
             groupBox1.Hide();
             groupBox2.Hide();
-            //MessageBox.Show("Teraz rozpocznie się gra. Rozpoczyna gracz: " + game.player1.name);
             currentPlayer = 1;
             currentPlayerBoard = game.boardPlayer1;
             currentDataGridView = dataGridView1;
             groupBox1.Show();
             groupBox2.Show();
-            if(game.player1 is ComputerPlayer && game.player2 is ComputerPlayer)
+            if (game.player1 is ComputerPlayer && game.player2 is ComputerPlayer)
             {
-                button1.Visible = true;
+                button1.Visible = false;
             }
+            button1.Visible = true;
+            dataGridView1.Enabled = true;
+            dataGridView2.Enabled = true;
             dataGridView1.ClearSelection();
             dataGridView2.ClearSelection();
         }
@@ -867,7 +874,7 @@ namespace ProjektStatki.Views
                         }
                         else if (cell.isShip == true && cell.wasShot == false)
                         {
-                            grid1.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Black;
+                            grid1.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = shipColor;
                         }
                         else if (cell.isShip == false && cell.wasShot == true)
                         {
@@ -922,6 +929,19 @@ namespace ProjektStatki.Views
         {
             listBox1.Visible = false;
             listBox2.Visible = false;
+            if(game.player1 is ComputerPlayer && game.player2 is ComputerPlayer)
+            {
+                if(dataGridView3.Rows.Count % 10 == 0)
+                {
+                    DialogResult result = MessageBox.Show("Czy chcesz zakończyć grę?", "Zakończenie gry", MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        this.Close();
+                        return;
+                    }
+                }
+            }
             if (currentPlayer == 1)
             {
                 groupBox1.Hide(); groupBox2.Hide(); dataGridView3.Hide(); label1.Hide();
@@ -933,11 +953,11 @@ namespace ProjektStatki.Views
                 dataGridView1.Enabled = false;
                 if (game.player1 is HumanPlayer)
                 {
-                    
+
                 }
                 else
                 {
-                    groupBox1.Visible = true; 
+                    groupBox1.Visible = true;
                     groupBox2.Visible = true;
                     groupBox1.Show();
                     groupBox2.Show();
@@ -948,7 +968,7 @@ namespace ProjektStatki.Views
             else
             {
                 if (game.player1 is HumanPlayer && game.player2 is HumanPlayer)
-                    groupBox1.Hide(); groupBox2.Hide() ; dataGridView3.Hide(); label1.Hide();
+                    groupBox1.Hide(); groupBox2.Hide(); dataGridView3.Hide(); label1.Hide();
                 MessageBox.Show("Teraz rusza się gracz: " + game.player2.name);
                 dataGridView2.ClearSelection();
                 groupBox1.Show(); groupBox2.Show(); dataGridView3.Show(); label1.Show();
@@ -958,7 +978,7 @@ namespace ProjektStatki.Views
                 dataGridView2.Enabled = false;
                 if (game.player2 is HumanPlayer)
                 {
-                    
+
                 }
                 else
                 {
@@ -1014,7 +1034,7 @@ namespace ProjektStatki.Views
             {
                 if (point.wight >= 0 && point.wight < grid.RowCount && point.height >= 0 && point.height < grid.ColumnCount)
                 {
-                    grid.Rows[point.wight].Cells[point.height].Style.BackColor = Color.Black;
+                    grid.Rows[point.wight].Cells[point.height].Style.BackColor = shipColor;
                 }
             }
         }
@@ -1234,6 +1254,34 @@ namespace ProjektStatki.Views
             dataGridView3.Visible = true;
             StartGame();
             PlayerTurn();
+        }
+
+        private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBox3.SelectedIndex == 0)
+            {
+                this.BackColor = Color.White;
+            }
+            else if (listBox3.SelectedIndex == 1)
+            {
+                this.BackColor = Color.Red;
+            }
+            else if (listBox3.SelectedIndex == 2)
+            {
+                this.BackColor = Color.Green;
+            }
+        }
+
+        private void listBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBox4.SelectedIndex == 0)
+            {
+                shipColor = Color.Black;
+            }
+            else if (listBox4.SelectedIndex == 1)
+            {
+                shipColor = Color.Orange;
+            }
         }
     }
 }

@@ -27,8 +27,8 @@ namespace ProjektStatki.Controllers
         }
         public void RunController()
         {
-            int choose;
-            while(true)
+            int choose; bool run = true;
+            while(run)
             {
                 choose = playerView.Run(LoggedUserId);
                 switch (choose)
@@ -52,6 +52,7 @@ namespace ProjektStatki.Controllers
                         break;
                     default:
                         {
+                            run = false;
                             break;
                         }
                 }
