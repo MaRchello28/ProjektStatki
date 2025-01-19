@@ -16,12 +16,14 @@ namespace ProjektStatki.Controllers
         MyDbContext db;
         PlayerView playerView;
         ChooseGameModeView gameModeView;
+        HistoryView historyView;
         public PlayerController(MyDbContext db, string LoggedUserId) 
         { 
             this.db = db;
             this.LoggedUserId = LoggedUserId;
             playerView = new PlayerView(db);
             gameModeView = new ChooseGameModeView(db);
+            historyView = new HistoryView(db, LoggedUserId);
         }
         public void RunController()
         {
@@ -45,6 +47,9 @@ namespace ProjektStatki.Controllers
                             }
                             break;
                         }
+                    case 2:
+                        historyView.ShowDialog();
+                        break;
                     default:
                         {
                             break;

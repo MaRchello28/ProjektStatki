@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProjektStatki.Models.Data;
 using ProjektStatki.Models.Gamemodes;
 
 namespace ProjektStatki.Models
@@ -50,6 +51,22 @@ namespace ProjektStatki.Models
 
         public void OnEndGame()
         {
+            using (var context = new MyDbContext())
+            {
+                string loggedPlayerId = (boardPlayer1.player.Id); // ID zalogowanego gracza
+                string opponentId = (boardPlayer2.player.Id); // ID przeciwnika
+
+                var historyEntry = new GameHistoryModel(
+                    loggedPlayerId, // Zalogowany gracz
+                    opponentId,     // Przeciwnik
+                    result,      // Przykładowy rezultat
+                    "Klasyczny",     // Przykładowy tryb gry
+                    gameStart
+                );
+
+                context.gameHistory.Add(historyEntry);
+                context.SaveChanges();
+            }
 
         }
     }
