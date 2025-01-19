@@ -28,6 +28,7 @@ namespace ProjektStatki.Views
 
         private void volumeTrackBar_Scroll(object sender, EventArgs e)
         {
+            // Zmiana głośności
             volumeLabel.Text = $"Głośność: {volumeTrackBar.Value}%";
             waveOut.Volume = volumeTrackBar.Value / 100f;
         }
