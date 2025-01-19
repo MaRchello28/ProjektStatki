@@ -26,7 +26,17 @@ namespace ProjektStatki.Controllers
             Player player1 = db.users.FirstOrDefault(u => u.Id == this.LoggedUserId);
             if(player1 == null)
             {
-                MessageBox.Show("Nie znaleziono gracza!");
+                if(gamemode.board1.player == null)
+                {
+                    MessageBox.Show("Nie znaleziono gracza!");
+                }
+                else
+                {
+                    player1 = gamemode.board1.player;
+                    Game game = new Game(gamemode.board1, gamemode.board2, gamemode, player1, player2);
+                    GameView gameView = new GameView(game, db);
+                    gameView.ShowDialog();
+                }
             }
             else
             {

@@ -36,6 +36,10 @@ namespace ProjektStatki.Models
             this.level.exp = exp;
             this.level.expToNextLevel = expToNext;
         }
+        public Point Shot(Board b)
+        {
+            return new Point(0, 0);
+        }
 
         private string GenerateId()
         {

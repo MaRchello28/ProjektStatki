@@ -43,12 +43,17 @@
             pictureBox1 = new PictureBox();
             label2 = new Label();
             panel1 = new Panel();
+            listBox3 = new ListBox();
+            label16 = new Label();
+            listBox1 = new ListBox();
             textBox3 = new TextBox();
             label14 = new Label();
             label12 = new Label();
             textBox1 = new TextBox();
             checkBox1 = new CheckBox();
             panel2 = new Panel();
+            label17 = new Label();
+            listBox2 = new ListBox();
             textBox4 = new TextBox();
             label15 = new Label();
             label13 = new Label();
@@ -91,7 +96,7 @@
             // button1
             // 
             button1.Font = new Font("Segoe UI", 13F);
-            button1.Location = new Point(269, 459);
+            button1.Location = new Point(282, 455);
             button1.Name = "button1";
             button1.Size = new Size(147, 35);
             button1.TabIndex = 3;
@@ -131,7 +136,7 @@
             // 
             label1.BorderStyle = BorderStyle.FixedSingle;
             label1.Font = new Font("Segoe UI", 15F);
-            label1.Location = new Point(3, 9);
+            label1.Location = new Point(20, 9);
             label1.Name = "label1";
             label1.Size = new Size(247, 34);
             label1.TabIndex = 0;
@@ -141,7 +146,7 @@
             // pictureBox1
             // 
             pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Location = new Point(3, 46);
+            pictureBox1.Location = new Point(20, 46);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(247, 129);
             pictureBox1.TabIndex = 1;
@@ -151,7 +156,7 @@
             // 
             label2.BorderStyle = BorderStyle.FixedSingle;
             label2.Font = new Font("Segoe UI", 11F);
-            label2.Location = new Point(3, 178);
+            label2.Location = new Point(20, 178);
             label2.Name = "label2";
             label2.Size = new Size(247, 161);
             label2.TabIndex = 2;
@@ -161,6 +166,9 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(listBox3);
+            panel1.Controls.Add(label16);
+            panel1.Controls.Add(listBox1);
             panel1.Controls.Add(textBox3);
             panel1.Controls.Add(label14);
             panel1.Controls.Add(label12);
@@ -171,8 +179,37 @@
             panel1.Controls.Add(pictureBox1);
             panel1.Location = new Point(212, 12);
             panel1.Name = "panel1";
-            panel1.Size = new Size(256, 441);
+            panel1.Size = new Size(284, 441);
             panel1.TabIndex = 6;
+            // 
+            // listBox3
+            // 
+            listBox3.FormattingEnabled = true;
+            listBox3.ItemHeight = 15;
+            listBox3.Items.AddRange(new object[] { "Łatwy", "Średni", "Trudny" });
+            listBox3.Location = new Point(213, 362);
+            listBox3.Name = "listBox3";
+            listBox3.Size = new Size(66, 49);
+            listBox3.TabIndex = 10;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(159, 344);
+            label16.Name = "label16";
+            label16.Size = new Size(92, 15);
+            label16.TabIndex = 9;
+            label16.Text = "Wybierz poziom";
+            // 
+            // listBox1
+            // 
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 15;
+            listBox1.Items.AddRange(new object[] { "Łatwy", "Średni", "Trudny" });
+            listBox1.Location = new Point(137, 362);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(66, 49);
+            listBox1.TabIndex = 8;
             // 
             // textBox3
             // 
@@ -219,6 +256,8 @@
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(label17);
+            panel2.Controls.Add(listBox2);
             panel2.Controls.Add(textBox4);
             panel2.Controls.Add(label15);
             panel2.Controls.Add(label13);
@@ -232,6 +271,25 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(256, 441);
             panel2.TabIndex = 7;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(159, 339);
+            label17.Name = "label17";
+            label17.Size = new Size(92, 15);
+            label17.TabIndex = 11;
+            label17.Text = "Wybierz poziom";
+            // 
+            // listBox2
+            // 
+            listBox2.FormattingEnabled = true;
+            listBox2.ItemHeight = 15;
+            listBox2.Items.AddRange(new object[] { "Łatwy", "Średni", "Trudny" });
+            listBox2.Location = new Point(169, 357);
+            listBox2.Name = "listBox2";
+            listBox2.Size = new Size(66, 49);
+            listBox2.TabIndex = 10;
             // 
             // textBox4
             // 
@@ -452,7 +510,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(789, 506);
+            ClientSize = new Size(498, 506);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(treeView1);
@@ -517,5 +575,10 @@
         private TextBox textBox4;
         private Label label15;
         private Label label13;
+        private Label label16;
+        private ListBox listBox1;
+        private Label label17;
+        private ListBox listBox2;
+        private ListBox listBox3;
     }
 }

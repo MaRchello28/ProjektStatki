@@ -78,8 +78,16 @@ namespace ProjektStatki.Controllers
         {   
             if(gameModeView.Enemy() != null)
             {
-                GameController gameController = new GameController(db, gameMode, LoggedUserId, gameModeView.Enemy());
-                gameController.RunController();
+                if(gameModeView.Player1() == null)
+                {
+                    GameController gameController = new GameController(db, gameMode, LoggedUserId, gameModeView.Enemy());
+                    gameController.RunController();
+                }
+                else
+                {
+                    GameController gameController = new GameController(db, gameMode, gameModeView.Player1().name, gameModeView.Enemy());
+                    gameController.RunController();
+                }
             }
             
         }

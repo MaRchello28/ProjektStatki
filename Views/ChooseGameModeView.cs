@@ -18,6 +18,7 @@ namespace ProjektStatki.Views
     {
         public GameMode gameMode = null;
         public Player enemy = null;
+        public Player player1 = null;
         MyDbContext db;
         public ChooseGameModeView(MyDbContext db)
         {
@@ -25,6 +26,10 @@ namespace ProjektStatki.Views
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             this.db = db;
             this.StartPosition = FormStartPosition.CenterScreen;
+            label16.Visible = false;
+            label17.Visible = false;
+            listBox1.Visible = false;
+            listBox2.Visible = false;
         }
 
         public GameMode ChoseGamemode()
@@ -37,11 +42,30 @@ namespace ProjektStatki.Views
             return enemy;
         }
 
+        public Player Player1()
+        {
+            return player1;
+        }
+
         private void ChooseGameModeView_Load(object sender, EventArgs e)
         {
             panel1.Visible = false;
             panel2.Visible = false;
-            
+        }
+
+        private void ComputerDifficultyView(bool visible)
+        {
+            if(panel1.Visible)
+            {
+                label16.Visible = visible;
+                listBox1.Visible = visible;
+                listBox3.Visible = visible;
+            }
+            else
+            {
+                label17.Visible = visible;
+                listBox2.Visible = visible;
+            }
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -59,6 +83,7 @@ namespace ProjektStatki.Views
                         label1.Text = selectedNode.Text;
                         if (label1.Text == "Nie rankingowa")
                         {
+                            ComputerDifficultyView(false);
                             label2.Text = "" +
                                 "Rankingowa = Nie \n\r" +
                                 "Rozmiar Planszy = 10x10 \n\r" +
@@ -67,6 +92,7 @@ namespace ProjektStatki.Views
                         }
                         else if (label1.Text == "Rankingowa")
                         {
+                            ComputerDifficultyView(false);
                             label2.Text = "" +
                                 "Rankingowa = Tak \n\r" +
                                 "Rozmiar Planszy = 10x10 \n\r" +
@@ -75,6 +101,7 @@ namespace ProjektStatki.Views
                         }
                         else if (label1.Text == "Tryb Symulacji")
                         {
+                            ComputerDifficultyView(true);
                             label2.Text = "" +
                                 "Rankingowa = Nie \n\r" +
                                 "Rozmiar Planszy = 10x10 \n\r" +
@@ -84,6 +111,7 @@ namespace ProjektStatki.Views
                         }
                         else if (label1.Text == "SpecjalneStatki")
                         {
+                            ComputerDifficultyView(false);
                             label2.Text = "" +
                                 "Rankingowa = Nie \n\r" +
                                 "Rozmiar Planszy = 10x10 \n\r" +
@@ -103,6 +131,14 @@ namespace ProjektStatki.Views
                         panel2.Visible = true;
                         panel2.Location = panel1.Location;
                         label4.Text = selectedNode.Text;
+                        if (label4.Text == "Gracz vs AI")
+                        {
+                            ComputerDifficultyView(true);
+                        }
+                        else
+                        {
+                            ComputerDifficultyView(false);
+                        }
                     }
                 }
             }
@@ -170,7 +206,60 @@ namespace ProjektStatki.Views
                 }
                 else if(label1.Text == "Tryb Symulacji")
                 {
-                    MessageBox.Show("trybSymulacji");
+                    if(listBox1.SelectedIndex == -1 || listBox3.SelectedIndex == -1)
+                    {
+                        MessageBox.Show("Nie wybrano poziomu trudności dla wszystkich botów");
+                    }
+                    else
+                    {
+                        gameMode = new ClassicGameMode(true);
+                        List<string> names = new List<string>()
+                        {
+                            "Mieszko", "Bolesław", "Kazimierz", "Władysław", "Stanisław", "Leszek"
+                        };
+
+                        if (listBox1.SelectedIndex == 0)
+                        {
+                            player1 = new ComputerPlayer(names[0], 1);
+                            player1.name = names[0];
+                        }
+                        else if(listBox1.SelectedIndex == 1)
+                        {
+                            player1 = new ComputerPlayer(names[1], 2);
+                            player1.name = names[1];
+                        }
+                        else if (listBox1.SelectedIndex == 2)
+                        {
+                            player1 = new ComputerPlayer(names[2], 3);
+                            player1.name = names[2];
+                        }
+                        else
+                        {
+                            MessageBox.Show("Bład podczas konstrukcji player1");
+                        }
+
+                        if (listBox3.SelectedIndex == 0)
+                        {
+                            enemy = new ComputerPlayer(names[3], 1);
+                            enemy.name = names[3];
+                        }
+                        else if (listBox3.SelectedIndex == 1)
+                        {
+                            enemy = new ComputerPlayer(names[4], 2);
+                            enemy.name = names[4];
+                        }
+                        else if (listBox3.SelectedIndex == 2)
+                        {
+                            enemy = new ComputerPlayer(names[5], 3);
+                            enemy.name = names[5];
+                        }
+                        else
+                        {
+                            MessageBox.Show("Bład podczas konstrukcji player2");
+                        }
+                        gameMode.board1.player = player1;
+                        gameMode.board2.player = enemy;
+                    }
                 }
                 else if(label1.Text == "SpecjalneStatki")
                 {
@@ -209,7 +298,52 @@ namespace ProjektStatki.Views
             {
                 if (label4.Text == "Gracz vs AI")
                 {
-                    MessageBox.Show("graczVsAI");
+
+                    if (listBox2.SelectedIndex == -1)
+                    {
+                        MessageBox.Show("Nie wybrano poziomu trudności dla wszystkich bota");
+                    }
+                    else
+                    {
+                        List<string> names = new List<string>()
+                        {
+                            "Mieszko", "Bolesław", "Kazimierz"
+                        };
+
+                        if (listBox2.SelectedIndex == 0)
+                        {
+                            enemy = new ComputerPlayer(names[0], 1);
+                            enemy.name = names[0];
+                        }
+                        else if (listBox2.SelectedIndex == 1)
+                        {
+                            enemy = new ComputerPlayer(names[1], 2);
+                            enemy.name = names[1];
+                        }
+                        else if (listBox2.SelectedIndex == 2)
+                        {
+                            enemy = new ComputerPlayer(names[2], 3);
+                            enemy.name = names[2];
+                        }
+                        else
+                        {
+                            MessageBox.Show("Bład podczas konstrukcji player2");
+                        }
+                        Board board = new Board((int)numericUpDown5.Value, (int)numericUpDown4.Value);
+                        Board board1 = new Board(board);
+                        board1.player = player1;
+                        Board board2 = new Board(board);
+                        board2.player = enemy;
+                        int shipsCount = (int)numericUpDown3.Value;
+                        int specShipsCount = (int)numericUpDown6.Value;
+                        SelectShipsView select = new SelectShipsView(shipsCount, specShipsCount);
+                        select.ShowDialog();
+                        List<Ship> ships = select.GetSelectedShips();
+                        if (IsPossibleToCreateGame(board, shipsCount, specShipsCount))
+                        {
+                            gameMode = new CustomgameMode(board1, board2, shipsCount, specShipsCount, ships);
+                        }
+                    }
                 }
                 else if (label4.Text == "Stwórz Własną")
                 {
@@ -239,7 +373,9 @@ namespace ProjektStatki.Views
                     }
                     Board board = new Board((int)numericUpDown5.Value, (int)numericUpDown4.Value);
                     Board board1 = new Board(board);
+                    board1.player = player1;
                     Board board2 = new Board(board);
+                    board2.player = enemy;
                     int shipsCount = (int)numericUpDown3.Value;
                     int specShipsCount = (int)numericUpDown6.Value;
                     SelectShipsView select = new SelectShipsView(shipsCount, specShipsCount);
