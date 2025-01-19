@@ -150,7 +150,7 @@
             // label2
             // 
             label2.BorderStyle = BorderStyle.FixedSingle;
-            label2.Font = new Font("Segoe UI", 15F);
+            label2.Font = new Font("Segoe UI", 11F);
             label2.Location = new Point(3, 178);
             label2.Name = "label2";
             label2.Size = new Size(247, 161);
@@ -452,7 +452,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(485, 506);
+            ClientSize = new Size(789, 506);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(treeView1);

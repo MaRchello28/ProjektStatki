@@ -12,6 +12,9 @@ using System.Windows.Forms;
 using Point = ProjektStatki.Models.Point;
 using System.Threading;
 using ProjektStatki.Models.Data;
+using ProjektStatki.Models.Creator;
+using ProjektStatki.Models.Decorator;
+using ProjektStatki.Models.Decorators;
 
 namespace ProjektStatki.Views
 {
@@ -26,6 +29,9 @@ namespace ProjektStatki.Views
         DataGridView currentDataGridView = null;
         Board board1;
         Board board2;
+        private List<Ship> player1Ships = new List<Ship>();
+        private List<Ship> player2Ships = new List<Ship>();
+        Ship copiedShip = null;
         public GameView(Game game, MyDbContext db)
         {
             InitializeComponent();
@@ -186,6 +192,11 @@ namespace ProjektStatki.Views
                     {
                         dataGridView1.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Red;
                         cell.wasShot = true;
+                        var hitShip = player1Ships.FirstOrDefault(s => s.points.Any(p => p.wight == cell.point.height && p.height == cell.point.wight));
+                        if (hitShip != null)
+                        {
+                            hitShip.Execute(cell.point.wight, cell.point.height, board1);
+                        }
                         if (!PlayerWon())
                             MessageBox.Show("Trafiony!. Ruszasz się ponownie");
                         AddShotToList(cell.point.wight, cell.point.height, cell.isShip);
@@ -237,6 +248,11 @@ namespace ProjektStatki.Views
                     {
                         dataGridView2.Rows[cell.point.height].Cells[cell.point.wight].Style.BackColor = Color.Red;
                         cell.wasShot = true;
+                        var hitShip = player2Ships.FirstOrDefault(s => s.points.Any(p => p.wight == cell.point.height && p.height == cell.point.wight));
+                        if (hitShip != null)
+                        {
+                            hitShip.Execute(cell.point.wight, cell.point.height, board2);
+                        }
                         if (!PlayerWon())
                             MessageBox.Show("Trafiony!. Ruszasz się ponownie");
                         AddShotToList(cell.point.wight, cell.point.height, cell.isShip);
@@ -490,6 +506,53 @@ namespace ProjektStatki.Views
                             HighlightShotCells(grid, board);
                             if (currentPlayer == 1)
                             {
+                                selectedShip = game.gameMode.ships.Find(s => s.getName() == listBox1.SelectedItem.ToString());
+                                Ship originalShip = selectedShip;
+
+                                // Usuwanie dekoratora, jeśli statek jest udekorowany
+                                while (originalShip is ShipDecorator decorator)
+                                {
+                                    originalShip = decorator.Ship;
+                                }
+
+                                // Teraz oryginalny statek jest przechowywany w originalShip, bez dekoratora
+                                if (originalShip is NormalShipType || originalShip is SpecialShipType)
+                                {
+                                    // Kopiowanie statku
+                                    if (originalShip is NormalShipType normalShip)
+                                    {
+                                        copiedShip = new NormalShipType(normalShip.getName());
+                                    }
+                                    else if (originalShip is SpecialShipType specialShip)
+                                    {
+                                        copiedShip = new SpecialShipType(specialShip.getName());
+                                    }
+
+                                    // Kopiowanie punktów statku
+                                    copiedShip.points = shipPoints;
+
+                                    // Teraz sprawdzamy, czy statek był dekorowany
+                                    if (selectedShip is ShipDecorator decoratedShip)
+                                    {
+                                        if (decoratedShip is OneHPShipDecorator)
+                                        {
+                                            copiedShip = new OneHPShipDecorator(copiedShip);
+                                        }
+                                        else if (decoratedShip is ChangePlaceShipDecorator)
+                                        {
+                                            copiedShip = new ChangePlaceShipDecorator(copiedShip);
+                                        }
+                                        else
+                                        {
+                                            throw new InvalidOperationException("Nieznany dekorator");
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    throw new InvalidOperationException("Nieznany typ statku.");
+                                }
+                                player1Ships.Add(copiedShip);
                                 foreach (Point point in shipPoints)
                                 {
                                     if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
@@ -519,6 +582,53 @@ namespace ProjektStatki.Views
                             }
                             else
                             {
+                                selectedShip = game.gameMode.ships.Find(s => s.getName() == listBox2.SelectedItem.ToString());
+                                Ship originalShip = selectedShip;
+
+                                // Usuwanie dekoratora, jeśli statek jest udekorowany
+                                while (originalShip is ShipDecorator decorator)
+                                {
+                                    originalShip = decorator.Ship;
+                                }
+
+                                // Teraz oryginalny statek jest przechowywany w originalShip, bez dekoratora
+                                if (originalShip is NormalShipType || originalShip is SpecialShipType)
+                                {
+                                    // Kopiowanie statku
+                                    if (originalShip is NormalShipType normalShip)
+                                    {
+                                        copiedShip = new NormalShipType(normalShip.getName());
+                                    }
+                                    else if (originalShip is SpecialShipType specialShip)
+                                    {
+                                        copiedShip = new SpecialShipType(specialShip.getName());
+                                    }
+
+                                    // Kopiowanie punktów statku
+                                    copiedShip.points = shipPoints;
+
+                                    // Teraz sprawdzamy, czy statek był dekorowany
+                                    if (selectedShip is ShipDecorator decoratedShip)
+                                    {
+                                        if (decoratedShip is OneHPShipDecorator)
+                                        {
+                                            copiedShip = new OneHPShipDecorator(copiedShip);
+                                        }
+                                        else if (decoratedShip is ChangePlaceShipDecorator)
+                                        {
+                                            copiedShip = new ChangePlaceShipDecorator(copiedShip);
+                                        }
+                                        else
+                                        {
+                                            throw new InvalidOperationException("Nieznany dekorator");
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    throw new InvalidOperationException("Nieznany typ statku.");
+                                }
+                                player2Ships.Add(copiedShip);
                                 foreach (Point point in shipPoints)
                                 {
                                     if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
