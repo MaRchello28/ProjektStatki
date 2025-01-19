@@ -29,7 +29,7 @@ namespace ProjektStatki
 
         }
 
-        private void button1_Click(object sender, EventArgs e)//Zaloguj
+        private void button1_Click(object sender, EventArgs e) //Zaloguj
         {
             login = textBox1.Text;
             password = textBox2.Text;

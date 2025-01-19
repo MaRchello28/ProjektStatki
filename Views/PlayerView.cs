@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NAudio.Wave;
 
 namespace ProjektStatki.Views
 {
@@ -15,11 +16,19 @@ namespace ProjektStatki.Views
     {
         MyDbContext db;
         public int choose = 10;
+        private IWavePlayer _waveOutDevice;
+        private AudioFileReader _audioFileReader;
         public PlayerView(MyDbContext db)
         {
             InitializeComponent();
             this.db = db;
             this.StartPosition = FormStartPosition.CenterScreen;
+            var tempFile = System.IO.Path.GetTempFileName();
+            System.IO.File.WriteAllBytes(tempFile, Properties.Resources._02_Title_Theme);
+            _waveOutDevice = new WaveOutEvent();
+            _audioFileReader = new AudioFileReader(tempFile);
+            _waveOutDevice.Init(_audioFileReader);
+            _waveOutDevice.Play();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -55,6 +64,7 @@ namespace ProjektStatki.Views
         {
             choose = 1;
             this.Close();
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -62,5 +72,9 @@ namespace ProjektStatki.Views
             choose = 2;
             this.Close();
         }
+        /*_waveOutDevice?.Stop();
+        _waveOutDevice?.Dispose();
+        _audioFileReader?.Dispose();
+        base.OnFormClosing(e); -- nie wiem gdzie to wylaczenie ma byc */ 
     }
 }
