@@ -45,7 +45,7 @@ namespace ProjektStatki.Models.Gamemodes
             NormalShipCreator normalShipCreator = new NormalShipCreator();
             SpecialTypeShipCreator special = new SpecialTypeShipCreator();
 
-            selectedShips.Add(normalShipCreator.createShip(2, "Łudka"));
+            selectedShips.Add(normalShipCreator.createShip(2, "Łódka"));
             selectedShips.Add(normalShipCreator.createShip(3, "Liniowiec-1"));
             selectedShips.Add(normalShipCreator.createShip(5, "Lotniskowiec"));
 

@@ -33,7 +33,6 @@
             progressBar1 = new ProgressBar();
             button1 = new Button();
             button2 = new Button();
-            button3 = new Button();
             button4 = new Button();
             pictureBox2 = new PictureBox();
             label2 = new Label();
@@ -92,16 +91,6 @@
             button2.Text = "Wyświetl Historię Gier";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
-            // 
-            // button3
-            // 
-            button3.Font = new Font("Segoe UI", 16F);
-            button3.Location = new Point(12, 122);
-            button3.Name = "button3";
-            button3.Size = new Size(144, 100);
-            button3.TabIndex = 4;
-            button3.Text = "Wyświetl Osiągnięcia";
-            button3.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
@@ -193,7 +182,7 @@
             // button5
             // 
             button5.Font = new Font("Segoe UI", 16F);
-            button5.Location = new Point(12, 228);
+            button5.Location = new Point(12, 122);
             button5.Name = "button5";
             button5.Size = new Size(144, 100);
             button5.TabIndex = 16;
@@ -225,7 +214,6 @@
             Controls.Add(label2);
             Controls.Add(pictureBox2);
             Controls.Add(button4);
-            Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(progressBar1);
@@ -247,7 +235,6 @@
         private ProgressBar progressBar1;
         private Button button1;
         private Button button2;
-        private Button button3;
         private Button button4;
         private PictureBox pictureBox2;
         private Label label2;

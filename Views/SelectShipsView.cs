@@ -85,7 +85,7 @@ namespace ProjektStatki.Views
             };
             List<string> names = new List<string>
             {
-                "Kajak", "Łudka", "Liniowiec", "Krążownik", "Lotniskowiec", "Pancernik"
+                "Kajak", "Łódka", "Liniowiec", "Krążownik", "Lotniskowiec", "Pancernik"
             };
 
             List<string> specNames = new List<string>

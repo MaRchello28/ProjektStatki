@@ -43,7 +43,7 @@ namespace ProjektStatki.Models.Gamemodes
         {
             List<Ship> selectedShips = new List<Ship>();
             NormalShipCreator normalShipCreator = new NormalShipCreator();
-            selectedShips.Add(normalShipCreator.createShip(2, "Łudka"));
+            selectedShips.Add(normalShipCreator.createShip(2, "Łódka"));
             selectedShips.Add(normalShipCreator.createShip(3, "Liniowiec-1"));
             selectedShips.Add(normalShipCreator.createShip(3, "Liniowiec-2"));
             selectedShips.Add(normalShipCreator.createShip(4, "Pancernik"));
