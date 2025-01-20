@@ -62,10 +62,13 @@ namespace ProjektStatki
             CreateAccountClicked?.Invoke(this, EventArgs.Empty);
         }
 
-        public string Run()
+        public void Run()
         {
             this.ShowDialog();
-            return humanPlayer.Id;
+            if(humanPlayer == null)
+            {
+                this.ShowDialog();
+            }
         }
 
         // Presenter
