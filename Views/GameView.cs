@@ -236,68 +236,78 @@ namespace ProjektStatki.Views
             return false;
         }
 
+        public void WinP1()
+        {
+            var playerWon = db.users.FirstOrDefault(u => u.name == game.player1.name);
+            var playerLose = db.users.FirstOrDefault(u => u.name == game.player2.name);
+
+            if (playerWon != null)
+            {
+                if (game.gameMode.isRanked == true)
+                {
+                    playerWon.UpdateRanking(true, playerLose.raitingPoints);
+                }
+                playerWon.LevelUp(true);
+            }
+            if (playerLose != null)
+            {
+                if (game.gameMode.isRanked == true)
+                {
+                    playerLose.UpdateRanking(false, playerWon.raitingPoints);
+                }
+                playerLose.LevelUp(false);
+            }
+            if (game.player1 is HumanPlayer && game.player2 is HumanPlayer && playerLose != null && playerWon != null)
+            {
+                GameHistoryModel ghm = new GameHistoryModel(game.player1.Id, game.player2.Id, game.player1.name + "Wygrał",
+                    game.gameMode.name, DateTime.Now);
+                db.gameHistory.Add(ghm);
+            }
+            db.SaveChanges();
+            this.Close();
+        }
+
         public void WinView()
         {
             if (currentPlayer == 1)
             {
-                var playerWon = db.users.FirstOrDefault(u => u.name == game.player1.name);
-                var playerLose = db.users.FirstOrDefault(u => u.name == game.player2.name);
-
-                if (playerWon != null)
-                {
-                    if (game.gameMode.isRanked == true)
-                    {
-                        playerWon.UpdateRanking(true, playerLose.raitingPoints);
-                    }
-                    playerWon.LevelUp(true);
-                }
-                if (playerLose != null)
-                {
-                    if (game.gameMode.isRanked == true)
-                    {
-                        playerLose.UpdateRanking(false, playerWon.raitingPoints);
-                    }
-                    playerLose.LevelUp(false);
-                }
-                if (game.player1 is HumanPlayer && game.player2 is HumanPlayer && playerLose != null && playerWon != null)
-                {
-                    GameHistoryModel ghm = new GameHistoryModel(game.player1.Id, game.player2.Id, game.player1.name + "Wygrał",
-                        game.gameMode.name, DateTime.Now);
-                    db.gameHistory.Add(ghm);
-                }
-                db.SaveChanges();
-                this.Close();
+                WinP1();
             }
             else
             {
-                var playerWon = db.users.FirstOrDefault(u => u.name == game.player2.name);
-                var playerLose = db.users.FirstOrDefault(u => u.name == game.player1.name);
-
-                if (playerWon != null)
-                {
-                    if (game.gameMode.isRanked == true)
-                    {
-                        playerWon.UpdateRanking(true, playerLose.raitingPoints);
-                    }
-                    playerWon.LevelUp(true);
-                }
-                if (playerLose != null)
-                {
-                    if (game.gameMode.isRanked == true)
-                    {
-                        playerLose.UpdateRanking(false, playerWon.raitingPoints);
-                    }
-                    playerLose.LevelUp(false);
-                }
-                if (game.player1 is HumanPlayer && game.player2 is HumanPlayer && playerLose != null && playerWon != null)
-                {
-                    GameHistoryModel ghm = new GameHistoryModel(game.player1.Id, game.player2.Id, game.player2.name + " Wygrał",
-                        game.gameMode.name, DateTime.Now);
-                    db.gameHistory.Add(ghm);
-                }
-                db.SaveChanges();
-                this.Close();
+                WinP2();
             }
+        }
+
+        public void WinP2()
+        {
+            var playerWon = db.users.FirstOrDefault(u => u.name == game.player2.name);
+            var playerLose = db.users.FirstOrDefault(u => u.name == game.player1.name);
+
+            if (playerWon != null)
+            {
+                if (game.gameMode.isRanked == true)
+                {
+                    playerWon.UpdateRanking(true, playerLose.raitingPoints);
+                }
+                playerWon.LevelUp(true);
+            }
+            if (playerLose != null)
+            {
+                if (game.gameMode.isRanked == true)
+                {
+                    playerLose.UpdateRanking(false, playerWon.raitingPoints);
+                }
+                playerLose.LevelUp(false);
+            }
+            if (game.player1 is HumanPlayer && game.player2 is HumanPlayer && playerLose != null && playerWon != null)
+            {
+                GameHistoryModel ghm = new GameHistoryModel(game.player1.Id, game.player2.Id, game.player2.name + " Wygrał",
+                    game.gameMode.name, DateTime.Now);
+                db.gameHistory.Add(ghm);
+            }
+            db.SaveChanges();
+            this.Close();
         }
 
         private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -602,6 +612,78 @@ namespace ProjektStatki.Views
             }
         }
 
+        public void PlaceShip2(DataGridView grid)
+        {
+            selectedShip = game.gameMode.ships.Find(s => s.getName() == listBox2.SelectedItem.ToString());
+            Ship originalShip = selectedShip;
+
+            // Usuwanie dekoratora, jeśli statek jest udekorowany
+            while (originalShip is ShipDecorator decorator)
+            {
+                originalShip = decorator.Ship;
+            }
+
+            // Teraz oryginalny statek jest przechowywany w originalShip, bez dekoratora
+            if (originalShip is NormalShipType || originalShip is SpecialShipType)
+            {
+                // Kopiowanie statku
+                if (originalShip is NormalShipType normalShip)
+                {
+                    copiedShip = new NormalShipType(normalShip.getName());
+                }
+                else if (originalShip is SpecialShipType specialShip)
+                {
+                    copiedShip = new SpecialShipType(specialShip.getName());
+                }
+
+                // Kopiowanie punktów statku
+                copiedShip.points = shipPoints;
+
+                // Teraz sprawdzamy, czy statek był dekorowany
+                if (selectedShip is ShipDecorator decoratedShip)
+                {
+                    if (decoratedShip is OneHPShipDecorator)
+                    {
+                        copiedShip = new OneHPShipDecorator(copiedShip);
+                    }
+                    else if (decoratedShip is ChangePlaceShipDecorator)
+                    {
+                        copiedShip = new ChangePlaceShipDecorator(copiedShip);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Nieznany dekorator");
+                    }
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("Nieznany typ statku.");
+            }
+            player2Ships.Add(copiedShip);
+            foreach (Point point in shipPoints)
+            {
+                if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
+                {
+                    Cell cell = game.boardPlayer2.cells.FirstOrDefault(c => c.point.wight == point.height &&
+                    c.point.height == point.wight);
+
+                    if (cell != null)
+                    {
+                        cell.isShip = true;
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Coś poszło nie tak");
+                }
+            }
+
+            listBox2.Items.Remove(listBox2.SelectedItem);
+            listBox2.SelectedIndex = -1;
+        }
+
         private void MoveShip(Keys key, List<Point> shipPoints, DataGridView grid, Board board)
         {
             dataGridView1.CurrentCell = null;
@@ -665,74 +747,7 @@ namespace ProjektStatki.Views
                             HighlightShotCells(grid, board);
                             if (currentPlayer == 1)
                             {
-                                selectedShip = game.gameMode.ships.Find(s => s.getName() == listBox1.SelectedItem.ToString());
-                                Ship originalShip = selectedShip;
-
-                                // Usuwanie dekoratora, jeśli statek jest udekorowany
-                                while (originalShip is ShipDecorator decorator)
-                                {
-                                    originalShip = decorator.Ship;
-                                }
-
-                                // Teraz oryginalny statek jest przechowywany w originalShip, bez dekoratora
-                                if (originalShip is NormalShipType || originalShip is SpecialShipType)
-                                {
-                                    // Kopiowanie statku
-                                    if (originalShip is NormalShipType normalShip)
-                                    {
-                                        copiedShip = new NormalShipType(normalShip.getName());
-                                    }
-                                    else if (originalShip is SpecialShipType specialShip)
-                                    {
-                                        copiedShip = new SpecialShipType(specialShip.getName());
-                                    }
-
-                                    // Kopiowanie punktów statku
-                                    copiedShip.points = shipPoints;
-
-                                    // Teraz sprawdzamy, czy statek był dekorowany
-                                    if (selectedShip is ShipDecorator decoratedShip)
-                                    {
-                                        if (decoratedShip is OneHPShipDecorator)
-                                        {
-                                            copiedShip = new OneHPShipDecorator(copiedShip);
-                                        }
-                                        else if (decoratedShip is ChangePlaceShipDecorator)
-                                        {
-                                            copiedShip = new ChangePlaceShipDecorator(copiedShip);
-                                        }
-                                        else
-                                        {
-                                            throw new InvalidOperationException("Nieznany dekorator");
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    throw new InvalidOperationException("Nieznany typ statku.");
-                                }
-                                player1Ships.Add(copiedShip);
-                                foreach (Point point in shipPoints)
-                                {
-                                    if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
-                                    {
-                                        Cell cell = game.boardPlayer1.cells.FirstOrDefault(c => c.point.wight == point.height &&
-                                        c.point.height == point.wight);
-
-                                        if (cell != null)
-                                        {
-                                            cell.isShip = true;
-                                        }
-
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("Coś poszło nie tak");
-                                    }
-                                }
-
-                                listBox1.Items.Remove(listBox1.SelectedItem);
-                                listBox1.SelectedIndex = -1;
+                                PlaceShip1(grid);
 
                                 if (listBox1.Items.Count == 0)
                                 {
@@ -741,74 +756,7 @@ namespace ProjektStatki.Views
                             }
                             else
                             {
-                                selectedShip = game.gameMode.ships.Find(s => s.getName() == listBox2.SelectedItem.ToString());
-                                Ship originalShip = selectedShip;
-
-                                // Usuwanie dekoratora, jeśli statek jest udekorowany
-                                while (originalShip is ShipDecorator decorator)
-                                {
-                                    originalShip = decorator.Ship;
-                                }
-
-                                // Teraz oryginalny statek jest przechowywany w originalShip, bez dekoratora
-                                if (originalShip is NormalShipType || originalShip is SpecialShipType)
-                                {
-                                    // Kopiowanie statku
-                                    if (originalShip is NormalShipType normalShip)
-                                    {
-                                        copiedShip = new NormalShipType(normalShip.getName());
-                                    }
-                                    else if (originalShip is SpecialShipType specialShip)
-                                    {
-                                        copiedShip = new SpecialShipType(specialShip.getName());
-                                    }
-
-                                    // Kopiowanie punktów statku
-                                    copiedShip.points = shipPoints;
-
-                                    // Teraz sprawdzamy, czy statek był dekorowany
-                                    if (selectedShip is ShipDecorator decoratedShip)
-                                    {
-                                        if (decoratedShip is OneHPShipDecorator)
-                                        {
-                                            copiedShip = new OneHPShipDecorator(copiedShip);
-                                        }
-                                        else if (decoratedShip is ChangePlaceShipDecorator)
-                                        {
-                                            copiedShip = new ChangePlaceShipDecorator(copiedShip);
-                                        }
-                                        else
-                                        {
-                                            throw new InvalidOperationException("Nieznany dekorator");
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    throw new InvalidOperationException("Nieznany typ statku.");
-                                }
-                                player2Ships.Add(copiedShip);
-                                foreach (Point point in shipPoints)
-                                {
-                                    if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
-                                    {
-                                        Cell cell = game.boardPlayer2.cells.FirstOrDefault(c => c.point.wight == point.height &&
-                                        c.point.height == point.wight);
-
-                                        if (cell != null)
-                                        {
-                                            cell.isShip = true;
-                                        }
-
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("Coś poszło nie tak");
-                                    }
-                                }
-
-                                listBox2.Items.Remove(listBox2.SelectedItem);
-                                listBox2.SelectedIndex = -1;
+                                PlaceShip2(grid);
 
                                 if (listBox2.Items.Count == 0)
                                 {
@@ -833,6 +781,78 @@ namespace ProjektStatki.Views
                 ClearGrid(previousShipPoints, grid, board);
                 DisplayShipInGrid(shipPoints, grid);
             }
+        }
+
+        public void PlaceShip1(DataGridView grid)
+        {
+            selectedShip = game.gameMode.ships.Find(s => s.getName() == listBox1.SelectedItem.ToString());
+            Ship originalShip = selectedShip;
+
+            // Usuwanie dekoratora, jeśli statek jest udekorowany
+            while (originalShip is ShipDecorator decorator)
+            {
+                originalShip = decorator.Ship;
+            }
+
+            // Teraz oryginalny statek jest przechowywany w originalShip, bez dekoratora
+            if (originalShip is NormalShipType || originalShip is SpecialShipType)
+            {
+                // Kopiowanie statku
+                if (originalShip is NormalShipType normalShip)
+                {
+                    copiedShip = new NormalShipType(normalShip.getName());
+                }
+                else if (originalShip is SpecialShipType specialShip)
+                {
+                    copiedShip = new SpecialShipType(specialShip.getName());
+                }
+
+                // Kopiowanie punktów statku
+                copiedShip.points = shipPoints;
+
+                // Teraz sprawdzamy, czy statek był dekorowany
+                if (selectedShip is ShipDecorator decoratedShip)
+                {
+                    if (decoratedShip is OneHPShipDecorator)
+                    {
+                        copiedShip = new OneHPShipDecorator(copiedShip);
+                    }
+                    else if (decoratedShip is ChangePlaceShipDecorator)
+                    {
+                        copiedShip = new ChangePlaceShipDecorator(copiedShip);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Nieznany dekorator");
+                    }
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("Nieznany typ statku.");
+            }
+            player1Ships.Add(copiedShip);
+            foreach (Point point in shipPoints)
+            {
+                if (point.height >= 0 && point.height < grid.ColumnCount && point.wight >= 0 && point.wight < grid.RowCount)
+                {
+                    Cell cell = game.boardPlayer1.cells.FirstOrDefault(c => c.point.wight == point.height &&
+                    c.point.height == point.wight);
+
+                    if (cell != null)
+                    {
+                        cell.isShip = true;
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Coś poszło nie tak");
+                }
+            }
+
+            listBox1.Items.Remove(listBox1.SelectedItem);
+            listBox1.SelectedIndex = -1;
         }
 
         public void StartGame()
@@ -925,6 +945,30 @@ namespace ProjektStatki.Views
             grid1.Visible = true; grid2.Visible = true;
         }
 
+        public void Turn1()
+        {
+            groupBox1.Hide(); groupBox2.Hide(); dataGridView3.Hide(); label1.Hide();
+            MessageBox.Show("Teraz rusza się gracz: " + game.player1.name);
+            groupBox1.Show(); groupBox2.Show(); dataGridView3.Show(); label1.Show();
+            dataGridView1.ClearSelection();
+            PlayerView(dataGridView1, dataGridView2, board1, board2);
+            dataGridView2.Enabled = true;
+            dataGridView1.Enabled = false;
+            if (game.player1 is HumanPlayer)
+            {
+
+            }
+            else
+            {
+                groupBox1.Visible = true;
+                groupBox2.Visible = true;
+                groupBox1.Show();
+                groupBox2.Show();
+                Point p = game.player1.Shot(board1);
+                ShotPlayer1(p);
+            }
+        }
+
         public void PlayerTurn()
         {
             listBox1.Visible = false;
@@ -944,51 +988,37 @@ namespace ProjektStatki.Views
             }
             if (currentPlayer == 1)
             {
-                groupBox1.Hide(); groupBox2.Hide(); dataGridView3.Hide(); label1.Hide();
-                MessageBox.Show("Teraz rusza się gracz: " + game.player1.name);
-                groupBox1.Show(); groupBox2.Show(); dataGridView3.Show(); label1.Show();
-                dataGridView1.ClearSelection();
-                PlayerView(dataGridView1, dataGridView2, board1, board2);
-                dataGridView2.Enabled = true;
-                dataGridView1.Enabled = false;
-                if (game.player1 is HumanPlayer)
-                {
-
-                }
-                else
-                {
-                    groupBox1.Visible = true;
-                    groupBox2.Visible = true;
-                    groupBox1.Show();
-                    groupBox2.Show();
-                    Point p = game.player1.Shot(board1);
-                    ShotPlayer1(p);
-                }
+                Turn1();
             }
             else
             {
-                if (game.player1 is HumanPlayer && game.player2 is HumanPlayer)
-                    groupBox1.Hide(); groupBox2.Hide(); dataGridView3.Hide(); label1.Hide();
-                MessageBox.Show("Teraz rusza się gracz: " + game.player2.name);
-                dataGridView2.ClearSelection();
-                groupBox1.Show(); groupBox2.Show(); dataGridView3.Show(); label1.Show();
-                if (!(game.player1 is HumanPlayer && game.player2 is ComputerPlayer))
-                    PlayerView(dataGridView2, dataGridView1, board2, board1);
-                dataGridView1.Enabled = true;
-                dataGridView2.Enabled = false;
-                if (game.player2 is HumanPlayer)
-                {
+                
+            }
+        }
 
-                }
-                else
-                {
-                    groupBox1.Visible = true;
-                    groupBox2.Visible = true;
-                    groupBox1.Show();
-                    groupBox2.Show();
-                    Point p = game.player2.Shot(board2);
-                    ShotPlayer2(p);
-                }
+        public void Turn2()
+        {
+            if (game.player1 is HumanPlayer && game.player2 is HumanPlayer)
+                groupBox1.Hide(); groupBox2.Hide(); dataGridView3.Hide(); label1.Hide();
+            MessageBox.Show("Teraz rusza się gracz: " + game.player2.name);
+            dataGridView2.ClearSelection();
+            groupBox1.Show(); groupBox2.Show(); dataGridView3.Show(); label1.Show();
+            if (!(game.player1 is HumanPlayer && game.player2 is ComputerPlayer))
+                PlayerView(dataGridView2, dataGridView1, board2, board1);
+            dataGridView1.Enabled = true;
+            dataGridView2.Enabled = false;
+            if (game.player2 is HumanPlayer)
+            {
+
+            }
+            else
+            {
+                groupBox1.Visible = true;
+                groupBox2.Visible = true;
+                groupBox1.Show();
+                groupBox2.Show();
+                Point p = game.player2.Shot(board2);
+                ShotPlayer2(p);
             }
         }
 
