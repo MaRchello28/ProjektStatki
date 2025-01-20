@@ -1,42 +1,33 @@
 ﻿using ProjektStatki.Models.Data;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProjektStatki.Views
 {
     public partial class ShowPlayersRankingView : Form
     {
-        MyDbContext db;
+        private ShowPlayersRankingPresenter presenter;
+
         public ShowPlayersRankingView(MyDbContext db)
         {
             InitializeComponent();
-            this.db = db; 
-            LoadRanking();
+            presenter = new ShowPlayersRankingPresenter(this, db);
+            presenter.LoadRanking();
         }
-        private void LoadRanking()
-        {
-            // Pobieramy graczy z bazy danych i sortujemy ich po punktach rankingowych
-            var players = db.users
-                            .OrderByDescending(p => p.raitingPoints)  // Sortowanie malejąco po punktach
-                            .ToList();
 
+        public void DisplayRanking(List<(int Rank, string Name, int Points, int Level)> players)
+        {
+            dataGridView1.Columns.Clear();
             dataGridView1.Columns.Add("Rank", "Pozycja");
             dataGridView1.Columns.Add("Name", "Nazwa gracza");
             dataGridView1.Columns.Add("Points", "Punkty rankingowe");
             dataGridView1.Columns.Add("Level", "Poziom");
 
-            // Wypełnienie danych w tabeli
-            for (int i = 0; i < players.Count; i++)
+            foreach (var player in players)
             {
-                var player = players[i];
-                dataGridView1.Rows.Add(i + 1, player.name, player.raitingPoints, player.level.level);
+                dataGridView1.Rows.Add(player.Rank, player.Name, player.Points, player.Level);
             }
 
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -44,6 +35,37 @@ namespace ProjektStatki.Views
             dataGridView1.ReadOnly = true; // Tabela tylko do odczytu
             dataGridView1.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells);
         }
+    }
 
+    public class ShowPlayersRankingPresenter
+    {
+        private readonly ShowPlayersRankingView view;
+        private readonly MyDbContext db;
+
+        public ShowPlayersRankingPresenter(ShowPlayersRankingView view, MyDbContext db)
+        {
+            this.view = view;
+            this.db = db;
+        }
+
+        public void LoadRanking()
+        {
+            // Pobieramy graczy z bazy danych i sortujemy ich po punktach rankingowych
+            var players = db.users
+                            .OrderByDescending(p => p.raitingPoints)  // Sortowanie malejąco po punktach
+                            .Select((player, index) => new
+                            {
+                                Rank = index + 1,
+                                Name = player.name,
+                                Points = player.raitingPoints,
+                                Level = player.level.level
+                            })
+                            .ToList();
+
+            var rankingData = players.Select(p => (p.Rank, p.Name, p.Points, p.Level)).ToList();
+
+            // Wyświetlamy dane w widoku
+            view.DisplayRanking(rankingData);
+        }
     }
 }
