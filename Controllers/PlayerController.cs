@@ -77,16 +77,6 @@ namespace ProjektStatki.Controllers
             return user;
         }
 
-        public void ShowRanking()
-        {
-
-        }
-
-        public void ShowGameHistory()
-        {
-
-        }
-
         public void CreateGame(GameMode gameMode)
         {   
             if(gameModeView.Enemy() != null)
@@ -103,11 +93,6 @@ namespace ProjektStatki.Controllers
                 }
             }
             
-        }
-
-        public void UnlockElement()
-        {
-          
         }
     }
 }

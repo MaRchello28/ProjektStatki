@@ -45,15 +45,5 @@ namespace ProjektStatki.Controllers
                 gameView.ShowDialog();
             }
         }
-
-        public void StartGame(Game game)
-        {
-
-        }
-
-        public void UnlockAchievement()
-        {
-
-        }
     }
 }
