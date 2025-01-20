@@ -1,5 +1,4 @@
-﻿using ProjektStatki.Controllers;
-using ProjektStatki.Models;
+﻿using ProjektStatki.Models;
 using ProjektStatki.Models.Data;
 using ProjektStatki.Models.Gamemodes;
 using System;

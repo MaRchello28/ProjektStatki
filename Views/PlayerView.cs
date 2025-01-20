@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using NAudio.Wave;
 using ProjektStatki.Models;
 using ProjektStatki.Models.Gamemodes;
-using ProjektStatki.Controllers;
 using ProjektStatki.Models.ElementsToUnlock;
 
 namespace ProjektStatki.Views
@@ -62,27 +61,19 @@ namespace ProjektStatki.Views
 
         public Game InitGame(GameMode gamemode, Player player2)
         {
-            Player player1 = db.users.FirstOrDefault(u => u.Id == _player.Id);
-            if (player1 == null)
+            Player player1;
+            if (gamemode.board1.player == null)
             {
-                if (gamemode.board1.player == null)
-                {
-                    MessageBox.Show("Nie znaleziono gracza!");
-                }
-                else
-                {
-                    player1 = gamemode.board1.player;
-                    Game game = new Game(gamemode.board1, gamemode.board2, gamemode, player1, player2);
-                    return game;
-                }
+                player1 = db.users.FirstOrDefault(u => u.Id == _player.Id);
+                Game game = new Game(gamemode.board1, gamemode.board2, gamemode, player1, player2);
+                return game;
             }
             else
             {
+                player1 = gamemode.board1.player;
                 Game game = new Game(gamemode.board1, gamemode.board2, gamemode, player1, player2);
-                GameView gameView = new GameView(game, db);
                 return game;
             }
-            return new Game();
         }
 
         public void CreateGame(GameMode gameMode)
@@ -92,16 +83,12 @@ namespace ProjektStatki.Views
                 if (gameModeView.Player1() == null)
                 {
                     Game game = InitGame(gameMode, gameModeView.Enemy());
-                    //GameController gameController = new GameController(db, gameMode, _player.Id, gameModeView.Enemy());
-                    //gameController.RunController();
                     GameView gameView = new GameView(game, db);
                     gameView.ShowDialog();
                 }
                 else
                 {
                     Game game = InitGame(gameMode, gameModeView.Enemy());
-                    //GameController gameController = new GameController(db, gameMode, gameModeView.Player1().name, gameModeView.Enemy());
-                    //gameController.RunController();
                     GameView gameView = new GameView(game, db);
                     gameView.ShowDialog();
                 }
