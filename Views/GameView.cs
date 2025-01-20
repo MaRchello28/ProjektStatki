@@ -759,6 +759,8 @@ namespace ProjektStatki.Views
 
                                 if (listBox2.Items.Count == 0)
                                 {
+                                    HighlightShotCells(dataGridView1, board1);
+                                    HighlightShotCells(dataGridView2, board2);
                                     groupBox2.Visible = false;
                                     StartGame();
                                     PlayerTurn();
@@ -862,8 +864,6 @@ namespace ProjektStatki.Views
             currentPlayer = 1;
             currentPlayerBoard = game.boardPlayer1;
             currentDataGridView = dataGridView1;
-            groupBox1.Show();
-            groupBox2.Show();
             if (game.player1 is ComputerPlayer && game.player2 is ComputerPlayer)
             {
                 button1.Visible = false;
@@ -873,6 +873,8 @@ namespace ProjektStatki.Views
             dataGridView2.Enabled = true;
             dataGridView1.ClearSelection();
             dataGridView2.ClearSelection();
+            //groupBox1.Show();
+            //groupBox2.Show();
         }
 
         public void PlayerView(DataGridView grid1, DataGridView grid2, Board board1, Board board2)
@@ -991,7 +993,7 @@ namespace ProjektStatki.Views
             }
             else
             {
-                
+                Turn2();
             }
         }
 
@@ -1310,6 +1312,25 @@ namespace ProjektStatki.Views
             else if (listBox4.SelectedIndex == 1)
             {
                 shipColor = Color.Orange;
+            }
+            else if(listBox4.SelectedIndex == 2)
+            {
+                if(game.player1 is HumanPlayer)
+                {
+                    var user = db.users.FirstOrDefault(u => u.Id == game.player1.Id);
+                    if(user.level.level < 4)
+                    {
+                        MessageBox.Show("Ta zawartość nie jest odblokowana!");
+                    }
+                    else
+                    {
+                        shipColor = Color.Pink;
+                    }
+                }
+                else
+                {
+                    shipColor = Color.Pink;
+                }
             }
         }
     }

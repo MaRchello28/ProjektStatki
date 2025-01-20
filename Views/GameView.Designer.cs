@@ -155,7 +155,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(608, 295);
+            button2.Location = new Point(608, 316);
             button2.Name = "button2";
             button2.Size = new Size(140, 59);
             button2.TabIndex = 13;
@@ -171,17 +171,17 @@
             panel1.Controls.Add(label2);
             panel1.Location = new Point(595, 131);
             panel1.Name = "panel1";
-            panel1.Size = new Size(165, 158);
+            panel1.Size = new Size(165, 179);
             panel1.TabIndex = 14;
             // 
             // listBox4
             // 
             listBox4.FormattingEnabled = true;
             listBox4.ItemHeight = 15;
-            listBox4.Items.AddRange(new object[] { "Czarne", "Pomarańczowe" });
+            listBox4.Items.AddRange(new object[] { "Czarne", "Pomarańczowe", "Różowy" });
             listBox4.Location = new Point(17, 109);
             listBox4.Name = "listBox4";
-            listBox4.Size = new Size(125, 34);
+            listBox4.Size = new Size(125, 49);
             listBox4.TabIndex = 3;
             listBox4.SelectedIndexChanged += listBox4_SelectedIndexChanged;
             // 
