@@ -107,7 +107,6 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "MainMenu";
             Text = "Login";
-            Load += MainMenu_Load;
             ResumeLayout(false);
             PerformLayout();
         }
