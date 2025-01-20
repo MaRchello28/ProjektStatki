@@ -37,6 +37,7 @@ namespace ProjektStatki.Views
         }
         private void InitializePlayerProfile(HumanPlayer player)
         {
+            //Inicjuje profil
             nameLabel.Text = $"Nazwa gracza: {player.name}";
             ratingLabel.Text = $"Punkty rankingowe: {player.raitingPoints}";
             levelLabel.Text = $"Poziom: {player.level.level}";
@@ -47,6 +48,11 @@ namespace ProjektStatki.Views
             // Ustawienie suwaka głośności na aktualną wartość
             volumeTrackBar.Value = (int)(waveOut.Volume * 100);
             volumeLabel.Text = $"Głośność: {volumeTrackBar.Value}%";
+        }
+
+        private void SettingsView_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
