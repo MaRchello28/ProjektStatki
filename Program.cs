@@ -13,10 +13,10 @@ namespace ProjektStatki
         static void Main()
         {
             MyDbContext db = new MyDbContext();
-            
-            MainController controller = new MainController(db);
 
-            controller.Run();
+            MainMenu menu = new MainMenu(db);
+
+            menu.Run();
         }
     }
 }

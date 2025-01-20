@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
 using ProjektStatki.Models;
+using ProjektStatki.Models.Gamemodes;
+using ProjektStatki.Controllers;
+using ProjektStatki.Models.ElementsToUnlock;
 
 namespace ProjektStatki.Views
 {
@@ -20,9 +23,13 @@ namespace ProjektStatki.Views
         private IWavePlayer _waveOutDevice;
         private AudioFileReader _audioFileReader;
         private bool buttonPress = false;
-        private  HumanPlayer _player;
-        private  SettingsView _settingsView;
-        public PlayerView(MyDbContext db, string player)
+        private HumanPlayer _player;
+        private SettingsView _settingsView;
+        private ChooseGameModeView gameModeView;
+        private HistoryView historyView;
+        private ShowContentView ShowContentView;
+        private ShowPlayersRankingView showPlayersRankingView;
+        public PlayerView(MyDbContext db, string player, List<Element> elements)
         {
             InitializeComponent();
             this.db = db;
@@ -35,9 +42,12 @@ namespace ProjektStatki.Views
             _waveOutDevice.Init(_audioFileReader);
             _waveOutDevice.Play();
             _player = db.users
-                        .FirstOrDefault(p => p.Id == player);
+                        .FirstOrDefault(p => p.name == player);
             _settingsView = new SettingsView(_player, _waveOutDevice, _audioFileReader);
-
+            gameModeView = new ChooseGameModeView(db, _player.Id);
+            historyView = new HistoryView(db, _player.Id);
+            ShowContentView = new ShowContentView(elements);
+            showPlayersRankingView = new ShowPlayersRankingView(db);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -50,9 +60,89 @@ namespace ProjektStatki.Views
             buttonPress = false;
         }
 
+        public Game InitGame(GameMode gamemode, Player player2)
+        {
+            Player player1 = db.users.FirstOrDefault(u => u.Id == _player.Id);
+            if (player1 == null)
+            {
+                if (gamemode.board1.player == null)
+                {
+                    MessageBox.Show("Nie znaleziono gracza!");
+                }
+                else
+                {
+                    player1 = gamemode.board1.player;
+                    Game game = new Game(gamemode.board1, gamemode.board2, gamemode, player1, player2);
+                    return game;
+                }
+            }
+            else
+            {
+                Game game = new Game(gamemode.board1, gamemode.board2, gamemode, player1, player2);
+                GameView gameView = new GameView(game, db);
+                return game;
+            }
+            return new Game();
+        }
+
+        public void CreateGame(GameMode gameMode)
+        {
+            if (gameModeView.Enemy() != null)
+            {
+                if (gameModeView.Player1() == null)
+                {
+                    Game game = InitGame(gameMode, gameModeView.Enemy());
+                    //GameController gameController = new GameController(db, gameMode, _player.Id, gameModeView.Enemy());
+                    //gameController.RunController();
+                    GameView gameView = new GameView(game, db);
+                    gameView.ShowDialog();
+                }
+                else
+                {
+                    Game game = InitGame(gameMode, gameModeView.Enemy());
+                    //GameController gameController = new GameController(db, gameMode, gameModeView.Player1().name, gameModeView.Enemy());
+                    //gameController.RunController();
+                    GameView gameView = new GameView(game, db);
+                    gameView.ShowDialog();
+                }
+            }
+
+        }
+
+        public void SelectOption(int choose)
+        {
+            switch (choose)
+            {
+                case 1:
+                    gameModeView.ShowDialog();
+                    GameMode selectedGameMode = gameModeView.ChoseGamemode();
+                    if (selectedGameMode != null)
+                    {
+                        CreateGame(selectedGameMode);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nie wybrano trybu gry.");
+                    }
+                    break;
+                case 2:
+                    historyView.ShowDialog();
+                    break;
+                case 3:
+                    ShowContentView.ShowDialog();
+                    break;
+                case 4:
+                    showPlayersRankingView.ShowDialog();
+                    break;
+                default:
+                    this.Close();
+                    break;
+            }
+        }
+
         public int Run(string LoggedUserId)
         {
-            var user = db.users.FirstOrDefault(s => s.Id == LoggedUserId);
+            var user = db.users.FirstOrDefault(s => s.name == LoggedUserId);
             if (user == null)
             {
                 MessageBox.Show("Coś poszło nie tak ze znalezieniem użytkownika");
@@ -71,24 +161,21 @@ namespace ProjektStatki.Views
 
         private void button1_Click(object sender, EventArgs e)
         {
-            choose = 1;
+            SelectOption(1);
             buttonPress = true;
-            this.Close();
-
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            choose = 2;
+            SelectOption(2);
             buttonPress = true;
-            this.Close();
         }
 
         private void PlayerView_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (buttonPress == false)
             {
-                choose = 10;
+                SelectOption(10);
             }
         }
 
@@ -99,16 +186,14 @@ namespace ProjektStatki.Views
 
         private void button5_Click(object sender, EventArgs e)
         {
-            choose = 4;
+            SelectOption(4);
             buttonPress = true;
-            this.Close();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            choose = 3;
+            SelectOption(3);
             buttonPress = true;
-            this.Close();
         }
     }
 }

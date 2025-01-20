@@ -1,5 +1,6 @@
 using ProjektStatki.Models;
 using ProjektStatki.Models.Data;
+using ProjektStatki.Models.ElementsToUnlock;
 using ProjektStatki.Views;
 
 namespace ProjektStatki
@@ -10,12 +11,14 @@ namespace ProjektStatki
         private string password;
         protected HumanPlayer humanPlayer;
         CreateAccountView create;
+        List<Element> elements = new List<Element>();
         MyDbContext db;
         public MainMenu(MyDbContext db)
         {
             InitializeComponent();
             this.db = db;
             this.StartPosition = FormStartPosition.CenterScreen;
+            InitElements();
         }
 
         public string Run()
@@ -26,7 +29,7 @@ namespace ProjektStatki
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void button1_Click(object sender, EventArgs e) //Zaloguj
@@ -44,6 +47,8 @@ namespace ProjektStatki
                 else
                 {
                     this.Close();
+                    PlayerView playerView = new PlayerView(db, humanPlayer.name, elements);
+                    playerView.Run(humanPlayer.name);
                 }
             }
             else
@@ -57,6 +62,12 @@ namespace ProjektStatki
             create = new CreateAccountView(this, db);
             this.Hide();
             create.ShowDialog();
+        }
+
+        public void InitElements()
+        {
+            elements.Add(new SkinElement("Skin", 4, "Pink"));
+            elements.Add(new GameModeElement("GameMode", 6, "Specjalne Statki"));
         }
     }
 }

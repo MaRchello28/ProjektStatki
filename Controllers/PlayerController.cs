@@ -25,7 +25,7 @@ namespace ProjektStatki.Controllers
         { 
             this.db = db;
             this.LoggedUserId = LoggedUserId;
-            playerView = new PlayerView(db,LoggedUserId);
+            //playerView = new PlayerView(db,LoggedUserId);
             gameModeView = new ChooseGameModeView(db, LoggedUserId);
             historyView = new HistoryView(db, LoggedUserId);
             ShowContentView = new ShowContentView(elements);

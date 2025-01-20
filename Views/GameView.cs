@@ -15,6 +15,7 @@ using ProjektStatki.Models.Data;
 using ProjektStatki.Models.Creator;
 using ProjektStatki.Models.Decorator;
 using ProjektStatki.Models.Decorators;
+using ProjektStatki.Models.Gamemodes;
 
 namespace ProjektStatki.Views
 {
@@ -66,6 +67,31 @@ namespace ProjektStatki.Views
                 }
             }
         }
+
+        //public void RunGame()
+        //{
+        //    Player player1 = db.users.FirstOrDefault(u => u.Id == this.LoggedUserId);
+        //    if (player1 == null)
+        //    {
+        //        if (gamemode.board1.player == null)
+        //        {
+        //            MessageBox.Show("Nie znaleziono gracza!");
+        //        }
+        //        else
+        //        {
+        //            player1 = gamemode.board1.player;
+        //            Game game = new Game(gamemode.board1, gamemode.board2, gamemode, player1, player2);
+        //            GameView gameView = new GameView(game, db);
+        //            gameView.ShowDialog();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Game game = new Game(gamemode.board1, gamemode.board2, gamemode, player1, player2);
+        //        GameView gameView = new GameView(game, db);
+        //        gameView.ShowDialog();
+        //    }
+        //}
 
         public (int maxX, int maxY) GetMaxCoordinates(Board board)
         {
@@ -873,8 +899,11 @@ namespace ProjektStatki.Views
             dataGridView2.Enabled = true;
             dataGridView1.ClearSelection();
             dataGridView2.ClearSelection();
-            //groupBox1.Show();
-            //groupBox2.Show();
+            if(game.player1 is HumanPlayer && game.player2 is ComputerPlayer)
+            {
+                groupBox1.Show();
+                groupBox2.Show();
+            }
         }
 
         public void PlayerView(DataGridView grid1, DataGridView grid2, Board board1, Board board2)
