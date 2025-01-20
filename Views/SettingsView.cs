@@ -14,23 +14,26 @@ namespace ProjektStatki.Views
 {
     public partial class SettingsView : Form
     {
-        private WaveOutEvent waveOut;
+        private IWavePlayer waveOut;
         private AudioFileReader audioFile;
 
-        public SettingsView(HumanPlayer player,WaveOutEvent existingWaveOut, AudioFileReader existingAudioFile)
+        public SettingsView(HumanPlayer player, IWavePlayer existingWaveOut, AudioFileReader existingAudioFile)
         {
             InitializeComponent();
-            waveOut = existingWaveOut; 
-            audioFile = existingAudioFile; 
+            waveOut = existingWaveOut;
+            audioFile = existingAudioFile;
+
             InitializePlayerProfile(player);
-            InitializeVolumeControl();
         }
 
         private void volumeTrackBar_Scroll(object sender, EventArgs e)
         {
             // Zmiana głośności
-            volumeLabel.Text = $"Głośność: {volumeTrackBar.Value}%";
-            waveOut.Volume = volumeTrackBar.Value / 100f;
+            if (waveOut is WaveOutEvent waveOutEvent)
+            {
+                waveOutEvent.Volume = volumeTrackBar.Value / 100f;
+                volumeLabel.Text = $"Głośność: {volumeTrackBar.Value}%";
+            }
         }
         private void InitializePlayerProfile(HumanPlayer player)
         {

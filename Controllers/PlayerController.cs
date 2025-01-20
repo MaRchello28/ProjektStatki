@@ -1,5 +1,6 @@
 ﻿using ProjektStatki.Models;
 using ProjektStatki.Models.Data;
+using ProjektStatki.Models.ElementsToUnlock;
 using ProjektStatki.Models.Gamemodes;
 using ProjektStatki.Views;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ProjektStatki.Controllers
 {
@@ -17,13 +19,17 @@ namespace ProjektStatki.Controllers
         PlayerView playerView;
         ChooseGameModeView gameModeView;
         HistoryView historyView;
-        public PlayerController(MyDbContext db, string LoggedUserId) 
+        ShowContentView ShowContentView;
+        ShowPlayersRankingView showPlayersRankingView;
+        public PlayerController(MyDbContext db, string LoggedUserId, List<Element>elements) 
         { 
             this.db = db;
             this.LoggedUserId = LoggedUserId;
-            playerView = new PlayerView(db);
+            playerView = new PlayerView(db,LoggedUserId);
             gameModeView = new ChooseGameModeView(db, LoggedUserId);
             historyView = new HistoryView(db, LoggedUserId);
+            ShowContentView = new ShowContentView(elements);
+            showPlayersRankingView = new ShowPlayersRankingView(db);
         }
         public void RunController()
         {
@@ -49,6 +55,12 @@ namespace ProjektStatki.Controllers
                         }
                     case 2:
                         historyView.ShowDialog();
+                        break;
+                    case 3:
+                        ShowContentView.ShowDialog();
+                        break;
+                    case 4:
+                        showPlayersRankingView.ShowDialog();
                         break;
                     default:
                         {
@@ -95,7 +107,7 @@ namespace ProjektStatki.Controllers
 
         public void UnlockElement()
         {
-
+          
         }
     }
 }

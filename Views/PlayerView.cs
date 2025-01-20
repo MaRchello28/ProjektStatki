@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using NAudio.Wave;
+using ProjektStatki.Models;
 
 namespace ProjektStatki.Views
 {
@@ -19,7 +20,9 @@ namespace ProjektStatki.Views
         private IWavePlayer _waveOutDevice;
         private AudioFileReader _audioFileReader;
         private bool buttonPress = false;
-        public PlayerView(MyDbContext db)
+        private  HumanPlayer _player;
+        private  SettingsView _settingsView;
+        public PlayerView(MyDbContext db, string player)
         {
             InitializeComponent();
             this.db = db;
@@ -31,6 +34,10 @@ namespace ProjektStatki.Views
             _audioFileReader = new AudioFileReader(tempFile);
             _waveOutDevice.Init(_audioFileReader);
             _waveOutDevice.Play();
+            _player = db.users
+                        .FirstOrDefault(p => p.Id == player);
+            _settingsView = new SettingsView(_player, _waveOutDevice, _audioFileReader);
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -79,10 +86,29 @@ namespace ProjektStatki.Views
 
         private void PlayerView_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(buttonPress == false)
+            if (buttonPress == false)
             {
                 choose = 10;
             }
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            _settingsView.ShowDialog();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            choose = 4;
+            buttonPress = true;
+            this.Close();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            choose = 3;
+            buttonPress = true;
+            this.Close();
         }
     }
 }
