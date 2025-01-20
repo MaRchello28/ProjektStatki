@@ -22,7 +22,7 @@ namespace ProjektStatki.Controllers
             this.db = db;
             this.LoggedUserId = LoggedUserId;
             playerView = new PlayerView(db);
-            gameModeView = new ChooseGameModeView(db);
+            gameModeView = new ChooseGameModeView(db, LoggedUserId);
             historyView = new HistoryView(db, LoggedUserId);
         }
         public void RunController()

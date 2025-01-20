@@ -322,7 +322,6 @@ namespace ProjektStatki.Views
                 ShotPlayer2(selectedCell);
             }
         }
-
         public void ShotPlayer1(Point selectedCell)
         {
             Cell cell = board2.cells.FirstOrDefault(c => c.point.height == selectedCell.wight &&

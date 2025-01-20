@@ -20,7 +20,8 @@ namespace ProjektStatki.Views
         public Player enemy = null;
         public Player player1 = null;
         MyDbContext db;
-        public ChooseGameModeView(MyDbContext db)
+        private string loggedUserid = null;
+        public ChooseGameModeView(MyDbContext db, string loggedUserId)
         {
             InitializeComponent();
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -30,6 +31,7 @@ namespace ProjektStatki.Views
             label17.Visible = false;
             listBox1.Visible = false;
             listBox2.Visible = false;
+            this.loggedUserid = loggedUserId;
         }
 
         public GameMode ChoseGamemode()
@@ -144,150 +146,271 @@ namespace ProjektStatki.Views
             }
         }
 
+        public void Unranked()
+        {
+            gameMode = new ClassicGameMode(false);
+            if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                if (!(checkBox1.Checked))
+                {
+                    MessageBox.Show("Musisz wybrać przeciwnika");
+                }
+                else
+                {
+                    enemy = new HumanPlayer("GOŚĆ", "1234");
+                }
+            }
+            else
+            {
+                string login = textBox1.Text;
+                string password = textBox3.Text;
+                if (db.users.Any(u => u.name == login && u.password == password))
+                {
+                    enemy = db.users.FirstOrDefault(u => u.name == login);
+                }
+                else
+                {
+                    MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
+                }
+            }
+        }
+
+        public void Ranked()
+        {
+            if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                if (!(checkBox1.Checked))
+                {
+                    MessageBox.Show("Musisz wybrać przeciwnika");
+                }
+                else
+                {
+                    MessageBox.Show("W tym trybie przeciwnik nie może być Gościem");
+                }
+            }
+            else
+            {
+                string login = textBox1.Text;
+                string password = textBox3.Text;
+                if (db.users.Any(u => u.name == login && u.password == password))
+                {
+                    enemy = db.users.FirstOrDefault(u => u.name == login);
+                }
+                else
+                {
+                    MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
+                }
+            }
+            gameMode = new ClassicGameMode(true);
+        }
+
+        public void Simulation()
+        {
+            if (listBox1.SelectedIndex == -1 || listBox3.SelectedIndex == -1)
+            {
+                MessageBox.Show("Nie wybrano poziomu trudności dla wszystkich botów");
+            }
+            else
+            {
+                gameMode = new ClassicGameMode(true);
+                List<string> names = new List<string>()
+                        {
+                            "Mieszko", "Bolesław", "Kazimierz", "Władysław", "Stanisław", "Leszek"
+                        };
+
+                if (listBox1.SelectedIndex == 0)
+                {
+                    player1 = new ComputerPlayer(names[0], 1);
+                    player1.name = names[0];
+                }
+                else if (listBox1.SelectedIndex == 1)
+                {
+                    player1 = new ComputerPlayer(names[1], 2);
+                    player1.name = names[1];
+                }
+                else if (listBox1.SelectedIndex == 2)
+                {
+                    player1 = new ComputerPlayer(names[2], 3);
+                    player1.name = names[2];
+                }
+                else
+                {
+                    MessageBox.Show("Bład podczas konstrukcji player1");
+                }
+
+                if (listBox3.SelectedIndex == 0)
+                {
+                    enemy = new ComputerPlayer(names[3], 1);
+                    enemy.name = names[3];
+                }
+                else if (listBox3.SelectedIndex == 1)
+                {
+                    enemy = new ComputerPlayer(names[4], 2);
+                    enemy.name = names[4];
+                }
+                else if (listBox3.SelectedIndex == 2)
+                {
+                    enemy = new ComputerPlayer(names[5], 3);
+                    enemy.name = names[5];
+                }
+                else
+                {
+                    MessageBox.Show("Bład podczas konstrukcji player2");
+                }
+                gameMode.board1.player = player1;
+                gameMode.board2.player = enemy;
+            }
+        }
+
+        public void SpecialShips()
+        {
+            var user = db.users.FirstOrDefault(u => u.Id == loggedUserid);
+            if (user != null)
+            {
+                if (user.level.level < 6)
+                {
+                    MessageBox.Show("Ta zawartość nie została odblokowana!");
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(textBox1.Text))
+                    {
+                        if (!(checkBox1.Checked))
+                        {
+                            MessageBox.Show("Musisz wybrać przeciwnika");
+                        }
+                        else
+                        {
+                            enemy = new HumanPlayer("GOŚĆ", "1234");
+                        }
+                    }
+                    else
+                    {
+                        string login = textBox1.Text;
+                        string password = textBox3.Text;
+                        if (db.users.Any(u => u.name == login && u.password == password))
+                        {
+                            enemy = db.users.FirstOrDefault(u => u.name == login);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
+                        }
+                    }
+                }
+            }
+            gameMode = new OneShotSinksShip();
+        }
+
+        public void PlayerVsAI()
+        {
+            if (listBox2.SelectedIndex == -1)
+            {
+                MessageBox.Show("Nie wybrano poziomu trudności dla wszystkich bota");
+            }
+            else
+            {
+                List<string> names = new List<string>()
+                        {
+                            "Mieszko", "Bolesław", "Kazimierz"
+                        };
+
+                if (listBox2.SelectedIndex == 0)
+                {
+                    enemy = new ComputerPlayer(names[0], 1);
+                    enemy.name = names[0];
+                }
+                else if (listBox2.SelectedIndex == 1)
+                {
+                    enemy = new ComputerPlayer(names[1], 2);
+                    enemy.name = names[1];
+                }
+                else if (listBox2.SelectedIndex == 2)
+                {
+                    enemy = new ComputerPlayer(names[2], 3);
+                    enemy.name = names[2];
+                }
+                else
+                {
+                    MessageBox.Show("Bład podczas konstrukcji player2");
+                }
+                Board board = new Board((int)numericUpDown5.Value, (int)numericUpDown4.Value);
+                Board board1 = new Board(board);
+                board1.player = player1;
+                Board board2 = new Board(board);
+                board2.player = enemy;
+                int shipsCount = (int)numericUpDown3.Value;
+                int specShipsCount = (int)numericUpDown6.Value;
+                SelectShipsView select = new SelectShipsView(shipsCount, specShipsCount);
+                select.ShowDialog();
+                List<Ship> ships = select.GetSelectedShips();
+                if (IsPossibleToCreateGame(board, shipsCount, specShipsCount))
+                {
+                    gameMode = new CustomgameMode(board1, board2, shipsCount, specShipsCount, ships);
+                }
+            }
+        }
+
+        public void Custom()
+        {
+            if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                if (!(checkBox2.Checked))
+                {
+                    MessageBox.Show("Musisz wybrać przeciwnika");
+                }
+                else
+                {
+                    enemy = new HumanPlayer("GOŚĆ", "1234");
+                }
+            }
+            else
+            {
+                string login = textBox2.Text;
+                string password = textBox4.Text;
+                if (db.users.Any(u => u.name == login && u.password == password))
+                {
+                    enemy = db.users.FirstOrDefault(u => u.name == login);
+                }
+                else
+                {
+                    MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
+                }
+            }
+            Board board = new Board((int)numericUpDown5.Value, (int)numericUpDown4.Value);
+            Board board1 = new Board(board);
+            board1.player = player1;
+            Board board2 = new Board(board);
+            board2.player = enemy;
+            int shipsCount = (int)numericUpDown3.Value;
+            int specShipsCount = (int)numericUpDown6.Value;
+            SelectShipsView select = new SelectShipsView(shipsCount, specShipsCount);
+            select.ShowDialog();
+            List<Ship> ships = select.GetSelectedShips();
+            if (IsPossibleToCreateGame(board, shipsCount, specShipsCount))
+            {
+                gameMode = new CustomgameMode(board1, board2, shipsCount, specShipsCount, ships);
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             if (panel1.Visible == true)
             {
                 if(label1.Text == "Nie rankingowa")
                 {
-                    gameMode = new ClassicGameMode(false);
-                    if(string.IsNullOrEmpty(textBox1.Text))
-                    {
-                        if(!(checkBox1.Checked))
-                        {
-                            MessageBox.Show("Musisz wybrać przeciwnika");
-                        }
-                        else
-                        {
-                            enemy = new HumanPlayer("GOŚĆ", "1234");
-                        }
-                    }
-                    else
-                    {
-                        string login = textBox1.Text;
-                        string password = textBox3.Text;
-                        if(db.users.Any(u => u.name == login && u.password == password))
-                        {
-                            enemy = db.users.FirstOrDefault(u => u.name == login);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
-                        }
-                    }
+                    Unranked();
                 }
                 else if(label1.Text == "Rankingowa")
                 {
-                    if (string.IsNullOrEmpty(textBox1.Text))
-                    {
-                        if (!(checkBox1.Checked))
-                        {
-                            MessageBox.Show("Musisz wybrać przeciwnika");
-                        }
-                        else
-                        {
-                            MessageBox.Show("W tym trybie przeciwnik nie może być Gościem");
-                        }
-                    }
-                    else
-                    {
-                        string login = textBox1.Text;
-                        string password = textBox3.Text;
-                        if (db.users.Any(u => u.name == login && u.password == password))
-                        {
-                            enemy = db.users.FirstOrDefault(u => u.name == login);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
-                        }
-                    }
-                    gameMode = new ClassicGameMode(true);
+                    Ranked();
                 }
                 else if(label1.Text == "Tryb Symulacji")
                 {
-                    if(listBox1.SelectedIndex == -1 || listBox3.SelectedIndex == -1)
-                    {
-                        MessageBox.Show("Nie wybrano poziomu trudności dla wszystkich botów");
-                    }
-                    else
-                    {
-                        gameMode = new ClassicGameMode(true);
-                        List<string> names = new List<string>()
-                        {
-                            "Mieszko", "Bolesław", "Kazimierz", "Władysław", "Stanisław", "Leszek"
-                        };
-
-                        if (listBox1.SelectedIndex == 0)
-                        {
-                            player1 = new ComputerPlayer(names[0], 1);
-                            player1.name = names[0];
-                        }
-                        else if(listBox1.SelectedIndex == 1)
-                        {
-                            player1 = new ComputerPlayer(names[1], 2);
-                            player1.name = names[1];
-                        }
-                        else if (listBox1.SelectedIndex == 2)
-                        {
-                            player1 = new ComputerPlayer(names[2], 3);
-                            player1.name = names[2];
-                        }
-                        else
-                        {
-                            MessageBox.Show("Bład podczas konstrukcji player1");
-                        }
-
-                        if (listBox3.SelectedIndex == 0)
-                        {
-                            enemy = new ComputerPlayer(names[3], 1);
-                            enemy.name = names[3];
-                        }
-                        else if (listBox3.SelectedIndex == 1)
-                        {
-                            enemy = new ComputerPlayer(names[4], 2);
-                            enemy.name = names[4];
-                        }
-                        else if (listBox3.SelectedIndex == 2)
-                        {
-                            enemy = new ComputerPlayer(names[5], 3);
-                            enemy.name = names[5];
-                        }
-                        else
-                        {
-                            MessageBox.Show("Bład podczas konstrukcji player2");
-                        }
-                        gameMode.board1.player = player1;
-                        gameMode.board2.player = enemy;
-                    }
+                    Simulation();
                 }
                 else if(label1.Text == "SpecjalneStatki")
                 {
-                    if (string.IsNullOrEmpty(textBox1.Text))
-                    {
-                        if (!(checkBox1.Checked))
-                        {
-                            MessageBox.Show("Musisz wybrać przeciwnika");
-                        }
-                        else
-                        {
-                            enemy = new HumanPlayer("GOŚĆ", "1234");
-                        }
-                    }
-                    else
-                    {
-                        string login = textBox1.Text;
-                        string password = textBox3.Text;
-                        if (db.users.Any(u => u.name == login && u.password == password))
-                        {
-                            enemy = db.users.FirstOrDefault(u => u.name == login);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
-                        }
-                    }
-                    gameMode = new OneShotSinksShip();
+                    SpecialShips();
                 }
                 else
                 {
@@ -298,93 +421,12 @@ namespace ProjektStatki.Views
             {
                 if (label4.Text == "Gracz vs AI")
                 {
-
-                    if (listBox2.SelectedIndex == -1)
-                    {
-                        MessageBox.Show("Nie wybrano poziomu trudności dla wszystkich bota");
-                    }
-                    else
-                    {
-                        List<string> names = new List<string>()
-                        {
-                            "Mieszko", "Bolesław", "Kazimierz"
-                        };
-
-                        if (listBox2.SelectedIndex == 0)
-                        {
-                            enemy = new ComputerPlayer(names[0], 1);
-                            enemy.name = names[0];
-                        }
-                        else if (listBox2.SelectedIndex == 1)
-                        {
-                            enemy = new ComputerPlayer(names[1], 2);
-                            enemy.name = names[1];
-                        }
-                        else if (listBox2.SelectedIndex == 2)
-                        {
-                            enemy = new ComputerPlayer(names[2], 3);
-                            enemy.name = names[2];
-                        }
-                        else
-                        {
-                            MessageBox.Show("Bład podczas konstrukcji player2");
-                        }
-                        Board board = new Board((int)numericUpDown5.Value, (int)numericUpDown4.Value);
-                        Board board1 = new Board(board);
-                        board1.player = player1;
-                        Board board2 = new Board(board);
-                        board2.player = enemy;
-                        int shipsCount = (int)numericUpDown3.Value;
-                        int specShipsCount = (int)numericUpDown6.Value;
-                        SelectShipsView select = new SelectShipsView(shipsCount, specShipsCount);
-                        select.ShowDialog();
-                        List<Ship> ships = select.GetSelectedShips();
-                        if (IsPossibleToCreateGame(board, shipsCount, specShipsCount))
-                        {
-                            gameMode = new CustomgameMode(board1, board2, shipsCount, specShipsCount, ships);
-                        }
-                    }
+                    PlayerVsAI();
+                    
                 }
                 else if (label4.Text == "Stwórz Własną")
                 {
-                    if (string.IsNullOrEmpty(textBox1.Text))
-                    {
-                        if (!(checkBox2.Checked))
-                        {
-                            MessageBox.Show("Musisz wybrać przeciwnika");
-                        }
-                        else
-                        {
-                            enemy = new HumanPlayer("GOŚĆ", "1234");
-                        }
-                    }
-                    else
-                    {
-                        string login = textBox2.Text;
-                        string password = textBox4.Text;
-                        if (db.users.Any(u => u.name == login && u.password == password))
-                        {
-                            enemy = db.users.FirstOrDefault(u => u.name == login);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Nie istnieje taki użytkownik lub podano złe dane");
-                        }
-                    }
-                    Board board = new Board((int)numericUpDown5.Value, (int)numericUpDown4.Value);
-                    Board board1 = new Board(board);
-                    board1.player = player1;
-                    Board board2 = new Board(board);
-                    board2.player = enemy;
-                    int shipsCount = (int)numericUpDown3.Value;
-                    int specShipsCount = (int)numericUpDown6.Value;
-                    SelectShipsView select = new SelectShipsView(shipsCount, specShipsCount);
-                    select.ShowDialog();
-                    List<Ship> ships = select.GetSelectedShips();
-                    if(IsPossibleToCreateGame(board, shipsCount, specShipsCount))
-                    {
-                        gameMode = new CustomgameMode(board1, board2, shipsCount, specShipsCount, ships);
-                    }
+                    Custom();
                 }
                 else
                 {
